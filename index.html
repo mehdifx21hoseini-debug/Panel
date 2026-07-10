@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0">
+<title>گزارش منتورینگ | آکادمی سبحان صمدی</title>
+<meta name="theme-color" content="#09090b">
+<meta name="description" content="داشبورد مدیریت منتورینگ آکادمی سبحان صمدی">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="assets/icon-192.png">
+<link rel="icon" href="assets/icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="گزارش منتورینگ">
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+/* ============================================================
+   DESIGN SYSTEM — copied 1:1 from the reference identity
+   (dark zinc surface + emerald-green accent, Vazirmatn type,
+   rounded 16–24px cards, soft shadows, pill badges/nav)
+   Re-applied to the mentoring app's mobile shell.
+============================================================ */
+:root{
+  --bg-primary:   #09090b;
+  --bg-secondary: #131316;
+  --bg-tertiary:  #1a1a1f;
+  --bg-card:      #18181b;
+  --bg-card-hover:#1f1f24;
+  --border:       #27272a;
+  --border-light: #1f1f24;
+  --text-primary: #fafafa;
+  --text-secondary:#a1a1aa;
+  --text-muted:   #71717a;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,.3);
+  --shadow-md: 0 4px 6px -1px rgba(0,0,0,.4), 0 2px 4px -2px rgba(0,0,0,.3);
+  --shadow-lg: 0 10px 25px -5px rgba(0,0,0,.5), 0 4px 10px -6px rgba(0,0,0,.4);
+  --shadow-xl: 0 20px 50px -12px rgba(0,0,0,.6);
+  --green:        #10b981;
+  --green-dark:   #059669;
+  --green-light:  #34d399;
+  --green-bg:     #022c22;
+  --green-border: #064e3b;
+  --red:          #ef4444;
+  --red-bg:       #2a0a0a;
+  --red-border:   #7f1d1d;
+  --amber:        #f59e0b;
+  --amber-bg:     #2a1d05;
+  --amber-border: #78350f;
+  --blue:         #3b82f6;
+  --blue-bg:      #0a1a2a;
+  --blue-border:  #1e3a5f;
+  --overlay:      rgba(9,9,11,.82);
+  --glass-bg:     rgba(24,24,27,.7);
+  --glass-border: rgba(255,255,255,.06);
+  --radius:       20px;
+  --radius-sm:    14px;
+  --safe-top:    env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Vazirmatn',sans-serif;
+  background-color:var(--bg-primary);
+  color:var(--text-primary);
+  line-height:1.7;
+  min-height:100vh;
+  overflow-x:hidden;
+  position:relative;
+}
+img{max-width:100%;display:block;}
+button,input,select,textarea{font-family:inherit;}
+::selection{background:rgba(16,185,129,.32);}
+::-webkit-scrollbar{width:6px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px;}
+
+@media (prefers-reduced-motion: reduce){ *{animation-duration:.01ms !important; transition-duration:.01ms !important;} }
+
+/* ---------- Animated ambient background (replaces the portrait) ---------- */
+.bg-fx{ position:fixed; inset:0; z-index:0; overflow:hidden; pointer-events:none; }
+.bg-fx .orb{ position:absolute; border-radius:50%; filter:blur(70px); opacity:.22; animation:orbFloat 16s ease-in-out infinite; }
+.bg-fx .orb1{ width:340px; height:340px; background:var(--green); top:-120px; right:-80px; animation-delay:0s; }
+.bg-fx .orb2{ width:300px; height:300px; background:#047857; bottom:-100px; left:-90px; animation-delay:-6s; }
+.bg-fx .orb3{ width:220px; height:220px; background:var(--green-light); top:38%; left:50%; animation-delay:-11s; opacity:.13; }
+@keyframes orbFloat{
+  0%,100%{ transform:translate(0,0) scale(1); }
+  33%{ transform:translate(18px,-22px) scale(1.08); }
+  66%{ transform:translate(-16px,16px) scale(.94); }
+}
+.bg-fx .grid{
+  position:absolute; inset:-2px; opacity:.5;
+  background-image:
+    linear-gradient(var(--border-light) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border-light) 1px, transparent 1px);
+  background-size:42px 42px;
+  -webkit-mask-image:radial-gradient(ellipse 80% 55% at 50% 0%, #000 35%, transparent 78%);
+          mask-image:radial-gradient(ellipse 80% 55% at 50% 0%, #000 35%, transparent 78%);
+  animation:gridDrift 26s linear infinite;
+}
+@keyframes gridDrift{ from{ background-position:0 0,0 0; } to{ background-position:42px 84px,84px 42px; } }
+.bg-fx .ring{
+  position:absolute; top:14%; left:50%; width:280px; height:280px; margin-left:-140px;
+  border:1.5px dashed var(--green); border-radius:50%; opacity:.14;
+  animation:ringSpin 38s linear infinite;
+}
+@keyframes ringSpin{ from{ transform:rotate(0deg); } to{ transform:rotate(360deg); } }
+
+/* ---------- Surfaces ---------- */
+.card{ background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius); padding:20px; transition:border-color .2s ease, box-shadow .2s ease; }
+.card-tt{ font-size:12.5px; color:var(--text-secondary); font-weight:700; margin-bottom:10px; display:flex; align-items:center; gap:8px; }
+.glass{ background:var(--glass-bg); border:1px solid var(--glass-border); border-radius:var(--radius); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px); }
+
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:8px;
+  border:none; border-radius:14px; padding:14px 20px; font-size:14.5px; font-weight:700;
+  cursor:pointer; transition:all .25s cubic-bezier(.4,0,.2,1); font-family:inherit;
+  -webkit-user-select:none; user-select:none; position:relative; overflow:hidden;
+}
+.btn:active{ transform:scale(.96); }
+.btn-gold, .btn-primary{ background:var(--green); color:#fff; box-shadow:0 1px 3px rgba(16,185,129,.25); }
+.btn-gold:active, .btn-primary:active{ background:var(--green-dark); }
+.btn-navy{ background:var(--bg-tertiary); color:var(--text-primary); border:1px solid var(--border); }
+.btn-ghost{ background:transparent; color:var(--text-secondary); border:1px solid var(--border); }
+.btn-danger{ background:var(--red-bg); color:#fca5a5; border:1px solid var(--red-border); }
+.btn-sm{ padding:9px 14px; font-size:13px; border-radius:11px; }
+.btn-block{ width:100%; }
+.btn[disabled]{ opacity:.45; pointer-events:none; }
+
+.field{ margin-bottom:14px; }
+.field label{ display:block; font-size:12.5px; color:var(--text-secondary); margin-bottom:8px; font-weight:600; }
+.field input, .field select, .field textarea{
+  width:100%; background:var(--bg-tertiary); border:1px solid var(--border);
+  color:var(--text-primary); border-radius:12px; padding:13px 14px; font-size:14.5px;
+  transition:border-color .2s, box-shadow .2s; font-family:inherit;
+}
+.field textarea{ resize:vertical; min-height:64px; line-height:1.7; }
+.field input:focus, .field select:focus, .field textarea:focus{
+  outline:none; border-color:var(--green); box-shadow:0 0 0 3px rgba(16,185,129,.12);
+}
+.field-row{ display:flex; gap:10px; }
+.field-row .field{ flex:1; }
+
+.badge{ display:inline-flex; align-items:center; gap:6px; font-size:11.5px; font-weight:700; padding:5px 12px; border-radius:50px; border:1px solid transparent; }
+.badge-green{ background:var(--green-bg); color:var(--green-light); border-color:var(--green-border); }
+.badge-amber{ background:var(--amber-bg); color:var(--amber); border-color:var(--amber-border); }
+.badge-red{ background:var(--red-bg); color:#fca5a5; border-color:var(--red-border); }
+.badge-blue{ background:var(--blue-bg); color:#93c5fd; border-color:var(--blue-border); }
+.badge-gold{ background:var(--green-bg); color:var(--green-light); border-color:var(--green-border); }
+.badge-dot{ width:7px; height:7px; border-radius:50%; background:currentColor; animation:pulse 2s infinite; }
+@keyframes pulse{ 0%,100%{opacity:1;} 50%{opacity:.35;} }
+
+.empty-state{ text-align:center; padding:44px 16px; color:var(--text-muted); }
+.empty-state .ico{ font-size:30px; margin-bottom:12px; color:var(--text-muted); opacity:.7; }
+.empty-state p{ font-size:13.5px; }
+
+.toast{
+  position:fixed; bottom:calc(86px + var(--safe-bottom)); left:50%; transform:translateX(-50%) translateY(20px);
+  background:var(--bg-card); border:1px solid var(--border); color:var(--text-primary);
+  padding:13px 20px; border-radius:14px; font-size:13.5px; box-shadow:var(--shadow-xl);
+  opacity:0; pointer-events:none; transition:all .3s cubic-bezier(.4,0,.2,1); z-index:999; max-width:88vw;
+}
+.toast.show{ opacity:1; transform:translateX(-50%) translateY(0); }
+
+.modal-overlay{ position:fixed; inset:0; background:rgba(0,0,0,.6); display:none; align-items:flex-end; justify-content:center; z-index:900; }
+.modal-overlay.show{ display:flex; animation:fadeIn .2s ease; }
+.modal-sheet{
+  width:100%; max-width:480px; background:var(--bg-card); border:1px solid var(--border);
+  border-radius:24px 24px 0 0; padding:22px 20px calc(20px + var(--safe-bottom));
+  max-height:88vh; overflow-y:auto; animation:slideUp .3s cubic-bezier(.4,0,.2,1); box-shadow:var(--shadow-xl);
+}
+@media(min-width:560px){ .modal-overlay{ align-items:center; } .modal-sheet{ border-radius:24px; max-height:84vh; } }
+@keyframes slideUp{ from{ transform:translateY(40px); opacity:0;} to{ transform:translateY(0); opacity:1;} }
+@keyframes fadeIn{ from{opacity:0;} to{opacity:1;} }
+.modal-head{ display:flex; align-items:center; justify-content:space-between; margin-bottom:18px; }
+.modal-head h3{ font-size:16.5px; font-weight:800; letter-spacing:-.3px; }
+.modal-close{ width:34px; height:34px; border-radius:10px; background:var(--bg-tertiary); border:1px solid var(--border); color:var(--text-muted); font-size:14px; cursor:pointer; transition:all .2s; }
+.modal-close:active{ background:var(--bg-card-hover); }
+
+.spinner{ width:18px; height:18px; border-radius:50%; border:2.5px solid rgba(255,255,255,.25); border-top-color:#fff; animation:spin .7s linear infinite; }
+@keyframes spin{ to{ transform:rotate(360deg);} }
+
+/* ---------- Screens ---------- */
+.screen{ display:none; min-height:100vh; position:relative; z-index:1; }
+.screen.active{ display:block; animation:fadeUp .4s cubic-bezier(.4,0,.2,1); }
+@keyframes fadeUp{ from{ opacity:0; transform:translateY(16px);} to{ opacity:1; transform:translateY(0);} }
+
+/* ====================== LOGIN ====================== */
+#screen-login{ display:none; min-height:100vh; flex-direction:column; align-items:center; justify-content:center; padding:24px; text-align:center; }
+#screen-login.active{ display:flex; }
+
+.login-logo-wrap{ margin-bottom:22px; }
+.login-logo{
+  width:104px; height:104px; border-radius:50%; object-fit:contain; padding:16px;
+  background:linear-gradient(135deg, var(--green), var(--green-dark));
+  box-shadow:var(--shadow-xl); cursor:pointer; transition:transform .15s ease; -webkit-user-select:none; user-select:none;
+}
+.login-logo:active{ transform:scale(.92); }
+.login-title{ font-size:1.9rem; font-weight:900; letter-spacing:-1px; margin-bottom:8px; }
+.login-badge{
+  display:inline-flex; align-items:center; gap:8px; background:var(--green-bg); color:var(--green-light);
+  padding:6px 16px; border-radius:50px; font-size:.85rem; font-weight:600; margin-bottom:22px; border:1px solid var(--green-border);
+}
+.login-card{ width:100%; max-width:360px; padding:30px 24px; }
+.login-card .field{ text-align:right; }
+.login-err{ color:#fca5a5; font-size:12.5px; min-height:18px; margin-top:8px; }
+.login-foot{ margin-top:28px; font-size:11.5px; color:var(--text-muted); }
+
+/* ====================== APP SHELL ====================== */
+.app-shell{ display:none; min-height:100vh; padding-bottom:calc(82px + var(--safe-bottom)); position:relative; z-index:1; }
+.app-shell.active{ display:block; }
+
+.topbar{
+  position:sticky; top:0; z-index:50; padding:calc(14px + var(--safe-top)) 16px 14px;
+  display:flex; align-items:center; gap:12px;
+  background:var(--overlay); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+}
+.topbar-logo{ width:38px; height:38px; border-radius:50%; object-fit:contain; background:linear-gradient(135deg,var(--green),var(--green-dark)); padding:6px; }
+.topbar-info{ flex:1; min-width:0; }
+.topbar-title{ font-size:14.5px; font-weight:800; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; letter-spacing:-.2px; }
+.topbar-sub{ font-size:11px; color:var(--text-muted); }
+.topbar-actions{ display:flex; align-items:center; gap:8px; }
+.icon-btn{
+  width:38px; height:38px; border-radius:11px; background:var(--bg-tertiary); border:1px solid var(--border);
+  color:var(--text-secondary); display:flex; align-items:center; justify-content:center; font-size:15px; cursor:pointer; position:relative; transition:all .2s;
+}
+.icon-btn:active{ background:var(--bg-card-hover); }
+.icon-btn .dot{ position:absolute; top:6px; left:6px; width:7px; height:7px; border-radius:50%; background:var(--red); display:none; box-shadow:0 0 0 2px var(--bg-primary); }
+.icon-btn .dot.show{ display:block; }
+
+.page-wrap{ padding:18px 16px 8px; max-width:720px; margin:0 auto; position:relative; }
+
+.section-title{ font-size:.78rem; font-weight:700; text-transform:uppercase; letter-spacing:1.4px; color:var(--green); margin:24px 2px 12px; display:flex; align-items:center; justify-content:space-between; }
+.section-title .lnk{ font-size:12px; color:var(--text-secondary); font-weight:600; cursor:pointer; text-transform:none; letter-spacing:0; }
+
+/* Bottom nav — pill style like reference nav-links */
+.bottomnav{
+  position:fixed; bottom:0; right:0; left:0; z-index:60;
+  background:var(--overlay); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
+  border-top:1px solid var(--border); padding:9px 10px calc(9px + var(--safe-bottom));
+  display:flex; justify-content:center; gap:4px;
+}
+.bnav{
+  background:none; border:none; color:var(--text-muted); display:flex; flex-direction:column; align-items:center; gap:4px;
+  font-size:10.5px; font-weight:600; padding:7px 4px; border-radius:12px; cursor:pointer; flex:1; max-width:84px;
+  transition:all .2s;
+}
+.bnav .bico{ font-size:17px; transition:transform .2s; width:17px; height:17px; display:flex; align-items:center; justify-content:center; }
+.bnav.active{ color:var(--green-light); background:var(--green-bg); }
+.bnav.active .bico{ transform:translateY(-1px); }
+
+.tab{ display:none; }
+.tab.active{ display:block; animation:fadeUp .3s cubic-bezier(.4,0,.2,1); }
+
+/* Stat grid */
+.stat-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:12px; position:relative; z-index:1; }
+.stat-card{ padding:18px; position:relative; overflow:hidden; }
+.stat-card .si{ width:36px; height:36px; border-radius:11px; display:flex; align-items:center; justify-content:center; font-size:15px; margin-bottom:12px; }
+.stat-card .sv{ font-size:1.5rem; font-weight:900; line-height:1; letter-spacing:-.5px; }
+.stat-card .sl{ font-size:11.5px; color:var(--text-muted); margin-top:6px; }
+
+.chart-wrap{ position:relative; z-index:1; }
+canvas{ width:100% !important; display:block; }
+
+.row-item{
+  display:flex; align-items:center; gap:12px; padding:14px 4px; border-bottom:1px solid var(--border-light);
+  cursor:pointer; transition:background .15s;
+}
+.row-item:last-child{ border-bottom:none; }
+.row-item:active{ background:var(--bg-tertiary); }
+.row-avatar{
+  width:40px; height:40px; min-width:40px; border-radius:12px;
+  background:linear-gradient(135deg,var(--green),var(--green-dark)); display:flex; align-items:center; justify-content:center;
+  font-weight:800; font-size:13px; color:#fff;
+}
+.row-main{ flex:1; min-width:0; }
+.row-title{ font-size:14px; font-weight:700; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.row-sub{ font-size:11.5px; color:var(--text-muted); margin-top:2px; }
+.row-aside{ text-align:left; font-size:11.5px; color:var(--text-muted); }
+
+.progress-bar{ width:100%; height:7px; border-radius:99px; background:var(--bg-tertiary); overflow:hidden; margin-top:10px; }
+.progress-bar i{ display:block; height:100%; border-radius:99px; background:linear-gradient(90deg, var(--green-dark), var(--green-light)); }
+
+.fab{
+  position:fixed; left:18px; bottom:calc(94px + var(--safe-bottom)); z-index:55;
+  width:54px; height:54px; border-radius:50%; background:var(--green);
+  color:#fff; border:none; font-size:22px; box-shadow:var(--shadow-xl); cursor:pointer;
+  display:flex; align-items:center; justify-content:center; transition:all .25s;
+}
+.fab:active{ transform:scale(.92); background:var(--green-dark); }
+
+.segmented{ display:flex; background:var(--bg-tertiary); border:1px solid var(--border); border-radius:14px; padding:4px; margin-bottom:14px; overflow-x:auto; }
+.segmented button{
+  flex:1; background:none; border:none; color:var(--text-muted); font-size:12px; font-weight:700; padding:9px 8px; border-radius:10px;
+  cursor:pointer; transition:all .2s; font-family:inherit; white-space:nowrap;
+}
+.segmented button.active{ background:var(--bg-card); color:var(--text-primary); box-shadow:var(--shadow-sm); }
+
+.search-bar{ display:flex; align-items:center; gap:10px; background:var(--bg-tertiary); border:1px solid var(--border); border-radius:14px; padding:12px 16px; margin-bottom:12px; }
+.search-bar input{ flex:1; background:none; border:none; color:var(--text-primary); font-size:13.5px; outline:none; }
+.search-bar input::placeholder{ color:var(--text-muted); }
+
+.leave-card{ display:flex; align-items:center; gap:14px; }
+.leave-ring{ width:64px; height:64px; min-width:64px; position:relative; }
+.leave-ring svg{ transform:rotate(-90deg); }
+.leave-ring .num{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:800; }
+
+.flex-between{ display:flex; align-items:center; justify-content:space-between; }
+.muted{ color:var(--text-muted); }
+.gold-text{ color:var(--green-light); }
+.mt-2{ margin-top:8px;} .mt-3{ margin-top:14px;} .mb-2{ margin-bottom:8px;}
+.tag-row{ display:flex; flex-wrap:wrap; gap:6px; margin-top:8px;}
+.hidden{ display:none !important; }
+
+.prio-dot{ width:8px; height:8px; border-radius:50%; display:inline-block; }
+.prio-high{ background:var(--red); } .prio-mid{ background:var(--amber); } .prio-low{ background:var(--green); }
+
+.skel{ background:linear-gradient(90deg, var(--bg-tertiary), var(--bg-card-hover), var(--bg-tertiary)); background-size:200% 100%; animation:shimmer 1.3s infinite; border-radius:10px;}
+@keyframes shimmer{ to{ background-position:-200% 0; } }
+
+</style>
+</head>
+<body>
+
+<!-- ============ AMBIENT ANIMATED BACKGROUND (global, fixed) ============ -->
+<div class="bg-fx" aria-hidden="true">
+  <div class="grid"></div>
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="orb orb3"></div>
+  <div class="ring"></div>
+</div>
+
+<!-- ============ TOAST ============ -->
+<div class="toast" id="toast"></div>
+
+<!-- ============ LOGIN SCREEN ============ -->
+<div class="screen" id="screen-login">
+  <div class="login-logo-wrap">
+    <img src="assets/logo.png" class="login-logo" id="logo-tap" alt="آکادمی سبحان صمدی">
+  </div>
+  <div class="login-title">گزارش منتورینگ</div>
+  <div class="login-badge"><span class="badge-dot"></span> آکادمی سبحان صمدی</div>
+
+  <div class="login-card glass" id="login-card-viewer">
+    <div class="field">
+      <label>رمز ورود</label>
+      <input type="password" id="login-pass" placeholder="رمز عبور را وارد کنید" inputmode="numeric" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()">
+    </div>
+    <button class="btn btn-primary btn-block" onclick="doLogin()"><i class="fas fa-arrow-left-to-bracket"></i> ورود به سامانه</button>
+    <div class="login-err" id="login-err"></div>
+  </div>
+
+  <div class="login-foot">نسخه ۲ · طراحی‌شده برای موبایل</div>
+</div>
+
+<!-- ============ ADMIN PASSWORD MODAL (hidden trigger) ============ -->
+<div class="modal-overlay" id="modal-admin-gate">
+  <div class="modal-sheet" style="max-width:360px;">
+    <div class="modal-head">
+      <h3><i class="fas fa-lock"></i> ورود مدیر</h3>
+      <button class="modal-close" onclick="closeModal('modal-admin-gate')"><i class="fas fa-xmark"></i></button>
+    </div>
+    <div class="field">
+      <label>رمز عبور مدیر</label>
+      <input type="password" id="admin-gate-pass" placeholder="••••••••" inputmode="numeric" onkeydown="if(event.key==='Enter')tryAdminGate()">
+    </div>
+    <div class="login-err" id="admin-gate-err"></div>
+    <button class="btn btn-navy btn-block mt-2" onclick="tryAdminGate()">تأیید و ورود</button>
+  </div>
+</div>
+
+<!-- ============ ADMIN APP SHELL ============ -->
+<div class="app-shell" id="shell-admin">
+  <div class="topbar">
+    <img src="assets/logo.png" class="topbar-logo" alt="">
+    <div class="topbar-info">
+      <div class="topbar-title">پنل مدیریت</div>
+      <div class="topbar-sub" id="admin-week-pill">هفته جاری</div>
+    </div>
+    <div class="topbar-actions">
+      <button class="icon-btn" onclick="openModal('modal-notifs')" title="اعلان‌ها"><i class="fas fa-bell"></i><span class="dot" id="notif-dot"></span></button>
+      <button class="icon-btn" onclick="confirmLogout()" title="خروج"><i class="fas fa-arrow-right-from-bracket"></i></button>
+    </div>
+  </div>
+  <div class="page-wrap">
+
+    <!-- TAB: dashboard -->
+    <div class="tab active" id="tab-a-dashboard"></div>
+    <!-- TAB: report -->
+    <div class="tab" id="tab-a-report"></div>
+    <!-- TAB: archive -->
+    <div class="tab" id="tab-a-archive"></div>
+    <!-- TAB: leaves -->
+    <div class="tab" id="tab-a-leaves"></div>
+    <!-- TAB: projects -->
+    <div class="tab" id="tab-a-projects"></div>
+    <!-- TAB: settings -->
+    <div class="tab" id="tab-a-settings"></div>
+
+  </div>
+
+  <div class="bottomnav">
+    <button class="bnav active" data-tab="dashboard" onclick="showAdminTab('dashboard',this)"><span class="bico"><i class="fas fa-house"></i></span><span>داشبورد</span></button>
+    <button class="bnav" data-tab="report" onclick="showAdminTab('report',this)"><span class="bico"><i class="fas fa-file-pen"></i></span><span>گزارش</span></button>
+    <button class="bnav" data-tab="leaves" onclick="showAdminTab('leaves',this)"><span class="bico"><i class="fas fa-umbrella-beach"></i></span><span>مرخصی</span></button>
+    <button class="bnav" data-tab="projects" onclick="showAdminTab('projects',this)"><span class="bico"><i class="fas fa-folder-open"></i></span><span>پروژه‌ها</span></button>
+    <button class="bnav" data-tab="settings" onclick="showAdminTab('settings',this)"><span class="bico"><i class="fas fa-gear"></i></span><span>تنظیمات</span></button>
+  </div>
+</div>
+
+<!-- ============ VIEWER APP SHELL ============ -->
+<div class="app-shell" id="shell-viewer">
+  <div class="topbar">
+    <img src="assets/logo.png" class="topbar-logo" alt="">
+    <div class="topbar-info">
+      <div class="topbar-title">گزارش منتورینگ</div>
+      <div class="topbar-sub">آکادمی سبحان صمدی</div>
+    </div>
+    <div class="topbar-actions">
+      <button class="icon-btn" onclick="confirmLogout()" title="خروج"><i class="fas fa-arrow-right-from-bracket"></i></button>
+    </div>
+  </div>
+  <div class="page-wrap">
+    <div class="tab active" id="tab-v-dashboard"></div>
+    <div class="tab" id="tab-v-archive"></div>
+    <div class="tab" id="tab-v-leaves"></div>
+    <div class="tab" id="tab-v-projects"></div>
+  </div>
+  <div class="bottomnav">
+    <button class="bnav active" data-tab="dashboard" onclick="showViewerTab('dashboard',this)"><span class="bico"><i class="fas fa-house"></i></span><span>داشبورد</span></button>
+    <button class="bnav" data-tab="archive" onclick="showViewerTab('archive',this)"><span class="bico"><i class="fas fa-box-archive"></i></span><span>آرشیو</span></button>
+    <button class="bnav" data-tab="leaves" onclick="showViewerTab('leaves',this)"><span class="bico"><i class="fas fa-umbrella-beach"></i></span><span>مرخصی</span></button>
+    <button class="bnav" data-tab="projects" onclick="showViewerTab('projects',this)"><span class="bico"><i class="fas fa-folder-open"></i></span><span>پروژه‌ها</span></button>
+  </div>
+</div>
+
+<!-- ============ SHARED MODALS (rendered into via JS) ============ -->
+<div class="modal-overlay" id="modal-generic">
+  <div class="modal-sheet" id="modal-generic-body"></div>
+</div>
+<div class="modal-overlay" id="modal-notifs">
+  <div class="modal-sheet" style="max-width:380px;">
+    <div class="modal-head"><h3><i class="fas fa-bell"></i> اعلان‌ها</h3><button class="modal-close" onclick="closeModal('modal-notifs')"><i class="fas fa-xmark"></i></button></div>
+    <div id="notif-list"></div>
+  </div>
+</div>
+<div class="modal-overlay" id="modal-confirm">
+  <div class="modal-sheet" style="max-width:340px;">
+    <div class="modal-head"><h3 id="confirm-title">تأیید عملیات</h3></div>
+    <p class="muted" id="confirm-body" style="font-size:13.5px;line-height:1.8;margin-bottom:18px;"></p>
+    <div style="display:flex;gap:10px;">
+      <button class="btn btn-ghost btn-block" onclick="closeModal('modal-confirm')">انصراف</button>
+      <button class="btn btn-danger btn-block" id="confirm-ok-btn">تأیید</button>
+    </div>
+  </div>
+</div>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
