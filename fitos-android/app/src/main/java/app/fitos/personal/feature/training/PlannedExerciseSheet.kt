@@ -52,6 +52,7 @@ import kotlin.math.roundToInt
 
 private val RestOptions = listOf(45, 60, 90, 120, 150, 180)
 private val RirOptions = listOf<Int?>(null, 0, 1, 2, 3, 4)
+private val DeloadOptions = listOf(5, 10, 15, 20)
 
 /** Edit the targets of one planned exercise; also the place to replace or remove it. */
 @OptIn(ExperimentalMaterial3Api::class)
@@ -77,6 +78,8 @@ fun PlannedExerciseSheet(
     var superset by remember { mutableStateOf(planned.supersetGroup != null) }
     var progression by remember { mutableStateOf(planned.progression?.type == ProgressionType.DOUBLE_PROGRESSION) }
     var increment by remember { mutableStateOf((planned.progression?.incrementKg ?: planned.exercise.weightIncrementKg ?: 2.5).let { Fmt.field(it, 2) }) }
+    var deload by remember { mutableIntStateOf(planned.progression?.deloadPercent ?: 10) }
+    var requireGood by remember { mutableStateOf(planned.progression?.requireGoodQuality ?: true) }
     var note by remember { mutableStateOf(planned.note.orEmpty()) }
     var problems by remember { mutableStateOf(emptySet<Problem>()) }
 
@@ -93,7 +96,7 @@ fun PlannedExerciseSheet(
         supersetGroup = if (superset) planned.supersetGroup ?: previousGroup ?: (planned.position + 1) else null,
         note = note,
         progression = if (type == LogType.WEIGHT_REPS && progression) {
-            ProgressionRule(ProgressionType.DOUBLE_PROGRESSION, PersianNumbers.parse(increment), planned.progression?.deloadPercent ?: 10, requireGoodQuality = true)
+            ProgressionRule(ProgressionType.DOUBLE_PROGRESSION, PersianNumbers.parse(increment), deload, requireGoodQuality = requireGood)
         } else {
             null
         },
@@ -152,6 +155,12 @@ fun PlannedExerciseSheet(
                     if (progression) {
                         FitNumberField(increment, { increment = it }, stringResource(R.string.field_increment), suffix = stringResource(R.string.unit_kg),
                             maxIntegerDigits = 2, maxFractionDigits = 2, error = err(Problem.INCREMENT, R.string.error_increment))
+                        FieldLabel(stringResource(R.string.field_deload))
+                        FitChips(DeloadOptions, setOf(deload), { deload = it }, label = { Fmt.int(it) + "٪" }, multi = false)
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Text(stringResource(R.string.field_require_quality), style = MaterialTheme.typography.bodyLarge, modifier = Modifier.weight(1f))
+                            Switch(checked = requireGood, onCheckedChange = { requireGood = it }, colors = SwitchDefaults.colors(checkedTrackColor = FitTheme.colors.primary))
+                        }
                     }
                 }
             }

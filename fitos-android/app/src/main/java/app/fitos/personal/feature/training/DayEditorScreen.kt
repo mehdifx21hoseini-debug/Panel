@@ -54,6 +54,8 @@ import app.fitos.core.domain.training.ProgramRepository
 import app.fitos.core.domain.training.SessionEstimate
 import app.fitos.core.domain.training.TrainingRules
 import app.fitos.core.domain.training.VariantKind
+import app.fitos.core.domain.training.WorkoutRepository
+import app.fitos.core.domain.training.WorkoutSession
 import app.fitos.personal.R
 import app.fitos.personal.feature.profile.FieldLabel
 import app.fitos.personal.ui.EditScaffold
@@ -63,10 +65,19 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
-class DayEditorViewModel(private val programs: ProgramRepository, programId: String, val dayId: String) : ViewModel() {
+class DayEditorViewModel(private val programs: ProgramRepository, private val workouts: WorkoutRepository, private val programId: String, val dayId: String) : ViewModel() {
+    val open: StateFlow<WorkoutSession?> = workouts.active.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), null)
+
+    /** Starts this day in the selected version, or opens the session already running. */
+    fun start(onReady: () -> Unit) = viewModelScope.launch {
+        if (workouts.active.first() == null) workouts.start(programId, dayId, kind.value)
+        onReady()
+    }
+
     val program: StateFlow<Program?> = programs.program(programId).stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), null)
     private val _kind = MutableStateFlow(VariantKind.FULL)
     val kind: StateFlow<VariantKind> = _kind.asStateFlow()
@@ -90,8 +101,10 @@ fun DayEditorScreen(
     onBack: () -> Unit,
     onAddExercise: (VariantKind) -> Unit,
     onReplace: (plannedId: String) -> Unit,
+    onOpenSession: () -> Unit,
 ) {
     val program by viewModel.program.collectAsStateWithLifecycle()
+    val open by viewModel.open.collectAsStateWithLifecycle()
     val kind by viewModel.kind.collectAsStateWithLifecycle()
     val colors = FitTheme.colors
     var editingDay by remember { mutableStateOf(false) }
@@ -161,6 +174,13 @@ fun DayEditorScreen(
             }
         }
 
+        if (exercises.isNotEmpty()) {
+            if (open != null) {
+                FitSecondaryButton(stringResource(R.string.training_resume), onClick = onOpenSession, icon = FitIcons.Play, modifier = Modifier.fillMaxWidth())
+            } else {
+                FitSecondaryButton(stringResource(R.string.day_start, stringResource(kind.label)), onClick = { viewModel.start(onOpenSession) }, icon = FitIcons.Play, modifier = Modifier.fillMaxWidth())
+            }
+        }
         exercises.forEachIndexed { index, p ->
             PlannedRow(
                 p,

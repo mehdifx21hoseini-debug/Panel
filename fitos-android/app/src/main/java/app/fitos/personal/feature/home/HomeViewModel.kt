@@ -12,6 +12,10 @@ import app.fitos.core.domain.profile.WeightGoalRepository
 import app.fitos.core.domain.training.ProgramDay
 import app.fitos.core.domain.training.ProgramRepository
 import app.fitos.core.domain.training.Schedule
+import app.fitos.core.domain.training.WorkoutRepository
+import app.fitos.core.domain.training.WorkoutSession
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
 import java.time.LocalDate
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -33,8 +37,8 @@ data class HomeState(
     val training: HomeTraining? = null,
 )
 
-/** The active program's next day; both null when there is no active program. */
-data class HomeTraining(val programId: String?, val next: ProgramDay?)
+/** The active program's next day (both null without an active program), an open session, and whether today is done. */
+data class HomeTraining(val programId: String?, val next: ProgramDay?, val open: WorkoutSession? = null, val doneToday: Boolean = false)
 
 class HomeViewModel(
     profiles: ProfileRepository,
@@ -42,6 +46,7 @@ class HomeViewModel(
     private val weights: WeightRepository,
     goals: WeightGoalRepository,
     programs: ProgramRepository,
+    workouts: WorkoutRepository,
 ) : ViewModel() {
     private val today = MutableStateFlow<LocalDate?>(null)
 
@@ -56,9 +61,14 @@ class HomeViewModel(
         today.filterNotNull().flatMapLatest { targets.effectiveOn(it) },
         weights.latest,
         goals.activeGoal,
-        // Sessions arrive in stage 4; until then nothing is completed and the first day is next.
-        combine(programs.active, today.filterNotNull()) { program, day ->
-            HomeTraining(program?.id, program?.let { Schedule.next(it, lastCompletedDayId = null, today = day) })
+        combine(
+            programs.active.flatMapLatest { p -> if (p == null) flowOf(null) else workouts.lastCompleted(p.id).map { p to it } },
+            today.filterNotNull(),
+            workouts.active,
+            workouts.history,
+        ) { pair, day, open, history ->
+            val program = pair?.first
+            HomeTraining(program?.id, program?.let { Schedule.nextAfter(it, pair.second, day) }, open, history.any { it.day == day })
         },
     ) { profile, target, weight, goal, training ->
         HomeState(name = profile?.displayName, target = target, latestWeight = weight, goal = goal, training = training)

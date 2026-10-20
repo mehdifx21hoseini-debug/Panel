@@ -56,6 +56,12 @@ import app.fitos.personal.feature.onboarding.OnboardingViewModel
 import app.fitos.personal.feature.placeholder.ComingSoonScreen
 import app.fitos.personal.feature.profile.ProfileEditScreen
 import app.fitos.personal.feature.profile.ProfileEditViewModel
+import app.fitos.personal.feature.session.SessionDetailScreen
+import app.fitos.personal.feature.session.SessionDetailViewModel
+import app.fitos.personal.feature.session.SessionHistoryScreen
+import app.fitos.personal.feature.session.SessionHistoryViewModel
+import app.fitos.personal.feature.session.SessionScreen
+import app.fitos.personal.feature.session.SessionViewModel
 import app.fitos.personal.feature.settings.SettingsScreen
 import app.fitos.personal.feature.targets.TargetsScreen
 import app.fitos.personal.feature.targets.TargetsViewModel
@@ -97,10 +103,20 @@ import kotlinx.serialization.Serializable
 @Serializable data class ProgramEditorRoute(val programId: String)
 @Serializable data class DayEditorRoute(val programId: String, val dayId: String)
 @Serializable data class ChangeLogRoute(val programId: String)
-/** [mode] is a [LibraryMode] name; [kind] a [VariantKind] code (pick mode); [plannedId] for replace mode. */
-@Serializable data class LibraryRoute(val mode: String = LibraryMode.BROWSE.name, val dayId: String? = null, val kind: String? = null, val plannedId: String? = null)
+/** [mode] is a [LibraryMode] name; the other fields are what that mode works on. */
+@Serializable data class LibraryRoute(
+    val mode: String = LibraryMode.BROWSE.name,
+    val dayId: String? = null,
+    val kind: String? = null,
+    val plannedId: String? = null,
+    val sessionId: String? = null,
+    val sessionExerciseId: String? = null,
+)
 @Serializable data class ExerciseDetailRoute(val exerciseId: String)
 @Serializable data class ExerciseFormRoute(val exerciseId: String? = null)
+@Serializable data object SessionRoute
+@Serializable data class SessionDetailRoute(val sessionId: String, val justFinished: Boolean = false)
+@Serializable data object SessionHistoryRoute
 
 /** The five tabs of the bottom navigation bar, in reading order (right to left on screen). */
 private enum class TopLevel(val route: Any, val routeClass: KClass<*>, val icon: ImageVector, @param:StringRes val label: Int) {
@@ -173,12 +189,13 @@ fun FitOsApp(container: AppContainer, startWithSetup: Boolean) {
             }
             composable<HomeRoute> {
                 HomeScreen(
-                    viewModel = viewModel { HomeViewModel(data.profiles, data.targets, data.weights, data.goals, data.programs) },
+                    viewModel = viewModel { HomeViewModel(data.profiles, data.targets, data.weights, data.goals, data.programs, data.workouts) },
                     today = today,
                     now = { LocalTime.now(clock) },
                     onOpenSettings = { navController.navigate(SettingsRoute) },
                     onOpenTargets = { navController.navigate(TargetsRoute) },
                     onOpenWorkout = { programId, dayId -> navController.navigate(DayEditorRoute(programId, dayId)) },
+                    onOpenSession = { navController.navigate(SessionRoute) },
                     onOpenTraining = {
                         navController.navigate(TrainingRoute) {
                             popUpTo(navController.graph.findStartDestination().id) { saveState = true }
@@ -190,11 +207,13 @@ fun FitOsApp(container: AppContainer, startWithSetup: Boolean) {
             }
             composable<TrainingRoute> {
                 TrainingScreen(
-                    viewModel = viewModel { TrainingViewModel(data.programs, data.profiles, clock) },
+                    viewModel = viewModel { TrainingViewModel(data.programs, data.profiles, data.workouts, clock) },
                     onOpenProgram = { navController.navigate(ProgramEditorRoute(it)) },
                     onOpenDay = { programId, dayId -> navController.navigate(DayEditorRoute(programId, dayId)) },
                     onOpenPrograms = { navController.navigate(ProgramsRoute) },
                     onOpenLibrary = { navController.navigate(LibraryRoute()) },
+                    onOpenSession = { navController.navigate(SessionRoute) },
+                    onOpenHistory = { navController.navigate(SessionHistoryRoute) },
                 )
             }
             composable<ProgramsRoute> {
@@ -216,10 +235,11 @@ fun FitOsApp(container: AppContainer, startWithSetup: Boolean) {
             composable<DayEditorRoute> { entry ->
                 val route = entry.toRoute<DayEditorRoute>()
                 DayEditorScreen(
-                    viewModel = viewModel { DayEditorViewModel(data.programs, route.programId, route.dayId) },
+                    viewModel = viewModel { DayEditorViewModel(data.programs, data.workouts, route.programId, route.dayId) },
                     onBack = { navController.popBackStack() },
                     onAddExercise = { kind -> navController.navigate(LibraryRoute(LibraryMode.PICK.name, dayId = route.dayId, kind = kind.code)) },
                     onReplace = { navController.navigate(LibraryRoute(LibraryMode.REPLACE.name, plannedId = it)) },
+                    onOpenSession = { navController.navigate(SessionRoute) },
                 )
             }
             composable<ChangeLogRoute> { entry ->
@@ -233,10 +253,13 @@ fun FitOsApp(container: AppContainer, startWithSetup: Boolean) {
                         LibraryViewModel(
                             data.exercises,
                             data.programs,
+                            data.workouts,
                             LibraryMode.valueOf(route.mode),
                             dayId = route.dayId,
                             kind = VariantKind.fromCode(route.kind.orEmpty()),
                             plannedId = route.plannedId,
+                            sessionId = route.sessionId,
+                            sessionExerciseId = route.sessionExerciseId,
                         )
                     },
                     onBack = { navController.popBackStack() },
@@ -247,9 +270,37 @@ fun FitOsApp(container: AppContainer, startWithSetup: Boolean) {
             composable<ExerciseDetailRoute> { entry ->
                 val route = entry.toRoute<ExerciseDetailRoute>()
                 ExerciseDetailScreen(
-                    viewModel = viewModel { ExerciseDetailViewModel(data.exercises, route.exerciseId) },
+                    viewModel = viewModel { ExerciseDetailViewModel(data.exercises, data.workouts, route.exerciseId) },
                     onBack = { navController.popBackStack() },
                     onEdit = { navController.navigate(ExerciseFormRoute(it)) },
+                )
+            }
+            composable<SessionRoute> {
+                SessionScreen(
+                    viewModel = viewModel { SessionViewModel(data.workouts, clock, container.restAlarm) },
+                    clock = clock,
+                    onClose = { navController.popBackStack() },
+                    onFinished = { id ->
+                        navController.navigate(SessionDetailRoute(id, justFinished = true)) { popUpTo<SessionRoute> { inclusive = true } }
+                    },
+                    onReplace = { navController.navigate(LibraryRoute(LibraryMode.SESSION_REPLACE.name, sessionExerciseId = it)) },
+                    onAdd = { navController.navigate(LibraryRoute(LibraryMode.SESSION_ADD.name, sessionId = it)) },
+                )
+            }
+            composable<SessionDetailRoute> { entry ->
+                val route = entry.toRoute<SessionDetailRoute>()
+                SessionDetailScreen(
+                    viewModel = viewModel { SessionDetailViewModel(data.workouts, route.sessionId) },
+                    justFinished = route.justFinished,
+                    onBack = { navController.popBackStack() },
+                    onDone = { navController.popBackStack() },
+                )
+            }
+            composable<SessionHistoryRoute> {
+                SessionHistoryScreen(
+                    viewModel = viewModel { SessionHistoryViewModel(data.workouts) },
+                    onBack = { navController.popBackStack() },
+                    onOpen = { navController.navigate(SessionDetailRoute(it)) },
                 )
             }
             composable<ExerciseFormRoute> { entry ->

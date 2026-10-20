@@ -67,6 +67,19 @@ import app.fitos.core.domain.training.ProgramRepository
 import app.fitos.core.domain.training.TrainingRules
 import app.fitos.core.domain.training.TrainingRules.ExerciseProblem
 import app.fitos.core.domain.training.VariantKind
+import app.fitos.core.domain.training.WorkoutRepository
+import app.fitos.core.domain.training.ExercisePerformance
+import app.fitos.core.domain.training.PersonalRecord
+import app.fitos.core.domain.training.RecordType
+import app.fitos.core.domain.training.Strength
+import app.fitos.core.designsystem.component.ChartPoint
+import app.fitos.core.designsystem.component.TrendChart
+import app.fitos.core.domain.time.DateFormats
+import app.fitos.personal.feature.session.recordText
+import app.fitos.personal.feature.session.setText
+import androidx.compose.material3.HorizontalDivider
+import java.time.LocalDate
+import kotlin.math.roundToInt
 import app.fitos.personal.R
 import app.fitos.personal.feature.profile.FieldLabel
 import app.fitos.personal.ui.EditScaffold
@@ -81,16 +94,22 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
-/** Browse the library, pick an exercise for a day, or pick a replacement for a planned one. */
-enum class LibraryMode { BROWSE, PICK, REPLACE }
+/**
+ * Browse the library, pick an exercise for a program day or a replacement for a planned one,
+ * or do the same inside a running session.
+ */
+enum class LibraryMode { BROWSE, PICK, REPLACE, SESSION_ADD, SESSION_REPLACE }
 
 class LibraryViewModel(
     private val exercises: ExerciseRepository,
     private val programs: ProgramRepository,
+    private val workouts: WorkoutRepository,
     val mode: LibraryMode,
     private val dayId: String? = null,
     private val kind: VariantKind = VariantKind.FULL,
     private val plannedId: String? = null,
+    private val sessionId: String? = null,
+    private val sessionExerciseId: String? = null,
 ) : ViewModel() {
     private val _filter = MutableStateFlow(ExerciseFilter())
     val filter: StateFlow<ExerciseFilter> = _filter.asStateFlow()
@@ -112,6 +131,8 @@ class LibraryViewModel(
             when (mode) {
                 LibraryMode.PICK -> programs.addExercise(requireNotNull(dayId), kind, id)
                 LibraryMode.REPLACE -> programs.replaceExercise(requireNotNull(plannedId), id)
+                LibraryMode.SESSION_ADD -> workouts.addExercise(requireNotNull(sessionId), id)
+                LibraryMode.SESSION_REPLACE -> workouts.replaceExercise(requireNotNull(sessionExerciseId), id)
                 LibraryMode.BROWSE -> Unit
             }
             onDone()
@@ -133,7 +154,8 @@ fun LibraryScreen(
     val title = when (viewModel.mode) {
         LibraryMode.BROWSE -> R.string.library_title
         LibraryMode.PICK -> R.string.library_pick_title
-        LibraryMode.REPLACE -> R.string.library_replace_title
+        LibraryMode.REPLACE, LibraryMode.SESSION_REPLACE -> R.string.library_replace_title
+        LibraryMode.SESSION_ADD -> R.string.library_session_add_title
     }
     Scaffold(
         containerColor = colors.background,
@@ -270,9 +292,11 @@ private fun FavoriteButton(favorite: Boolean, name: String, onClick: () -> Unit)
 
 // ---- one exercise ----
 
-class ExerciseDetailViewModel(private val exercises: ExerciseRepository, val exerciseId: String) : ViewModel() {
+class ExerciseDetailViewModel(private val exercises: ExerciseRepository, workouts: WorkoutRepository, val exerciseId: String) : ViewModel() {
     /** Null while loading; a deleted own exercise stays readable (programs may still show it). */
     val exercise: StateFlow<Exercise?> = exercises.exercise(exerciseId).stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), null)
+    val history: StateFlow<List<ExercisePerformance>> = workouts.exerciseHistory(exerciseId).stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), emptyList())
+    val records: StateFlow<List<PersonalRecord>> = workouts.records(exerciseId).stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), emptyList())
 
     fun toggleFavorite() = viewModelScope.launch { exercise.value?.let { exercises.setFavorite(it.id, !it.isFavorite) } }
     suspend fun usageCount(): Int = exercises.usageCount(exerciseId)
@@ -285,6 +309,8 @@ class ExerciseDetailViewModel(private val exercises: ExerciseRepository, val exe
 @Composable
 fun ExerciseDetailScreen(viewModel: ExerciseDetailViewModel, onBack: () -> Unit, onEdit: (String) -> Unit) {
     val exercise by viewModel.exercise.collectAsStateWithLifecycle()
+    val history by viewModel.history.collectAsStateWithLifecycle()
+    val records by viewModel.records.collectAsStateWithLifecycle()
     val colors = FitTheme.colors
     val scope = rememberCoroutineScope()
     var deleteUsage by remember { mutableStateOf<Int?>(null) }
@@ -307,6 +333,7 @@ fun ExerciseDetailScreen(viewModel: ExerciseDetailViewModel, onBack: () -> Unit,
             SectionTitle(stringResource(if (e.isCustom) R.string.exercise_notes else R.string.exercise_how))
             FitCard { Text(text, style = MaterialTheme.typography.bodyMedium) }
         }
+        ExerciseProgress(e, history, records)
         FitSecondaryButton(
             stringResource(if (e.isFavorite) R.string.favorite_remove else R.string.favorite_add),
             onClick = viewModel::toggleFavorite,
@@ -332,6 +359,57 @@ fun ExerciseDetailScreen(viewModel: ExerciseDetailViewModel, onBack: () -> Unit,
             },
             dismissButton = { FitTextButton(stringResource(R.string.action_cancel), onClick = { deleteUsage = null }) },
         )
+    }
+}
+
+/** Records, the e1RM line over sessions and the latest sessions of one exercise. */
+@Composable
+private fun ExerciseProgress(e: Exercise, history: List<ExercisePerformance>, records: List<PersonalRecord>) {
+    val colors = FitTheme.colors
+    SectionTitle(stringResource(R.string.exercise_history))
+    if (history.isEmpty()) {
+        FitNote(stringResource(R.string.exercise_no_history))
+        return
+    }
+    Text(stringResource(R.string.training_sessions_done, Fmt.int(history.size)), style = MaterialTheme.typography.bodySmall, color = colors.subtle)
+    val points = history.reversed().mapNotNull { p ->
+        p.working.mapNotNull { Strength.e1rm(it.weightKg, it.reps) }.maxOrNull()?.let { ChartPoint(p.day.toEpochDay(), it, it) }
+    }
+    if (e.logType == LogType.WEIGHT_REPS && points.size >= 2) {
+        FitCard {
+            Text(stringResource(R.string.exercise_chart), style = MaterialTheme.typography.titleSmall)
+            TrendChart(
+                points = points,
+                description = stringResource(R.string.exercise_chart) + ": " + points.joinToString("، ") { Fmt.kg(it.value) },
+                valueLabel = { Fmt.int(it.roundToInt()) },
+                dateLabel = { DateFormats.dayMonth(LocalDate.ofEpochDay(it)) },
+                tooltip = { DateFormats.dayMonth(LocalDate.ofEpochDay(it.x)) + " · " + Fmt.kg(it.value) },
+                height = 160.dp,
+            )
+        }
+    }
+    val shown = records.filter { it.type != RecordType.MAX_WEIGHT_FOR_REPS } +
+        records.filter { it.type == RecordType.MAX_WEIGHT_FOR_REPS }.sortedByDescending { it.value }.take(3)
+    if (shown.isNotEmpty()) {
+        FitCard {
+            Text(stringResource(R.string.exercise_records), style = MaterialTheme.typography.titleSmall)
+            shown.forEach { r ->
+                Row(horizontalArrangement = Arrangement.spacedBy(FitSpacing.s8), verticalAlignment = Alignment.CenterVertically) {
+                    Icon(FitIcons.Star, contentDescription = null, tint = colors.primary, modifier = Modifier.size(18.dp))
+                    Text(recordText(r), style = MaterialTheme.typography.bodyMedium, modifier = Modifier.weight(1f))
+                    Text(DateFormats.dayMonth(r.day), style = MaterialTheme.typography.bodySmall, color = colors.subtle)
+                }
+            }
+        }
+    }
+    FitCard {
+        history.take(6).forEachIndexed { i, p ->
+            if (i > 0) HorizontalDivider(color = colors.outlineVariant)
+            Column(verticalArrangement = Arrangement.spacedBy(FitSpacing.s2)) {
+                Text(DateFormats.longDate(p.day), style = MaterialTheme.typography.bodySmall, color = colors.subtle)
+                Text(p.working.map { setText(e.logType, it) }.joinToString(" · "), style = MaterialTheme.typography.bodyMedium)
+            }
+        }
     }
 }
 

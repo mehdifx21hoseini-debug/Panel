@@ -67,11 +67,16 @@ import app.fitos.core.domain.training.Schedule
 import app.fitos.core.domain.training.ScheduleMode
 import app.fitos.core.domain.training.SessionEstimate
 import app.fitos.core.domain.training.VariantKind
+import app.fitos.core.domain.training.WorkoutRepository
+import app.fitos.core.domain.training.WorkoutSession
 import app.fitos.personal.R
 import app.fitos.personal.ui.Fmt
 import java.time.Clock
 import java.time.LocalDate
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
@@ -84,23 +89,42 @@ data class TrainingState(
     val active: Program? = null,
     val next: ProgramDay? = null,
     val volume: Map<Muscle, Double> = emptyMap(),
+    /** The unfinished session, if any. */
+    val open: WorkoutSession? = null,
+    val sessionsDone: Int = 0,
+    val doneToday: Boolean = false,
 )
 
+@OptIn(ExperimentalCoroutinesApi::class)
 class TrainingViewModel(
     private val programs: ProgramRepository,
     private val profiles: ProfileRepository,
+    private val workouts: WorkoutRepository,
     private val clock: Clock,
 ) : ViewModel() {
-    val state: StateFlow<TrainingState> = combine(programs.programs, programs.active) { list, active ->
+    private val lastDone = programs.active.flatMapLatest { p -> if (p == null) flowOf(null) else workouts.lastCompleted(p.id) }
+
+    val state: StateFlow<TrainingState> = combine(programs.programs, programs.active, lastDone, workouts.active, workouts.history) { list, active, last, open, history ->
+        val today = LocalDate.now(clock)
         TrainingState(
             loaded = true,
             programs = list,
             active = active,
-            // Sessions arrive in stage 4; until then nothing is completed and the first day is next.
-            next = active?.let { Schedule.next(it, lastCompletedDayId = null, today = LocalDate.now(clock)) },
+            next = active?.let { Schedule.nextAfter(it, last, today) },
             volume = active?.let { PlannedVolume.perCycle(it) }.orEmpty(),
+            open = open,
+            sessionsDone = history.size,
+            doneToday = history.any { it.day == today },
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), TrainingState())
+
+    /** Starts the day (or opens the session already running) and then [onReady]. */
+    fun start(programId: String, dayId: String, kind: VariantKind, onReady: () -> Unit) {
+        viewModelScope.launch {
+            if (workouts.active.first() == null) workouts.start(programId, dayId, kind)
+            onReady()
+        }
+    }
 
     fun createFromTemplate() {
         viewModelScope.launch {
@@ -122,6 +146,8 @@ fun TrainingScreen(
     onOpenDay: (programId: String, dayId: String) -> Unit,
     onOpenPrograms: () -> Unit,
     onOpenLibrary: () -> Unit,
+    onOpenSession: () -> Unit,
+    onOpenHistory: () -> Unit,
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     val colors = FitTheme.colors
@@ -160,7 +186,21 @@ fun TrainingScreen(
                 return@LazyColumn
             }
             item { ProgramHeader(active, onEdit = { onOpenProgram(active.id) }, onAll = onOpenPrograms) }
-            state.next?.let { next -> item { NextCard(next, onOpen = { onOpenDay(active.id, next.id) }) } }
+            val open = state.open
+            if (open != null) {
+                item { ResumeCard(open, onOpenSession) }
+            } else {
+                if (state.doneToday) item { FitNote(stringResource(R.string.training_done_today)) }
+                state.next?.let { next ->
+                    item {
+                        NextCard(
+                            next,
+                            onOpen = { onOpenDay(active.id, next.id) },
+                            onStart = { kind -> viewModel.start(active.id, next.id, kind, onOpenSession) },
+                        )
+                    }
+                }
+            }
             item {
                 Text(stringResource(R.string.training_days), style = MaterialTheme.typography.titleMedium, modifier = Modifier.semantics { heading() })
             }
@@ -172,6 +212,14 @@ fun TrainingScreen(
                 }
             }
             if (state.volume.isNotEmpty()) item { VolumeCard(state.volume) }
+            item {
+                FitSecondaryButton(
+                    stringResource(R.string.training_history) + " · " + stringResource(R.string.training_sessions_done, Fmt.int(state.sessionsDone)),
+                    onClick = onOpenHistory,
+                    icon = FitIcons.History,
+                    modifier = Modifier.fillMaxWidth(),
+                )
+            }
         }
     }
 }
@@ -195,11 +243,11 @@ private fun ProgramHeader(program: Program, onEdit: () -> Unit, onAll: () -> Uni
 }
 
 @Composable
-private fun NextCard(day: ProgramDay, onOpen: () -> Unit) {
+private fun NextCard(day: ProgramDay, onOpen: () -> Unit, onStart: (VariantKind) -> Unit) {
     val colors = FitTheme.colors
     val (primary, secondary) = PlannedVolume.muscles(day.full)
-    FitCard(Modifier.clickable(onClick = onOpen), hero = true) {
-        Row(verticalAlignment = Alignment.Top) {
+    FitCard(hero = true) {
+        Row(Modifier.clip(RoundedCornerShape(12.dp)).clickable(onClick = onOpen), verticalAlignment = Alignment.Top) {
             Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(FitSpacing.s4)) {
                 Text(stringResource(R.string.training_next), style = MaterialTheme.typography.labelLarge, color = colors.subtle)
                 Text(day.name, style = MaterialTheme.typography.titleLarge)
@@ -208,28 +256,45 @@ private fun NextCard(day: ProgramDay, onOpen: () -> Unit) {
             }
             MuscleMap(bestSide(primary, secondary), primary, secondary, width = 44.dp)
         }
-        VariantKind.entries.forEach { kind ->
-            val exercises = day.variant(kind)?.exercises.orEmpty()
-            if (exercises.isNotEmpty()) {
-                Row(
-                    Modifier
-                        .fillMaxWidth()
-                        .clip(RoundedCornerShape(12.dp))
-                        .background(if (kind == VariantKind.FULL) colors.primaryContainer else colors.surfaceContainer)
-                        .padding(horizontal = FitSpacing.s12, vertical = FitSpacing.s8),
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    Text(stringResource(kind.label), style = MaterialTheme.typography.labelLarge, modifier = Modifier.weight(1f))
-                    Text(
-                        stringResource(R.string.training_exercises_minutes, Fmt.int(exercises.size), Fmt.int(SessionEstimate.minutes(exercises))),
-                        style = MaterialTheme.typography.bodySmall,
-                        color = colors.onSurfaceVariant,
+        if (day.full.isNotEmpty()) {
+            Text(
+                stringResource(VariantKind.FULL.label) + " · " +
+                    stringResource(R.string.training_exercises_minutes, Fmt.int(day.full.size), Fmt.int(SessionEstimate.minutes(day.full))),
+                style = MaterialTheme.typography.bodySmall,
+                color = colors.onSurfaceVariant,
+            )
+            FitPrimaryButton(stringResource(R.string.training_start), onClick = { onStart(VariantKind.FULL) }, icon = FitIcons.Play, modifier = Modifier.fillMaxWidth())
+        } else {
+            Text(stringResource(R.string.training_no_exercises), style = MaterialTheme.typography.bodyMedium, color = colors.onSurfaceVariant)
+        }
+        val shorter = listOf(VariantKind.HOME, VariantKind.MINIMAL).filter { day.variant(it)?.exercises?.isNotEmpty() == true }
+        if (shorter.isNotEmpty()) {
+            Text(stringResource(R.string.training_start_hint), style = MaterialTheme.typography.bodySmall, color = colors.subtle)
+            Row(horizontalArrangement = Arrangement.spacedBy(FitSpacing.s8)) {
+                shorter.forEach { kind ->
+                    val exercises = day.variant(kind)!!.exercises
+                    FitSecondaryButton(
+                        stringResource(kind.label) + " · " + stringResource(R.string.minutes_short, Fmt.int(SessionEstimate.minutes(exercises))),
+                        onClick = { onStart(kind) },
+                        modifier = Modifier.weight(1f),
                     )
                 }
             }
         }
-        if (day.full.isEmpty()) Text(stringResource(R.string.training_no_exercises), style = MaterialTheme.typography.bodyMedium, color = colors.onSurfaceVariant)
-        FitNote(stringResource(R.string.training_next_hint))
+    }
+}
+
+/** A session left open (the app was closed or the phone restarted): carry on where it stopped. */
+@Composable
+private fun ResumeCard(session: WorkoutSession, onOpen: () -> Unit) {
+    val colors = FitTheme.colors
+    FitCard(hero = true) {
+        Text(stringResource(R.string.training_resume_title), style = MaterialTheme.typography.labelLarge, color = colors.subtle)
+        Text(
+            stringResource(R.string.training_resume_body, session.dayName ?: stringResource(R.string.session_title), Fmt.int(session.workingSets)),
+            style = MaterialTheme.typography.titleLarge,
+        )
+        FitPrimaryButton(stringResource(R.string.training_resume), onClick = onOpen, icon = FitIcons.Play, modifier = Modifier.fillMaxWidth())
     }
 }
 

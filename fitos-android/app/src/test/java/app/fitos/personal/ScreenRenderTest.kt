@@ -11,6 +11,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import app.fitos.core.domain.settings.ThemeMode
 import app.fitos.personal.ui.FitOsRoot
 import java.io.File
+import kotlinx.coroutines.flow.first
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -34,14 +35,18 @@ class ScreenRenderTest {
         setupDone: Boolean = true,
         weights: Int = 0,
         program: Boolean = false,
+        seed: suspend (AppContainer, TestApp.SettableClock) -> Unit = { _, _ -> },
         steps: () -> Unit = {},
     ) {
-        val container = TestApp.container(theme)
+        val clock = TestApp.SettableClock()
+        val container = TestApp.container(theme, clock = clock)
         if (setupDone) TestApp.completeSetup(container)
         if (weights > 0) TestApp.addWeights(container, weights)
         if (program) kotlinx.coroutines.runBlocking {
             container.data.programs.createFromTemplate(app.fitos.core.domain.training.ProgramTemplates.upperFocus5, emptySet())
         }
+        kotlinx.coroutines.runBlocking { seed(container, clock) }
+        clock.now = TestApp.clock.instant()
         compose.setContent { FitOsRoot(themeMode = theme, container = container, startWithSetup = !setupDone) }
         steps()
         compose.waitForIdle()
@@ -151,4 +156,71 @@ class ScreenRenderTest {
         click("ذخیره")
     }
     @Test fun homeWithProgram() = renderWith("11-home-training", program = true) { compose.waitForText("جلسه‌ی بعدی: سینه و پشت") }
+
+    /** Three chest-and-back sessions a week apart, bench press going up 2.5 kg each time. */
+    private suspend fun history(container: AppContainer, clock: TestApp.SettableClock, open: Boolean = false) {
+        val programs = container.data.programs
+        val workouts = container.data.workouts
+        val program = programs.active.first()!!
+        val chest = program.days.first().id
+        listOf(21L, 14L, 7L).forEachIndexed { i, ago ->
+            clock.now = TestApp.today.minusDays(ago).atTime(18, 0).atZone(TestApp.zone).toInstant()
+            val id = workouts.start(program.id, chest, app.fitos.core.domain.training.VariantKind.FULL)
+            val s = workouts.session(id).first()!!
+            repeat(4) { workouts.logSet(s.exercises[0].id, app.fitos.core.domain.training.SetInput(weightKg = 55.0 + i * 2.5, reps = 8, rir = 2)) }
+            repeat(4) { workouts.logSet(s.exercises[1].id, app.fitos.core.domain.training.SetInput(weightKg = 50.0, reps = 9 + i / 2)) }
+            clock.now = clock.now.plusSeconds(52 * 60)
+            workouts.finish(id, 7, null)
+        }
+        if (open) {
+            clock.now = TestApp.clock.instant().minusSeconds(14 * 60)
+            val id = workouts.start(program.id, chest, app.fitos.core.domain.training.VariantKind.FULL)
+            val bench = workouts.session(id).first()!!.exercises[0]
+            workouts.logSet(bench.id, app.fitos.core.domain.training.SetInput(weightKg = 62.5, reps = 8, rir = 2))
+            clock.now = TestApp.clock.instant().minusSeconds(40)
+            workouts.logSet(bench.id, app.fitos.core.domain.training.SetInput(weightKg = 62.5, reps = 7, rir = 1))
+        }
+    }
+
+    private fun openSessionFromHome() {
+        compose.tapText("جلسه‌ی نیمه‌تمام: سینه و پشت")
+        compose.waitForText("حرکت ۱ از ۶")
+    }
+
+    @Test fun sessionFirstSet() = renderWith("60-session-first", program = true) {
+        openTraining()
+        click("شروع تمرین")
+        compose.waitForText("حرکت ۱ از ۶")
+    }
+    @Test fun sessionResting() = renderWith("61-session-rest", program = true, seed = { c, k -> history(c, k, open = true) }) { openSessionFromHome() }
+    @Test fun sessionRestingDark() = renderWith("61-session-rest-dark", ThemeMode.DARK, program = true, seed = { c, k -> history(c, k, open = true) }) { openSessionFromHome() }
+    @Test fun sessionInputs() = renderWith("62-session-inputs", program = true, seed = { c, k -> history(c, k, open = true) }) {
+        openSessionFromHome()
+        compose.waitForText("ست‌های امروز").performScrollTo()
+    }
+    @Test fun sessionSummary() = renderWith("63-summary", program = true, seed = { c, k -> history(c, k) }) {
+        openTraining()
+        click("تاریخچه‌ی جلسه‌ها · ۳ جلسه انجام شده")
+        compose.onAllNodes(androidx.compose.ui.test.hasText("سینه و پشت · باشگاه") and androidx.compose.ui.test.hasClickAction())[0].performClick()
+        compose.waitForText("رکوردهای تازه")
+    }
+    @Test fun sessionHistory() = renderWith("64-history", program = true, seed = { c, k -> history(c, k) }) {
+        openTraining()
+        click("تاریخچه‌ی جلسه‌ها · ۳ جلسه انجام شده")
+        compose.waitForText("۳ جلسه انجام شده")
+    }
+    @Test fun exerciseProgress() = renderWith("65-exercise-progress", program = true, seed = { c, k -> history(c, k) }) {
+        openTraining()
+        compose.waitForDescription("کتابخانه‌ی حرکات").performClick()
+        compose.field("جست‌وجو").performTextInput("پرس سینه با هالتر")
+        compose.waitFor(androidx.compose.ui.test.hasText("پرس سینه با هالتر") and androidx.compose.ui.test.hasClickAction() and !androidx.compose.ui.test.hasSetTextAction()).performClick()
+        compose.waitForText("رکوردها").performScrollTo()
+    }
+    @Test fun trainingWithHistory() = renderWith("66-training-next", program = true, seed = { c, k -> history(c, k) }) {
+        openTraining()
+        compose.waitForText("جلسه‌ی بعدی")
+    }
+    @Test fun homeOpenSession() = renderWith("12-home-open-session", program = true, seed = { c, k -> history(c, k, open = true) }) {
+        compose.waitForText("جلسه‌ی نیمه‌تمام: سینه و پشت")
+    }
 }

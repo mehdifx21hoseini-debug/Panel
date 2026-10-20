@@ -14,6 +14,7 @@ import app.fitos.core.data.repository.RoomProfileRepository
 import app.fitos.core.data.repository.RoomSetupRepository
 import app.fitos.core.data.repository.RoomWeightGoalRepository
 import app.fitos.core.data.repository.RoomWeightRepository
+import app.fitos.core.data.repository.RoomWorkoutRepository
 import app.fitos.core.domain.backup.BackupService
 import app.fitos.core.domain.body.MeasurementRepository
 import app.fitos.core.domain.body.WeightRepository
@@ -24,6 +25,7 @@ import app.fitos.core.domain.profile.WeightGoalRepository
 import app.fitos.core.domain.settings.SettingsRepository
 import app.fitos.core.domain.training.ExerciseRepository
 import app.fitos.core.domain.training.ProgramRepository
+import app.fitos.core.domain.training.WorkoutRepository
 import java.time.Clock
 
 /**
@@ -47,6 +49,7 @@ class DataGraph private constructor(
     private val exerciseRepo = RoomExerciseRepository(db, clock)
     val exercises: ExerciseRepository = exerciseRepo
     val programs: ProgramRepository = RoomProgramRepository(db, exerciseRepo, clock)
+    val workouts: WorkoutRepository = RoomWorkoutRepository(db, clock)
     val backup: BackupService = RoomBackupService(context.applicationContext, db, settings, clock, app, backupIterations, afterRestore = exerciseRepo::reseed)
 
     fun close() = db.close()

@@ -91,11 +91,12 @@ fun HomeScreen(
     onOpenTargets: () -> Unit,
     onOpenWorkout: (programId: String, dayId: String) -> Unit,
     onOpenTraining: () -> Unit,
+    onOpenSession: () -> Unit,
 ) {
     LaunchedEffect(today) { viewModel.setToday(today) }
     val state by viewModel.state.collectAsStateWithLifecycle()
     var logging by remember { mutableStateOf(false) }
-    HomeContent(state, today, onOpenSettings, onOpenTargets, onOpenWorkout, onOpenTraining, onLogWeight = { logging = true })
+    HomeContent(state, today, onOpenSettings, onOpenTargets, onOpenWorkout, onOpenTraining, onOpenSession, onLogWeight = { logging = true })
     if (logging) {
         WeightEntrySheet(
             editing = null,
@@ -119,6 +120,7 @@ private fun HomeContent(
     onOpenTargets: () -> Unit,
     onOpenWorkout: (programId: String, dayId: String) -> Unit,
     onOpenTraining: () -> Unit,
+    onOpenSession: () -> Unit,
     onLogWeight: () -> Unit,
 ) {
     val colors = FitTheme.colors
@@ -158,7 +160,7 @@ private fun HomeContent(
             verticalArrangement = Arrangement.spacedBy(FitSpacing.gapSection),
         ) {
             TodayLoadCard(Modifier.pullUp(56.dp))
-            state.training?.let { TrainingCard(it, onOpenWorkout, onOpenTraining) }
+            state.training?.let { TrainingCard(it, onOpenWorkout, onOpenTraining, onOpenSession) }
             state.target?.let { TargetsCard(it, onOpenTargets) }
             WeightCard(state.latestWeight, state.goal, onLogWeight)
             FitCard {
@@ -211,23 +213,38 @@ private fun TodayLoadCard(modifier: Modifier = Modifier) {
 
 /** The next session of the active program, or a pointer to the Training tab when there is none. */
 @Composable
-private fun TrainingCard(training: HomeTraining, onOpenWorkout: (String, String) -> Unit, onOpenTraining: () -> Unit) {
+private fun TrainingCard(training: HomeTraining, onOpenWorkout: (String, String) -> Unit, onOpenTraining: () -> Unit, onOpenSession: () -> Unit) {
     val colors = FitTheme.colors
     val next = training.next
     val programId = training.programId
+    val open = training.open
     FitCard {
         Row(
             Modifier
                 .fillMaxWidth()
                 .clip(RoundedCornerShape(18.dp))
-                .clickable { if (programId != null && next != null) onOpenWorkout(programId, next.id) else onOpenTraining() }
+                .clickable {
+                    when {
+                        open != null -> onOpenSession()
+                        programId != null && next != null -> onOpenWorkout(programId, next.id)
+                        else -> onOpenTraining()
+                    }
+                }
                 .heightIn(min = FitSpacing.target),
             horizontalArrangement = Arrangement.spacedBy(FitSpacing.s12),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             EmojiTile(FitEmoji.LIFTING, tint = colors.training.container)
             Column(Modifier.weight(1f)) {
-                if (next != null) {
+                if (open != null) {
+                    Text(
+                        stringResource(R.string.home_session_open, open.dayName ?: stringResource(R.string.session_title)),
+                        style = MaterialTheme.typography.titleMedium,
+                        modifier = Modifier.semantics { heading() },
+                    )
+                    Text(stringResource(R.string.home_session_continue), style = MaterialTheme.typography.bodySmall, color = colors.subtle)
+                } else if (next != null) {
+                    if (training.doneToday) Text(stringResource(R.string.home_trained_today), style = MaterialTheme.typography.labelLarge, color = colors.primary)
                     Text(stringResource(R.string.home_next_workout, next.name), style = MaterialTheme.typography.titleMedium, modifier = Modifier.semantics { heading() })
                     Text(
                         stringResource(R.string.training_exercises_minutes, Fmt.int(next.full.size), Fmt.int(SessionEstimate.minutes(next.full))),

@@ -62,9 +62,10 @@ object Schedule {
     /**
      * Sequence mode: the training day after the last completed one, wrapping around; the first
      * training day when nothing is done yet. Weekday mode: today's day if it has one, otherwise
-     * the next weekday that does. Null when the program has no training days.
+     * the next weekday that does; once today's session is done ([lastCompletedOn] is today), the
+     * search starts tomorrow. Null when the program has no training days.
      */
-    fun next(program: Program, lastCompletedDayId: String?, today: LocalDate): ProgramDay? {
+    fun next(program: Program, lastCompletedDayId: String?, today: LocalDate, lastCompletedOn: LocalDate? = null): ProgramDay? {
         val training = program.trainingDays
         if (training.isEmpty()) return null
         return when (program.scheduleMode) {
@@ -74,11 +75,13 @@ object Schedule {
                 if (last == -1) return training.first()
                 (1..days.size).map { days[(last + it) % days.size] }.first { !it.isRest }
             }
-            ScheduleMode.WEEKDAYS -> (0L..6L).map { today.plusDays(it).dayOfWeek }
+            ScheduleMode.WEEKDAYS -> (if (lastCompletedOn == today) 1L..7L else 0L..6L).map { today.plusDays(it).dayOfWeek }
                 .firstNotNullOfOrNull { weekday -> training.firstOrNull { it.preferredWeekday == weekday } }
                 ?: training.first()
         }
     }
+
+    fun nextAfter(program: Program, last: CompletedDay?, today: LocalDate): ProgramDay? = next(program, last?.dayId, today, last?.date)
 
     /** The program day planned for [weekday] (rest days included), for the week view. */
     fun dayOn(program: Program, weekday: DayOfWeek): ProgramDay? = program.days.firstOrNull { it.preferredWeekday == weekday }

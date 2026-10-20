@@ -13,6 +13,8 @@ import app.fitos.core.domain.profile.Profile
 import app.fitos.core.domain.profile.Sex
 import app.fitos.core.domain.settings.SettingsRepository
 import app.fitos.core.domain.settings.ThemeMode
+import app.fitos.personal.feature.session.NoRestAlarm
+import app.fitos.personal.feature.session.RestAlarm
 import java.time.Clock
 import java.time.Instant
 import java.time.LocalDate
@@ -37,13 +39,21 @@ object TestApp {
     val today: LocalDate = LocalDate.of(2026, 10, 20)
     val clock: Clock = Clock.fixed(today.atTime(9, 0).atZone(zone).toInstant(), zone)
 
-    fun container(theme: ThemeMode = ThemeMode.LIGHT): AppContainer {
+    fun container(theme: ThemeMode = ThemeMode.LIGHT, restAlarm: RestAlarm = NoRestAlarm, clock: Clock = this.clock): AppContainer {
         val settings = FakeSettingsRepository(theme)
         return AppContainer(
             settingsRepository = settings,
             data = DataGraph.inMemory(ApplicationProvider.getApplicationContext<Context>(), clock, settings),
             clock = clock,
+            restAlarm = restAlarm,
         )
+    }
+
+    /** A clock tests can set, e.g. to log sessions on earlier days. Starts at [TestApp.clock]. */
+    class SettableClock(var now: Instant = clock.instant()) : Clock() {
+        override fun getZone(): ZoneId = TestApp.zone
+        override fun withZone(zone: ZoneId): Clock = this
+        override fun instant(): Instant = now
     }
 
     /** Weigh-ins on the [days] before today (oldest first), losing 0.1 kg a day from 91 kg. */
