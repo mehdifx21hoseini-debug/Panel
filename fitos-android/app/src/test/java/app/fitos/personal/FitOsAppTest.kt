@@ -126,7 +126,7 @@ class FitOsAppTest {
         launchReady()
         compose.waitForText("سلام، آرش")
         tab("تمرین").performClick()
-        compose.onNodeWithText("برنامه و جلسه تمرین").assertIsDisplayed()
+        compose.waitForText("هنوز برنامه‌ای نداری").assertIsDisplayed()
         tab("تغذیه").performClick()
         compose.onNodeWithText("غذا و کالری").assertIsDisplayed()
         tab("بدن").performClick()

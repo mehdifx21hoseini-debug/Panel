@@ -26,12 +26,22 @@ class ScreenRenderTest {
     @get:Rule val compose = createAndroidComposeRule<ComponentActivity>()
 
     private fun render(name: String, theme: ThemeMode = ThemeMode.LIGHT, setupDone: Boolean = true, steps: () -> Unit = {}) =
-        renderWith(name, theme, setupDone, weights = 0, steps)
+        renderWith(name, theme, setupDone, weights = 0, steps = steps)
 
-    private fun renderWith(name: String, theme: ThemeMode = ThemeMode.LIGHT, setupDone: Boolean = true, weights: Int, steps: () -> Unit = {}) {
+    private fun renderWith(
+        name: String,
+        theme: ThemeMode = ThemeMode.LIGHT,
+        setupDone: Boolean = true,
+        weights: Int = 0,
+        program: Boolean = false,
+        steps: () -> Unit = {},
+    ) {
         val container = TestApp.container(theme)
         if (setupDone) TestApp.completeSetup(container)
         if (weights > 0) TestApp.addWeights(container, weights)
+        if (program) kotlinx.coroutines.runBlocking {
+            container.data.programs.createFromTemplate(app.fitos.core.domain.training.ProgramTemplates.upperFocus5, emptySet())
+        }
         compose.setContent { FitOsRoot(themeMode = theme, container = container, startWithSetup = !setupDone) }
         steps()
         compose.waitForIdle()
@@ -95,4 +105,50 @@ class ScreenRenderTest {
         click("مشخصات و هدف")
         compose.field("قد")
     }
+
+    private fun openTraining() = compose.onNode(androidx.compose.ui.test.hasText("تمرین") and androidx.compose.ui.test.isSelectable()).performClick()
+    private fun openFirstDay() {
+        openTraining()
+        compose.waitFor(androidx.compose.ui.test.hasText("سینه و پشت") and androidx.compose.ui.test.hasClickAction())
+        compose.onAllNodes(androidx.compose.ui.test.hasText("سینه و پشت") and androidx.compose.ui.test.hasClickAction())[0].performClick()
+        compose.waitForText("پرس سینه با هالتر")
+    }
+
+    @Test fun trainingEmpty() = render("50-training-empty") { openTraining(); compose.waitForText("هنوز برنامه‌ای نداری") }
+    @Test fun training() = renderWith("51-training", program = true) { openTraining(); compose.waitForText("جلسه‌ی بعدی") }
+    @Test fun trainingDark() = renderWith("51-training-dark", ThemeMode.DARK, program = true) { openTraining(); compose.waitForText("جلسه‌ی بعدی") }
+    @Test fun trainingScrolled() = renderWith("52-training-volume", program = true) {
+        openTraining()
+        compose.waitForText("ست‌های هر عضله در یک دور برنامه")
+    }
+    @Test fun dayEditor() = renderWith("53-day-editor", program = true) { openFirstDay() }
+    @Test fun dayEditorDark() = renderWith("53-day-editor-dark", ThemeMode.DARK, program = true) { openFirstDay() }
+    @Test fun dayEditorHome() = renderWith("54-day-home", program = true) {
+        openFirstDay()
+        compose.onNode(androidx.compose.ui.test.hasText("خانگی") and androidx.compose.ui.test.isSelectable()).performClick()
+        compose.waitForText("شنا سوئدی")
+    }
+    @Test fun programEditor() = renderWith("55-program-editor", program = true) { openTraining(); click("ویرایش برنامه"); compose.waitForText("روزهای برنامه") }
+    @Test fun library() = render("56-library") { openTraining(); compose.waitForDescription("کتابخانه‌ی حرکات").performClick(); compose.waitForText("۱۰۸ حرکت") }
+    @Test fun libraryDark() = render("56-library-dark", ThemeMode.DARK) { openTraining(); compose.waitForDescription("کتابخانه‌ی حرکات").performClick(); compose.waitForText("۱۰۸ حرکت") }
+    @Test fun libraryFiltered() = render("57-library-shoulders") {
+        openTraining()
+        compose.waitForDescription("کتابخانه‌ی حرکات").performClick()
+        compose.waitForText("۱۰۸ حرکت")
+        click("سرشانه")
+    }
+    @Test fun exerciseDetail() = render("58-exercise-detail") {
+        openTraining()
+        compose.waitForDescription("کتابخانه‌ی حرکات").performClick()
+        compose.field("جست‌وجو").performTextInput("پرس سرشانه ایستاده با هالتر")
+        compose.waitFor(androidx.compose.ui.test.hasText("پرس سرشانه ایستاده با هالتر") and androidx.compose.ui.test.hasClickAction() and !androidx.compose.ui.test.hasSetTextAction()).performClick()
+        compose.waitForText("نحوه‌ی اجرا")
+    }
+    @Test fun exerciseForm() = render("59-exercise-form") {
+        openTraining()
+        compose.waitForDescription("کتابخانه‌ی حرکات").performClick()
+        click("ساخت حرکت جدید")
+        click("ذخیره")
+    }
+    @Test fun homeWithProgram() = renderWith("11-home-training", program = true) { compose.waitForText("جلسه‌ی بعدی: سینه و پشت") }
 }

@@ -23,6 +23,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.heightIn
+import app.fitos.core.domain.training.SessionEstimate
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
@@ -80,11 +83,19 @@ private enum class Module(@param:StringRes val label: Int, val emoji: FitEmoji, 
  * until then every module honestly reads "not logged" and the meter stays at zero.
  */
 @Composable
-fun HomeScreen(viewModel: HomeViewModel, today: LocalDate, now: () -> LocalTime, onOpenSettings: () -> Unit, onOpenTargets: () -> Unit) {
+fun HomeScreen(
+    viewModel: HomeViewModel,
+    today: LocalDate,
+    now: () -> LocalTime,
+    onOpenSettings: () -> Unit,
+    onOpenTargets: () -> Unit,
+    onOpenWorkout: (programId: String, dayId: String) -> Unit,
+    onOpenTraining: () -> Unit,
+) {
     LaunchedEffect(today) { viewModel.setToday(today) }
     val state by viewModel.state.collectAsStateWithLifecycle()
     var logging by remember { mutableStateOf(false) }
-    HomeContent(state, today, onOpenSettings, onOpenTargets, onLogWeight = { logging = true })
+    HomeContent(state, today, onOpenSettings, onOpenTargets, onOpenWorkout, onOpenTraining, onLogWeight = { logging = true })
     if (logging) {
         WeightEntrySheet(
             editing = null,
@@ -101,7 +112,15 @@ fun HomeScreen(viewModel: HomeViewModel, today: LocalDate, now: () -> LocalTime,
 }
 
 @Composable
-private fun HomeContent(state: HomeState, today: LocalDate, onOpenSettings: () -> Unit, onOpenTargets: () -> Unit, onLogWeight: () -> Unit) {
+private fun HomeContent(
+    state: HomeState,
+    today: LocalDate,
+    onOpenSettings: () -> Unit,
+    onOpenTargets: () -> Unit,
+    onOpenWorkout: (programId: String, dayId: String) -> Unit,
+    onOpenTraining: () -> Unit,
+    onLogWeight: () -> Unit,
+) {
     val colors = FitTheme.colors
     val week = remember(today) { weekOf(today) }
     Column(
@@ -139,6 +158,7 @@ private fun HomeContent(state: HomeState, today: LocalDate, onOpenSettings: () -
             verticalArrangement = Arrangement.spacedBy(FitSpacing.gapSection),
         ) {
             TodayLoadCard(Modifier.pullUp(56.dp))
+            state.training?.let { TrainingCard(it, onOpenWorkout, onOpenTraining) }
             state.target?.let { TargetsCard(it, onOpenTargets) }
             WeightCard(state.latestWeight, state.goal, onLogWeight)
             FitCard {
@@ -185,6 +205,41 @@ private fun TodayLoadCard(modifier: Modifier = Modifier) {
                     }
                 }
             }
+        }
+    }
+}
+
+/** The next session of the active program, or a pointer to the Training tab when there is none. */
+@Composable
+private fun TrainingCard(training: HomeTraining, onOpenWorkout: (String, String) -> Unit, onOpenTraining: () -> Unit) {
+    val colors = FitTheme.colors
+    val next = training.next
+    val programId = training.programId
+    FitCard {
+        Row(
+            Modifier
+                .fillMaxWidth()
+                .clip(RoundedCornerShape(18.dp))
+                .clickable { if (programId != null && next != null) onOpenWorkout(programId, next.id) else onOpenTraining() }
+                .heightIn(min = FitSpacing.target),
+            horizontalArrangement = Arrangement.spacedBy(FitSpacing.s12),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            EmojiTile(FitEmoji.LIFTING, tint = colors.training.container)
+            Column(Modifier.weight(1f)) {
+                if (next != null) {
+                    Text(stringResource(R.string.home_next_workout, next.name), style = MaterialTheme.typography.titleMedium, modifier = Modifier.semantics { heading() })
+                    Text(
+                        stringResource(R.string.training_exercises_minutes, Fmt.int(next.full.size), Fmt.int(SessionEstimate.minutes(next.full))),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = colors.subtle,
+                    )
+                } else {
+                    Text(stringResource(R.string.home_training_none_title), style = MaterialTheme.typography.titleMedium, modifier = Modifier.semantics { heading() })
+                    Text(stringResource(R.string.home_training_none_body), style = MaterialTheme.typography.bodySmall, color = colors.subtle)
+                }
+            }
+            Icon(FitIcons.ChevronRight, contentDescription = null, tint = colors.onSurfaceVariant)
         }
     }
 }

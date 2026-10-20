@@ -61,6 +61,8 @@ internal class RoomBackupService(
     private val clock: Clock,
     private val app: AppInfo,
     private val iterations: Int = BackupCrypto.DEFAULT_ITERATIONS,
+    /** Runs after a successful restore, e.g. to add built-in exercises an older backup lacks. */
+    private val afterRestore: suspend () -> Unit = {},
 ) : BackupService {
 
     private val stagingRoot get() = File(context.cacheDir, "restore")
@@ -92,8 +94,8 @@ internal class RoomBackupService(
             replacePhotos(File(dir, "photos"))
             applySettings(File(dir, BackupFormat.SETTINGS))
             dir.deleteRecursively()
-            Unit
         }
+        afterRestore()
     }
 
     override suspend fun safetyBackups(): List<SafetyBackup> = withContext(Dispatchers.IO) {

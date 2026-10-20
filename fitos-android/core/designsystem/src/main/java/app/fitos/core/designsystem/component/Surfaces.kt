@@ -6,6 +6,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
@@ -26,12 +27,14 @@ import app.fitos.core.designsystem.theme.FitTheme
 /**
  * Elevated card: surface, hairline border and a soft blue-tinted shadow (alpha < .08).
  * In dark the tonal surface and border carry the depth; shadows are invisible on navy.
- * [hero] uses the larger corner and padding of the screen's focal card.
+ * [hero] uses the larger corner and padding of the screen's focal card; list rows with trailing
+ * icon buttons pass a tighter [contentPadding].
  */
 @Composable
 fun FitCard(
     modifier: Modifier = Modifier,
     hero: Boolean = false,
+    contentPadding: PaddingValues? = null,
     content: @Composable ColumnScope.() -> Unit,
 ) {
     val colors = FitTheme.colors
@@ -44,7 +47,7 @@ fun FitCard(
             .clip(shape)
             .background(colors.surface)
             .border(BorderStroke(1.dp, colors.hairline), shape)
-            .padding(if (hero) FitSpacing.s20 else FitSpacing.s16),
+            .padding(contentPadding ?: PaddingValues(if (hero) FitSpacing.s20 else FitSpacing.s16)),
         verticalArrangement = Arrangement.spacedBy(FitSpacing.s12),
     ) {
         CompositionLocalProvider(LocalContentColor provides colors.onSurface) { content() }

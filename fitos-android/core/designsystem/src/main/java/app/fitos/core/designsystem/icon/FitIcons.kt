@@ -16,6 +16,7 @@ object FitIcons {
     val ChevronRight: ImageVector by lazy { fitIcon("chevron-right", strokes = listOf("m9 6 6 6-6 6"), autoMirror = true) }
     val ChevronLeft: ImageVector by lazy { fitIcon("chevron-left", strokes = listOf("m15 6-6 6 6 6"), autoMirror = true) }
     val ChevronDown: ImageVector by lazy { fitIcon("chevron-down", strokes = listOf("m6 9 6 6 6-6")) }
+    val ChevronUp: ImageVector by lazy { fitIcon("chevron-up", strokes = listOf("m6 15 6-6 6 6")) }
     val MoreV: ImageVector by lazy { fitIcon("more-v", strokes = emptyList(), fills = listOf("M10.4 5a1.6 1.6 0 1 0 3.2 0a1.6 1.6 0 1 0 -3.2 0z", "M10.4 12a1.6 1.6 0 1 0 3.2 0a1.6 1.6 0 1 0 -3.2 0z", "M10.4 19a1.6 1.6 0 1 0 3.2 0a1.6 1.6 0 1 0 -3.2 0z")) }
     val Search: ImageVector by lazy { fitIcon("search", strokes = listOf("M4 11a7 7 0 1 0 14 0a7 7 0 1 0 -14 0z", "m20 20-4-4")) }
     val Close: ImageVector by lazy { fitIcon("close", strokes = listOf("M18 6 6 18M6 6l12 12")) }
@@ -51,6 +52,7 @@ object FitIcons {
     val Bolt: ImageVector by lazy { fitIcon("bolt", strokes = listOf("M13 2.5 4.5 13.5H12l-1 8 8.5-11H12z")) }
     val Book: ImageVector by lazy { fitIcon("book", strokes = listOf("M4 5.5a2 2 0 0 1 2-2h13v15H6a2 2 0 0 0-2 2zM4 20.5v-15M8 7.5h7")) }
     val Star: ImageVector by lazy { fitIcon("star", strokes = listOf("m12 3 2.8 5.8 6.2.9-4.5 4.4 1.1 6.2L12 17.3l-5.6 3 1.1-6.2L3 9.7l6.2-.9z")) }
+    val StarFilled: ImageVector by lazy { fitIcon("star-filled", strokes = listOf("m12 3 2.8 5.8 6.2.9-4.5 4.4 1.1 6.2L12 17.3l-5.6 3 1.1-6.2L3 9.7l6.2-.9z"), fills = listOf("m12 3 2.8 5.8 6.2.9-4.5 4.4 1.1 6.2L12 17.3l-5.6 3 1.1-6.2L3 9.7l6.2-.9z")) }
     val Camera: ImageVector by lazy { fitIcon("camera", strokes = listOf("M4 8h3l2-3h6l2 3h3v11H4z", "M8.5 13a3.5 3.5 0 1 0 7 0a3.5 3.5 0 1 0 -7 0z")) }
     val Image: ImageVector by lazy { fitIcon("image", strokes = listOf("M5.5 4.5h13a2 2 0 0 1 2 2v11a2 2 0 0 1 -2 2h-13a2 2 0 0 1 -2 -2v-11a2 2 0 0 1 2 -2z", "M7.5 10a1.5 1.5 0 1 0 3 0a1.5 1.5 0 1 0 -3 0z", "m20.5 16-5-5-9 8.5")) }
     val User: ImageVector by lazy { fitIcon("user", strokes = listOf("M8 8a4 4 0 1 0 8 0a4 4 0 1 0 -8 0z", "M4.5 20.5a7.5 7.5 0 0 1 15 0")) }

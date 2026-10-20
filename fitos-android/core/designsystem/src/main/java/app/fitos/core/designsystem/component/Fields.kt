@@ -19,7 +19,8 @@ import app.fitos.core.domain.format.PersianNumbers
 
 /**
  * Outlined text field with a visible label, an optional unit suffix and one line below it:
- * the error when there is one, otherwise the [hint].
+ * the error when there is one, otherwise the [hint]. [minLines] above 1 makes it a growing
+ * multi-line field.
  */
 @Composable
 fun FitTextField(
@@ -32,6 +33,7 @@ fun FitTextField(
     hint: String? = null,
     keyboardType: KeyboardType = KeyboardType.Text,
     imeAction: ImeAction = ImeAction.Next,
+    minLines: Int = 1,
 ) {
     val colors = FitTheme.colors
     val below = error ?: hint
@@ -42,7 +44,8 @@ fun FitTextField(
         suffix = suffix?.let { { Text(it, color = colors.onSurfaceVariant) } },
         supportingText = below?.let { { Text(it) } },
         isError = error != null,
-        singleLine = true,
+        singleLine = minLines == 1,
+        minLines = minLines,
         keyboardOptions = KeyboardOptions(keyboardType = keyboardType, imeAction = imeAction),
         textStyle = MaterialTheme.typography.bodyLarge,
         shape = RoundedCornerShape(12.dp),
