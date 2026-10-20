@@ -159,7 +159,7 @@ private fun HomeContent(
             Modifier.padding(horizontal = FitSpacing.gutter),
             verticalArrangement = Arrangement.spacedBy(FitSpacing.gapSection),
         ) {
-            TodayLoadCard(Modifier.pullUp(56.dp))
+            TodayLoadCard(trainingDone = state.training?.doneToday == true, modifier = Modifier.pullUp(56.dp))
             state.training?.let { TrainingCard(it, onOpenWorkout, onOpenTraining, onOpenSession) }
             state.target?.let { TargetsCard(it, onOpenTargets) }
             WeightCard(state.latestWeight, state.goal, onLogWeight)
@@ -176,9 +176,12 @@ private fun HomeContent(
 }
 
 @Composable
-private fun TodayLoadCard(modifier: Modifier = Modifier) {
+private fun TodayLoadCard(trainingDone: Boolean, modifier: Modifier = Modifier) {
     val colors = FitTheme.colors
-    val percent = PersianNumbers.digits("0") + "٪"
+    // Only real logs fill a plate; so far that is a finished session today (the full day score is stage 7).
+    fun done(module: Module) = module == Module.Training && trainingDone
+    val filled = Module.entries.count(::done)
+    val percent = PersianNumbers.digits((filled * 100 / Module.entries.size).toString()) + "٪"
     FitCard(modifier, hero = true) {
         Row(verticalAlignment = Alignment.Bottom) {
             Column(Modifier.weight(1f)) {
@@ -188,7 +191,7 @@ private fun TodayLoadCard(modifier: Modifier = Modifier) {
             Text(percent, style = MaterialTheme.typography.displayMedium, color = colors.primary)
         }
         PlateMeter(
-            plates = Module.entries.map { Plate(fraction = 0f, color = it.color(colors).fill) },
+            plates = Module.entries.map { Plate(fraction = if (done(it)) 1f else 0f, color = it.color(colors).fill) },
             description = stringResource(R.string.home_meter_description, percent),
         )
         Module.entries.chunked(3).forEach { row ->
@@ -202,7 +205,7 @@ private fun TodayLoadCard(modifier: Modifier = Modifier) {
                         EmojiTile(module.emoji, size = 32.dp, tint = module.color(colors).container)
                         Column {
                             Text(stringResource(module.label), style = MaterialTheme.typography.bodySmall, color = colors.subtle)
-                            Text(stringResource(R.string.home_not_logged), style = MaterialTheme.typography.labelLarge, color = colors.onSurface)
+                            Text(stringResource(if (done(module)) R.string.home_done else R.string.home_not_logged), style = MaterialTheme.typography.labelLarge, color = colors.onSurface)
                         }
                     }
                 }

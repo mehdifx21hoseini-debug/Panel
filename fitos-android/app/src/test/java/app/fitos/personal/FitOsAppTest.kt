@@ -114,7 +114,7 @@ class FitOsAppTest {
         launchReady()
         compose.waitForText("سلام، آرش").assertIsDisplayed()
         compose.onNodeWithText("سه‌شنبه ۲۸ مهر ۱۴۰۵").assertIsDisplayed()
-        compose.onNodeWithContentDescription("پیشرفت امروز ۰٪. هنوز چیزی ثبت نشده است.").assertExists()
+        compose.onNodeWithContentDescription("پیشرفت امروز ۰٪.").assertExists()
         compose.onNodeWithContentDescription("شنبه ۲۵ مهر ۱۴۰۵").assertExists()
         compose.waitForText("هدف‌های امروز").performScrollTo().assertIsDisplayed()
         compose.waitForText("هدف: ۸۰ کیلوگرم").performScrollTo().assertIsDisplayed()

@@ -144,6 +144,10 @@ class SessionUiTest {
         compose.waitForDescription("بازگشت").performClick()
         compose.waitForText("پایین‌تنه")
         compose.waitForDescription("جلسه‌ی امروز ثبت شد")
+        // Home now counts the training plate as done.
+        compose.onNode(hasText("خانه") and isSelectable()).performClick()
+        compose.waitForDescription("پیشرفت امروز ۱۶٪.")
+        compose.waitForText("انجام شد")
     }
 
     @Test
