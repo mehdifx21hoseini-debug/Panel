@@ -45,6 +45,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import java.time.LocalTime
 import app.fitos.core.designsystem.theme.numeralStyle
 import app.fitos.core.domain.body.WeightEntry
+import app.fitos.core.domain.nutrition.NutrientTotals
 import app.fitos.core.domain.nutrition.NutritionTarget
 import app.fitos.core.domain.profile.WeightGoal
 import app.fitos.personal.ui.Fmt
@@ -67,6 +68,7 @@ import app.fitos.core.domain.time.DateFormats
 import app.fitos.core.domain.time.JalaliCalendar
 import app.fitos.personal.R
 import java.time.LocalDate
+import kotlin.math.roundToInt
 
 /** The six daily modules, in plate order from the collar outwards. */
 private enum class Module(@param:StringRes val label: Int, val emoji: FitEmoji, val color: (FitColors) -> CategoryColor) {
@@ -159,7 +161,7 @@ private fun HomeContent(
             Modifier.padding(horizontal = FitSpacing.gutter),
             verticalArrangement = Arrangement.spacedBy(FitSpacing.gapSection),
         ) {
-            TodayLoadCard(trainingDone = state.training?.doneToday == true, modifier = Modifier.pullUp(56.dp))
+            TodayLoadCard(trainingDone = state.training?.doneToday == true, eaten = state.eaten, target = state.target, modifier = Modifier.pullUp(56.dp))
             state.training?.let { TrainingCard(it, onOpenWorkout, onOpenTraining, onOpenSession) }
             state.target?.let { TargetsCard(it, onOpenTargets) }
             WeightCard(state.latestWeight, state.goal, onLogWeight)
@@ -176,12 +178,17 @@ private fun HomeContent(
 }
 
 @Composable
-private fun TodayLoadCard(trainingDone: Boolean, modifier: Modifier = Modifier) {
+private fun TodayLoadCard(trainingDone: Boolean, eaten: NutrientTotals?, target: NutritionTarget?, modifier: Modifier = Modifier) {
     val colors = FitTheme.colors
-    // Only real logs fill a plate; so far that is a finished session today (the full day score is stage 7).
-    fun done(module: Module) = module == Module.Training && trainingDone
-    val filled = Module.entries.count(::done)
-    val percent = PersianNumbers.digits((filled * 100 / Module.entries.size).toString()) + "٪"
+    // Only real logs fill a plate: a finished session today, and calories and protein against
+    // today's target (capped at a full plate). The full day score, with tolerances, is stage 7.
+    fun fraction(module: Module): Float = when (module) {
+        Module.Training -> if (trainingDone) 1f else 0f
+        Module.Calories -> if (eaten != null && target != null) (eaten.kcal / target.kcal).toFloat().coerceIn(0f, 1f) else 0f
+        Module.Protein -> if (eaten != null && target != null) (eaten.proteinG / target.proteinG).toFloat().coerceIn(0f, 1f) else 0f
+        else -> 0f
+    }
+    val percent = PersianNumbers.digits((Module.entries.sumOf { fraction(it).toDouble() } * 100 / Module.entries.size).toInt().toString()) + "٪"
     FitCard(modifier, hero = true) {
         Row(verticalAlignment = Alignment.Bottom) {
             Column(Modifier.weight(1f)) {
@@ -191,7 +198,7 @@ private fun TodayLoadCard(trainingDone: Boolean, modifier: Modifier = Modifier) 
             Text(percent, style = MaterialTheme.typography.displayMedium, color = colors.primary)
         }
         PlateMeter(
-            plates = Module.entries.map { Plate(fraction = if (done(it)) 1f else 0f, color = it.color(colors).fill) },
+            plates = Module.entries.map { Plate(fraction = fraction(it), color = it.color(colors).fill) },
             description = stringResource(R.string.home_meter_description, percent),
         )
         Module.entries.chunked(3).forEach { row ->
@@ -205,7 +212,14 @@ private fun TodayLoadCard(trainingDone: Boolean, modifier: Modifier = Modifier) 
                         EmojiTile(module.emoji, size = 32.dp, tint = module.color(colors).container)
                         Column {
                             Text(stringResource(module.label), style = MaterialTheme.typography.bodySmall, color = colors.subtle)
-                            Text(stringResource(if (done(module)) R.string.home_done else R.string.home_not_logged), style = MaterialTheme.typography.labelLarge, color = colors.onSurface)
+                            val status = when {
+                                module == Module.Training && trainingDone -> stringResource(R.string.home_done)
+                                // The plate shows the share of the target; the tile says how much.
+                                module == Module.Calories && eaten != null -> Fmt.int(eaten.kcal.roundToInt())
+                                module == Module.Protein && eaten != null -> stringResource(R.string.grams_value, Fmt.int(eaten.proteinG.roundToInt()))
+                                else -> stringResource(R.string.home_not_logged)
+                            }
+                            Text(status, style = MaterialTheme.typography.labelLarge, color = colors.onSurface, maxLines = 1)
                         }
                     }
                 }

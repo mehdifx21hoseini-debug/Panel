@@ -1,0 +1,3742 @@
+{
+ "foods": [
+  {
+   "fdcId": 168877,
+   "key": "rice_white_long_raw",
+   "nameFa": "برنج سفید دانه‌بلند، خام",
+   "nameEn": "White rice, long-grain, raw",
+   "category": "grains",
+   "state": "raw",
+   "portions": [
+    {
+     "labelFa": "پیمانه",
+     "grams": 185.0,
+     "usda": "1 cup"
+    }
+   ]
+  },
+  {
+   "fdcId": 168878,
+   "key": "rice_white_long_cooked",
+   "nameFa": "برنج سفید دانه‌بلند، پخته",
+   "nameEn": "White rice, long-grain, cooked",
+   "category": "grains",
+   "state": "cooked",
+   "portions": [
+    {
+     "labelFa": "پیمانه",
+     "grams": 158.0,
+     "usda": "1 cup"
+    }
+   ]
+  },
+  {
+   "fdcId": 169708,
+   "key": "rice_white_parboiled_cooked",
+   "nameFa": "برنج سفید پاربویل (نیم‌جوش)، پخته",
+   "nameEn": "Parboiled white rice, long-grain, cooked",
+   "category": "grains",
+   "state": "cooked",
+   "portions": [
+    {
+     "labelFa": "پیمانه",
+     "grams": 158.0,
+     "usda": "1 cup"
+    }
+   ]
+  },
+  {
+   "fdcId": 169703,
+   "key": "rice_brown_long_raw",
+   "nameFa": "برنج قهوه‌ای دانه‌بلند، خام",
+   "nameEn": "Brown rice, long-grain, raw",
+   "category": "grains",
+   "state": "raw",
+   "portions": [
+    {
+     "labelFa": "پیمانه",
+     "grams": 185.0,
+     "usda": "1 cup"
+    }
+   ]
+  },
+  {
+   "fdcId": 169704,
+   "key": "rice_brown_long_cooked",
+   "nameFa": "برنج قهوه‌ای دانه‌بلند، پخته",
+   "nameEn": "Brown rice, long-grain, cooked",
+   "category": "grains",
+   "state": "cooked",
+   "portions": [
+    {
+     "labelFa": "پیمانه",
+     "grams": 202.0,
+     "usda": "1 cup"
+    }
+   ]
+  },
+  {
+   "fdcId": 174915,
+   "key": "bread_pita_white",
+   "nameFa": "نان پیتا (سفید)",
+   "nameEn": "Pita bread, white",
+   "category": "grains",
+   "state": "na",
+   "portions": [
+    {
+     "labelFa": "عدد بزرگ (قطر حدود ۱۶ سانتی‌متر)",
+     "grams": 60.0,
+     "usda": "1 pita, large (6-1/2\" dia)"
+    },
+    {
+     "labelFa": "عدد کوچک (قطر حدود ۱۰ سانتی‌متر)",
+     "grams": 28.0,
+     "usda": "1 pita, small  (4\" dia)"
+    }
+   ]
+  },
+  {
+   "fdcId": 174916,
+   "key": "bread_pita_whole_wheat",
+   "nameFa": "نان پیتا سبوس‌دار (گندم کامل)",
+   "nameEn": "Pita bread, whole-wheat",
+   "category": "grains",
+   "state": "na",
+   "portions": [
+    {
+     "labelFa": "عدد بزرگ (قطر حدود ۱۶ سانتی‌متر)",
+     "grams": 64.0,
+     "usda": "1 pita, large (6-1/2\" dia)"
+    },
+    {
+     "labelFa": "عدد کوچک (قطر حدود ۱۰ سانتی‌متر)",
+     "grams": 28.0,
+     "usda": "1 pita, small  (4\" dia)"
+    }
+   ]
+  },
+  {
+   "fdcId": 174924,
+   "key": "bread_white_sliced",
+   "nameFa": "نان تست سفید",
+   "nameEn": "White sandwich bread",
+   "category": "grains",
+   "state": "na",
+   "portions": [
+    {
+     "labelFa": "برش",
+     "grams": 29.0,
+     "usda": "1 slice"
+    },
+    {
+     "labelFa": "برش نازک",
+     "grams": 20.0,
+     "usda": "1 slice, thin"
+    }
+   ]
+  },
+  {
+   "fdcId": 172688,
+   "key": "bread_whole_wheat_sliced",
+   "nameFa": "نان تست سبوس‌دار (گندم کامل)",
+   "nameEn": "Whole-wheat sandwich bread",
+   "category": "grains",
+   "state": "na",
+   "portions": [
+    {
+     "labelFa": "برش",
+     "grams": 32.0,
+     "usda": "1 slice"
+    }
+   ]
+  },
+  {
+   "fdcId": 172675,
+   "key": "bread_french",
+   "nameFa": "نان فرانسوی (باگت)",
+   "nameEn": "French bread (baguette)",
+   "category": "grains",
+   "state": "na",
+   "portions": []
+  },
+  {
+   "fdcId": 170688,
+   "key": "bulgur_dry",
+   "nameFa": "بلغور گندم، خام",
+   "nameEn": "Bulgur, dry",
+   "category": "grains",
+   "state": "raw",
+   "portions": [
+    {
+     "labelFa": "پیمانه",
+     "grams": 140.0,
+     "usda": "1 cup"
+    }
+   ]
+  },
+  {
+   "fdcId": 170287,
+   "key": "bulgur_cooked",
+   "nameFa": "بلغور گندم، پخته",
+   "nameEn": "Bulgur, cooked",
+   "category": "grains",
+   "state": "cooked",
+   "portions": [
+    {
+     "labelFa": "پیمانه",
+     "grams": 182.0,
+     "usda": "1 cup"
+    },
+    {
+     "labelFa": "قاشق غذاخوری",
+     "grams": 8.4,
+     "usda": "1 tbsp"
+    }
+   ]
+  },
+  {
+   "fdcId": 173904,
+   "key": "oats_rolled_dry",
+   "nameFa": "جو دوسر پرک، خام",
+   "nameEn": "Rolled oats, dry",
+   "category": "grains",
+   "state": "raw",
+   "portions": [
+    {
+     "labelFa": "پیمانه",
+     "grams": 81.0,
+     "usda": "1 cup"
+    },
+    {
+     "labelFa": "یک‌سوم پیمانه",
+     "grams": 27.0,
+     "usda": "0.33 cup"
+    }
+   ]
+  },
+  {
+   "fdcId": 169736,
+   "key": "pasta_dry",
+   "nameFa": "ماکارونی (پاستا)، خام",
+   "nameEn": "Pasta, dry",
+   "category": "grains",
+   "state": "raw",
+   "portions": [
+    {
+     "labelFa": "پیمانه (پنه)",
+     "grams": 95.0,
+     "usda": "1 cup penne"
+    },
+    {
+     "labelFa": "پیمانه (فرمی/شاخی)",
+     "grams": 122.0,
+     "usda": "1 cup elbows"
+    }
+   ]
+  },
+  {
+   "fdcId": 169737,
+   "key": "pasta_cooked",
+   "nameFa": "ماکارونی (پاستا)، پخته",
+   "nameEn": "Pasta, cooked",
+   "category": "grains",
+   "state": "cooked",
+   "portions": [
+    {
+     "labelFa": "پیمانه (اسپاگتی، فشرده‌نشده)",
+     "grams": 124.0,
+     "usda": "1 cup spaghetti not packed"
+    },
+    {
+     "labelFa": "پیمانه (پنه)",
+     "grams": 107.0,
+     "usda": "1 cup penne"
+    }
+   ]
+  },
+  {
+   "fdcId": 169738,
+   "key": "pasta_whole_wheat_dry",
+   "nameFa": "ماکارونی سبوس‌دار (گندم کامل)، خام",
+   "nameEn": "Whole-wheat pasta, dry",
+   "category": "grains",
+   "state": "raw",
+   "portions": [
+    {
+     "labelFa": "پیمانه (پنه)",
+     "grams": 95.0,
+     "usda": "1 cup penne"
+    },
+    {
+     "labelFa": "پیمانه (فرمی/شاخی)",
+     "grams": 122.0,
+     "usda": "1 cup elbows"
+    }
+   ]
+  },
+  {
+   "fdcId": 170284,
+   "key": "barley_pearled_raw",
+   "nameFa": "جو پوست‌کنده (مرواریدی)، خام",
+   "nameEn": "Pearled barley, raw",
+   "category": "grains",
+   "state": "raw",
+   "portions": [
+    {
+     "labelFa": "پیمانه",
+     "grams": 200.0,
+     "usda": "1 cup"
+    }
+   ]
+  },
+  {
+   "fdcId": 170285,
+   "key": "barley_pearled_cooked",
+   "nameFa": "جو پوست‌کنده (مرواریدی)، پخته",
+   "nameEn": "Pearled barley, cooked",
+   "category": "grains",
+   "state": "cooked",
+   "portions": [
+    {
+     "labelFa": "پیمانه",
+     "grams": 157.0,
+     "usda": "1 cup"
+    }
+   ]
+  },
+  {
+   "fdcId": 169700,
+   "key": "couscous_cooked",
+   "nameFa": "کوسکوس، پخته",
+   "nameEn": "Couscous, cooked",
+   "category": "grains",
+   "state": "cooked",
+   "portions": [
+    {
+     "labelFa": "پیمانه",
+     "grams": 157.0,
+     "usda": "1 cup, cooked"
+    }
+   ]
+  },
+  {
+   "fdcId": 174648,
+   "key": "corn_flakes",
+   "nameFa": "کورن‌فلکس",
+   "nameEn": "Corn flakes cereal",
+   "category": "grains",
+   "state": "na",
+   "portions": [
+    {
+     "labelFa": "پیمانه",
+     "grams": 28.0,
+     "usda": "1 cup (1 NLEA serving)"
+    }
+   ]
+  },
+  {
+   "fdcId": 168894,
+   "key": "flour_wheat_white",
+   "nameFa": "آرد سفید گندم (همه‌منظوره)",
+   "nameEn": "Wheat flour, white, all-purpose",
+   "category": "grains",
+   "state": "na",
+   "portions": [
+    {
+     "labelFa": "پیمانه",
+     "grams": 125.0,
+     "usda": "1 cup"
+    }
+   ]
+  },
+  {
+   "fdcId": 168893,
+   "key": "flour_wheat_whole",
+   "nameFa": "آرد گندم کامل (سبوس‌دار)",
+   "nameEn": "Wheat flour, whole-grain",
+   "category": "grains",
+   "state": "na",
+   "portions": [
+    {
+     "labelFa": "پیمانه",
+     "grams": 120.0,
+     "usda": "1 cup"
+    }
+   ]
+  },
+  {
+   "fdcId": 172746,
+   "key": "crackers_saltine",
+   "nameFa": "کراکر ساده (سالتین)",
+   "nameEn": "Saltine crackers",
+   "category": "grains",
+   "state": "na",
+   "portions": [
+    {
+     "labelFa": "۵ عدد",
+     "grams": 14.9,
+     "usda": "5 crackers"
+    },
+    {
+     "labelFa": "عدد",
+     "grams": 3.0,
+     "usda": "1 cracker square"
+    }
+   ]
+  },
+  {
+   "fdcId": 170250,
+   "key": "rice_cakes_plain",
+   "nameFa": "کیک برنجی ساده (رایس‌کیک)",
+   "nameEn": "Rice cakes, brown rice, plain",
+   "category": "grains",
+   "state": "na",
+   "portions": [
+    {
+     "labelFa": "عدد",
+     "grams": 9.0,
+     "usda": "1 cake"
+    },
+    {
+     "labelFa": "۲ عدد",
+     "grams": 18.0,
+     "usda": "2 cakes"
+    }
+   ]
+  },
+  {
+   "fdcId": 172420,
+   "key": "lentils_raw",
+   "nameFa": "عدس، خام",
+   "nameEn": "Lentils, raw",
+   "category": "legumes",
+   "state": "raw",
+   "portions": [
+    {
+     "labelFa": "پیمانه",
+     "grams": 192.0,
+     "usda": "1 cup"
+    },
+    {
+     "labelFa": "قاشق غذاخوری",
+     "grams": 12.0,
+     "usda": "1 tablespoon"
+    }
+   ]
+  },
+  {
+   "fdcId": 172421,
+   "key": "lentils_boiled",
+   "nameFa": "عدس، آب‌پز",
+   "nameEn": "Lentils, boiled",
+   "category": "legumes",
+   "state": "cooked",
+   "portions": [
+    {
+     "labelFa": "پیمانه",
+     "grams": 198.0,
+     "usda": "1 cup"
+    },
+    {
+     "labelFa": "قاشق غذاخوری",
+     "grams": 12.3,
+     "usda": "1 tbsp"
+    }
+   ]
+  },
+  {
+   "fdcId": 173756,
+   "key": "chickpeas_raw",
+   "nameFa": "نخود، خام",
+   "nameEn": "Chickpeas, raw",
+   "category": "legumes",
+   "state": "raw",
+   "portions": [
+    {
+     "labelFa": "پیمانه",
+     "grams": 200.0,
+     "usda": "1 cup"
+    },
+    {
+     "labelFa": "قاشق غذاخوری",
+     "grams": 12.5,
+     "usda": "1 tbsp"
+    }
+   ]
+  },
+  {
+   "fdcId": 173757,
+   "key": "chickpeas_boiled",
+   "nameFa": "نخود، آب‌پز",
+   "nameEn": "Chickpeas, boiled",
+   "category": "legumes",
+   "state": "cooked",
+   "portions": [
+    {
+     "labelFa": "پیمانه",
+     "grams": 164.0,
+     "usda": "1 cup"
+    }
+   ]
+  },
+  {
+   "fdcId": 173800,
+   "key": "chickpeas_canned_drained",
+   "nameFa": "نخود کنسروی، آبکش‌شده",
+   "nameEn": "Chickpeas, canned, drained",
+   "category": "legumes",
+   "state": "cooked",
+   "portions": []
+  },
+  {
+   "fdcId": 173744,
+   "key": "kidney_beans_red_raw",
+   "nameFa": "لوبیا قرمز، خام",
+   "nameEn": "Red kidney beans, raw",
+   "category": "legumes",
+   "state": "raw",
+   "portions": [
+    {
+     "labelFa": "پیمانه",
+     "grams": 184.0,
+     "usda": "1 cup"
+    },
+    {
+     "labelFa": "قاشق غذاخوری",
+     "grams": 12.2,
+     "usda": "1 tbsp"
+    }
+   ]
+  },
+  {
+   "fdcId": 175194,
+   "key": "kidney_beans_red_boiled",
+   "nameFa": "لوبیا قرمز، آب‌پز",
+   "nameEn": "Red kidney beans, boiled",
+   "category": "legumes",
+   "state": "cooked",
+   "portions": [
+    {
+     "labelFa": "پیمانه",
+     "grams": 177.0,
+     "usda": "1 cup"
+    },
+    {
+     "labelFa": "قاشق غذاخوری",
+     "grams": 11.0,
+     "usda": "1 tbsp"
+    }
+   ]
+  },
+  {
+   "fdcId": 175199,
+   "key": "pinto_beans_raw",
+   "nameFa": "لوبیا چیتی، خام",
+   "nameEn": "Pinto beans, raw",
+   "category": "legumes",
+   "state": "raw",
+   "portions": [
+    {
+     "labelFa": "پیمانه",
+     "grams": 193.0,
+     "usda": "1 cup"
+    },
+    {
+     "labelFa": "قاشق غذاخوری",
+     "grams": 12.0,
+     "usda": "1 tbsp"
+    }
+   ]
+  },
+  {
+   "fdcId": 175200,
+   "key": "pinto_beans_boiled",
+   "nameFa": "لوبیا چیتی، آب‌پز",
+   "nameEn": "Pinto beans, boiled",
+   "category": "legumes",
+   "state": "cooked",
+   "portions": [
+    {
+     "labelFa": "پیمانه",
+     "grams": 171.0,
+     "usda": "1 cup"
+    },
+    {
+     "labelFa": "قاشق غذاخوری",
+     "grams": 10.6,
+     "usda": "1 tbsp"
+    }
+   ]
+  },
+  {
+   "fdcId": 175202,
+   "key": "white_beans_raw",
+   "nameFa": "لوبیا سفید، خام",
+   "nameEn": "White beans, raw",
+   "category": "legumes",
+   "state": "raw",
+   "portions": [
+    {
+     "labelFa": "پیمانه",
+     "grams": 202.0,
+     "usda": "1 cup"
+    },
+    {
+     "labelFa": "قاشق غذاخوری",
+     "grams": 12.6,
+     "usda": "1 tbsp"
+    }
+   ]
+  },
+  {
+   "fdcId": 172428,
+   "key": "split_peas_green_raw",
+   "nameFa": "نخودفرنگی خشک لپه‌شده (سبز)، خام",
+   "nameEn": "Split peas, green, raw",
+   "category": "legumes",
+   "state": "raw",
+   "portions": [
+    {
+     "labelFa": "پیمانه",
+     "grams": 196.0,
+     "usda": "1 cup"
+    }
+   ]
+  },
+  {
+   "fdcId": 174256,
+   "key": "mung_beans_raw",
+   "nameFa": "ماش، خام",
+   "nameEn": "Mung beans, raw",
+   "category": "legumes",
+   "state": "raw",
+   "portions": [
+    {
+     "labelFa": "پیمانه",
+     "grams": 207.0,
+     "usda": "1 cup"
+    },
+    {
+     "labelFa": "قاشق غذاخوری",
+     "grams": 13.0,
+     "usda": "1 tbsp"
+    }
+   ]
+  },
+  {
+   "fdcId": 175205,
+   "key": "fava_beans_dried_raw",
+   "nameFa": "باقلای خشک، خام",
+   "nameEn": "Fava beans (broad beans), dried, raw",
+   "category": "legumes",
+   "state": "raw",
+   "portions": [
+    {
+     "labelFa": "پیمانه",
+     "grams": 150.0,
+     "usda": "1 cup"
+    },
+    {
+     "labelFa": "قاشق غذاخوری",
+     "grams": 9.4,
+     "usda": "1 tbsp"
+    }
+   ]
+  },
+  {
+   "fdcId": 173758,
+   "key": "black_eyed_peas_raw",
+   "nameFa": "لوبیا چشم‌بلبلی، خام",
+   "nameEn": "Black-eyed peas, raw",
+   "category": "legumes",
+   "state": "raw",
+   "portions": [
+    {
+     "labelFa": "پیمانه",
+     "grams": 167.0,
+     "usda": "1 cup"
+    },
+    {
+     "labelFa": "قاشق غذاخوری",
+     "grams": 10.5,
+     "usda": "1 tbsp"
+    }
+   ]
+  },
+  {
+   "fdcId": 174270,
+   "key": "soybeans_raw",
+   "nameFa": "دانه‌ی سویا، خام",
+   "nameEn": "Soybeans, raw",
+   "category": "legumes",
+   "state": "raw",
+   "portions": [
+    {
+     "labelFa": "پیمانه",
+     "grams": 186.0,
+     "usda": "1 cup"
+    }
+   ]
+  },
+  {
+   "fdcId": 172475,
+   "key": "tofu_firm",
+   "nameFa": "توفوی سفت",
+   "nameEn": "Tofu, firm",
+   "category": "legumes",
+   "state": "na",
+   "portions": [
+    {
+     "labelFa": "نصف پیمانه",
+     "grams": 126.0,
+     "usda": "0.5 cup"
+    },
+    {
+     "labelFa": "یک‌چهارم قالب",
+     "grams": 81.0,
+     "usda": "0.25 block"
+    }
+   ]
+  },
+  {
+   "fdcId": 171790,
+   "key": "beef_ground_95_raw",
+   "nameFa": "گوشت چرخ‌کرده‌ی گاو (۵٪ چربی)، خام",
+   "nameEn": "Ground beef 95% lean, raw",
+   "category": "meat",
+   "state": "raw",
+   "portions": []
+  },
+  {
+   "fdcId": 174028,
+   "key": "beef_ground_95_cooked",
+   "nameFa": "گوشت چرخ‌کرده‌ی گاو (۵٪ چربی)، تفت‌داده",
+   "nameEn": "Ground beef 95% lean, pan-browned",
+   "category": "meat",
+   "state": "cooked",
+   "portions": []
+  },
+  {
+   "fdcId": 174030,
+   "key": "beef_ground_90_raw",
+   "nameFa": "گوشت چرخ‌کرده‌ی گاو (۱۰٪ چربی)، خام",
+   "nameEn": "Ground beef 90% lean, raw",
+   "category": "meat",
+   "state": "raw",
+   "portions": []
+  },
+  {
+   "fdcId": 171794,
+   "key": "beef_ground_90_cooked",
+   "nameFa": "گوشت چرخ‌کرده‌ی گاو (۱۰٪ چربی)، تفت‌داده",
+   "nameEn": "Ground beef 90% lean, pan-browned",
+   "category": "meat",
+   "state": "cooked",
+   "portions": []
+  },
+  {
+   "fdcId": 171796,
+   "key": "beef_ground_85_raw",
+   "nameFa": "گوشت چرخ‌کرده‌ی گاو (۱۵٪ چربی)، خام",
+   "nameEn": "Ground beef 85% lean, raw",
+   "category": "meat",
+   "state": "raw",
+   "portions": []
+  },
+  {
+   "fdcId": 174034,
+   "key": "beef_ground_85_cooked",
+   "nameFa": "گوشت چرخ‌کرده‌ی گاو (۱۵٪ چربی)، تفت‌داده",
+   "nameEn": "Ground beef 85% lean, pan-browned",
+   "category": "meat",
+   "state": "cooked",
+   "portions": []
+  },
+  {
+   "fdcId": 174036,
+   "key": "beef_ground_80_raw",
+   "nameFa": "گوشت چرخ‌کرده‌ی گاو (۲۰٪ چربی)، خام",
+   "nameEn": "Ground beef 80% lean, raw",
+   "category": "meat",
+   "state": "raw",
+   "portions": []
+  },
+  {
+   "fdcId": 171799,
+   "key": "beef_ground_80_cooked",
+   "nameFa": "گوشت چرخ‌کرده‌ی گاو (۲۰٪ چربی)، تفت‌داده",
+   "nameEn": "Ground beef 80% lean, pan-browned",
+   "category": "meat",
+   "state": "cooked",
+   "portions": []
+  },
+  {
+   "fdcId": 171206,
+   "key": "beef_chuck_stew_raw",
+   "nameFa": "گوشت خورشتی گاو (سردست)، خام",
+   "nameEn": "Beef chuck for stew, raw",
+   "category": "meat",
+   "state": "raw",
+   "portions": []
+  },
+  {
+   "fdcId": 171203,
+   "key": "beef_chuck_stew_braised",
+   "nameFa": "گوشت خورشتی گاو (سردست)، پخته",
+   "nameEn": "Beef chuck for stew, braised",
+   "category": "meat",
+   "state": "cooked",
+   "portions": []
+  },
+  {
+   "fdcId": 171767,
+   "key": "beef_tenderloin_raw",
+   "nameFa": "فیله‌ی گاو (بدون چربی)، خام",
+   "nameEn": "Beef tenderloin, lean, raw",
+   "category": "meat",
+   "state": "raw",
+   "portions": [
+    {
+     "labelFa": "یک تکه استیک",
+     "grams": 170.0,
+     "usda": "1 steak"
+    }
+   ]
+  },
+  {
+   "fdcId": 170641,
+   "key": "beef_tenderloin_grilled",
+   "nameFa": "فیله‌ی گاو (بدون چربی)، کبابی",
+   "nameEn": "Beef tenderloin, lean, grilled",
+   "category": "meat",
+   "state": "cooked",
+   "portions": [
+    {
+     "labelFa": "یک تکه استیک",
+     "grams": 119.0,
+     "usda": "1 steak"
+    }
+   ]
+  },
+  {
+   "fdcId": 172508,
+   "key": "lamb_cubed_lean_raw",
+   "nameFa": "گوشت گوسفندی تکه‌ای کم‌چرب (ران و سردست)، خام",
+   "nameEn": "Lamb cubes for stew or kabob (leg & shoulder), lean, raw",
+   "category": "meat",
+   "state": "raw",
+   "portions": []
+  },
+  {
+   "fdcId": 172510,
+   "key": "lamb_cubed_lean_broiled",
+   "nameFa": "گوشت گوسفندی تکه‌ای کم‌چرب (ران و سردست)، کبابی",
+   "nameEn": "Lamb cubes for kabob (leg & shoulder), lean, broiled",
+   "category": "meat",
+   "state": "cooked",
+   "portions": []
+  },
+  {
+   "fdcId": 172484,
+   "key": "lamb_shank_lean_braised",
+   "nameFa": "ماهیچه‌ی گوسفند (بدون چربی)، پخته",
+   "nameEn": "Lamb foreshank, lean, braised",
+   "category": "meat",
+   "state": "cooked",
+   "portions": []
+  },
+  {
+   "fdcId": 174370,
+   "key": "lamb_ground_raw",
+   "nameFa": "گوشت چرخ‌کرده‌ی گوسفند، خام",
+   "nameEn": "Ground lamb, raw",
+   "category": "meat",
+   "state": "raw",
+   "portions": []
+  },
+  {
+   "fdcId": 172544,
+   "key": "lamb_ground_broiled",
+   "nameFa": "گوشت چرخ‌کرده‌ی گوسفند، کبابی",
+   "nameEn": "Ground lamb, broiled",
+   "category": "meat",
+   "state": "cooked",
+   "portions": []
+  },
+  {
+   "fdcId": 173843,
+   "key": "veal_stew_lean_raw",
+   "nameFa": "گوشت خورشتی گوساله (کم‌چرب)، خام",
+   "nameEn": "Veal cubes for stew, lean, raw",
+   "category": "meat",
+   "state": "raw",
+   "portions": []
+  },
+  {
+   "fdcId": 169451,
+   "key": "beef_liver_raw",
+   "nameFa": "جگر گاو، خام",
+   "nameEn": "Beef liver, raw",
+   "category": "meat",
+   "state": "raw",
+   "portions": []
+  },
+  {
+   "fdcId": 172531,
+   "key": "lamb_liver_raw",
+   "nameFa": "جگر گوسفند، خام",
+   "nameEn": "Lamb liver, raw",
+   "category": "meat",
+   "state": "raw",
+   "portions": []
+  },
+  {
+   "fdcId": 172533,
+   "key": "lamb_liver_pan_fried",
+   "nameFa": "جگر گوسفند، سرخ‌شده در تابه",
+   "nameEn": "Lamb liver, pan-fried",
+   "category": "meat",
+   "state": "cooked",
+   "portions": []
+  },
+  {
+   "fdcId": 170598,
+   "key": "beef_tongue_simmered",
+   "nameFa": "زبان گاو، آب‌پز",
+   "nameEn": "Beef tongue, simmered",
+   "category": "meat",
+   "state": "cooked",
+   "portions": []
+  },
+  {
+   "fdcId": 173862,
+   "key": "frankfurter_beef",
+   "nameFa": "سوسیس فرانکفورتر گوشت گاو",
+   "nameEn": "Beef frankfurter",
+   "category": "meat",
+   "state": "na",
+   "portions": [
+    {
+     "labelFa": "عدد",
+     "grams": 49.0,
+     "usda": "1 hot dog"
+    }
+   ]
+  },
+  {
+   "fdcId": 171077,
+   "key": "chicken_breast_raw",
+   "nameFa": "سینه‌ی مرغ بدون پوست و استخوان، خام",
+   "nameEn": "Chicken breast, skinless, boneless, raw",
+   "category": "poultry",
+   "state": "raw",
+   "portions": [
+    {
+     "labelFa": "یک تکه سینه",
+     "grams": 272.0,
+     "usda": "1 piece"
+    }
+   ]
+  },
+  {
+   "fdcId": 171534,
+   "key": "chicken_breast_grilled",
+   "nameFa": "سینه‌ی مرغ بدون پوست، کبابی (گریل)",
+   "nameEn": "Chicken breast, skinless, grilled",
+   "category": "poultry",
+   "state": "cooked",
+   "portions": [
+    {
+     "labelFa": "یک تکه سینه",
+     "grams": 196.0,
+     "usda": "1 piece"
+    }
+   ]
+  },
+  {
+   "fdcId": 171477,
+   "key": "chicken_breast_roasted",
+   "nameFa": "سینه‌ی مرغ بدون پوست، پخته در فر",
+   "nameEn": "Chicken breast, meat only, roasted",
+   "category": "poultry",
+   "state": "cooked",
+   "portions": [
+    {
+     "labelFa": "نصف سینه (بدون پوست و استخوان)",
+     "grams": 86.0,
+     "usda": "0.5 breast, bone and skin removed"
+    },
+    {
+     "labelFa": "پیمانه (خردشده)",
+     "grams": 140.0,
+     "usda": "1 cup, chopped or diced"
+    }
+   ]
+  },
+  {
+   "fdcId": 171478,
+   "key": "chicken_breast_boiled",
+   "nameFa": "سینه‌ی مرغ بدون پوست، آب‌پز",
+   "nameEn": "Chicken breast, meat only, stewed",
+   "category": "poultry",
+   "state": "cooked",
+   "portions": [
+    {
+     "labelFa": "نصف سینه (بدون پوست و استخوان)",
+     "grams": 95.0,
+     "usda": "0.5 breast, bone and skin removed"
+    },
+    {
+     "labelFa": "پیمانه (خردشده)",
+     "grams": 140.0,
+     "usda": "1 cup, chopped or diced"
+    }
+   ]
+  },
+  {
+   "fdcId": 173627,
+   "key": "chicken_thigh_raw",
+   "nameFa": "ران مرغ بدون پوست، خام",
+   "nameEn": "Chicken thigh, meat only, raw",
+   "category": "poultry",
+   "state": "raw",
+   "portions": [
+    {
+     "labelFa": "یک تکه ران (بدون پوست)",
+     "grams": 149.0,
+     "usda": "1 thigh without skin"
+    }
+   ]
+  },
+  {
+   "fdcId": 172388,
+   "key": "chicken_thigh_roasted",
+   "nameFa": "ران مرغ بدون پوست، پخته در فر",
+   "nameEn": "Chicken thigh, meat only, roasted",
+   "category": "poultry",
+   "state": "cooked",
+   "portions": [
+    {
+     "labelFa": "یک تکه ران (بدون پوست)",
+     "grams": 116.0,
+     "usda": "1 thigh without skin"
+    }
+   ]
+  },
+  {
+   "fdcId": 172376,
+   "key": "chicken_drumstick_roasted",
+   "nameFa": "ساق مرغ بدون پوست، پخته در فر",
+   "nameEn": "Chicken drumstick, meat only, roasted",
+   "category": "poultry",
+   "state": "cooked",
+   "portions": [
+    {
+     "labelFa": "یک تکه ساق (بدون پوست)",
+     "grams": 96.0,
+     "usda": "1 drumstick without skin"
+    }
+   ]
+  },
+  {
+   "fdcId": 171054,
+   "key": "chicken_meat_roasted",
+   "nameFa": "گوشت مرغ (همه‌ی قسمت‌ها، بدون پوست)، پخته در فر",
+   "nameEn": "Chicken meat (whole bird, no skin), roasted",
+   "category": "poultry",
+   "state": "cooked",
+   "portions": [
+    {
+     "labelFa": "پیمانه (خردشده)",
+     "grams": 140.0,
+     "usda": "1 cup, chopped or diced"
+    }
+   ]
+  },
+  {
+   "fdcId": 173630,
+   "key": "chicken_wing_roasted",
+   "nameFa": "بال مرغ با پوست، پخته در فر",
+   "nameEn": "Chicken wing with skin, roasted",
+   "category": "poultry",
+   "state": "cooked",
+   "portions": [
+    {
+     "labelFa": "یک تکه بال",
+     "grams": 85.0,
+     "usda": "1 piece"
+    }
+   ]
+  },
+  {
+   "fdcId": 171060,
+   "key": "chicken_liver_raw",
+   "nameFa": "جگر مرغ، خام",
+   "nameEn": "Chicken liver, raw",
+   "category": "poultry",
+   "state": "raw",
+   "portions": [
+    {
+     "labelFa": "عدد",
+     "grams": 44.0,
+     "usda": "1 liver"
+    }
+   ]
+  },
+  {
+   "fdcId": 174515,
+   "key": "turkey_breast_raw",
+   "nameFa": "سینه‌ی بوقلمون بدون پوست، خام",
+   "nameEn": "Turkey breast, meat only, raw",
+   "category": "poultry",
+   "state": "raw",
+   "portions": []
+  },
+  {
+   "fdcId": 171505,
+   "key": "turkey_ground_raw",
+   "nameFa": "گوشت چرخ‌کرده‌ی بوقلمون، خام",
+   "nameEn": "Ground turkey, raw",
+   "category": "poultry",
+   "state": "raw",
+   "portions": []
+  },
+  {
+   "fdcId": 175167,
+   "key": "salmon_farmed_raw",
+   "nameFa": "ماهی سالمون (آزاد) پرورشی، خام",
+   "nameEn": "Atlantic salmon, farmed, raw",
+   "category": "seafood",
+   "state": "raw",
+   "portions": [
+    {
+     "labelFa": "نصف فیله",
+     "grams": 198.0,
+     "usda": "0.5 fillet"
+    }
+   ]
+  },
+  {
+   "fdcId": 175168,
+   "key": "salmon_farmed_cooked",
+   "nameFa": "ماهی سالمون (آزاد) پرورشی، پخته",
+   "nameEn": "Atlantic salmon, farmed, cooked (dry heat)",
+   "category": "seafood",
+   "state": "cooked",
+   "portions": [
+    {
+     "labelFa": "نصف فیله",
+     "grams": 178.0,
+     "usda": "0.5 fillet"
+    }
+   ]
+  },
+  {
+   "fdcId": 173709,
+   "key": "tuna_light_canned_water",
+   "nameFa": "تن ماهی کنسرو در آب، آبکش‌شده",
+   "nameEn": "Light tuna, canned in water, drained",
+   "category": "seafood",
+   "state": "na",
+   "portions": [
+    {
+     "labelFa": "پیمانه",
+     "grams": 154.0,
+     "usda": "1 cup, solid or chunks"
+    }
+   ]
+  },
+  {
+   "fdcId": 173708,
+   "key": "tuna_light_canned_oil",
+   "nameFa": "تن ماهی کنسرو در روغن، آبکش‌شده",
+   "nameEn": "Light tuna, canned in oil, drained",
+   "category": "seafood",
+   "state": "na",
+   "portions": [
+    {
+     "labelFa": "پیمانه",
+     "grams": 146.0,
+     "usda": "1 cup, solid or chunks"
+    }
+   ]
+  },
+  {
+   "fdcId": 173717,
+   "key": "trout_rainbow_farmed_raw",
+   "nameFa": "ماهی قزل‌آلای رنگین‌کمان پرورشی، خام",
+   "nameEn": "Rainbow trout, farmed, raw",
+   "category": "seafood",
+   "state": "raw",
+   "portions": [
+    {
+     "labelFa": "فیله",
+     "grams": 79.0,
+     "usda": "1 fillet"
+    }
+   ]
+  },
+  {
+   "fdcId": 173718,
+   "key": "trout_rainbow_farmed_cooked",
+   "nameFa": "ماهی قزل‌آلای رنگین‌کمان پرورشی، پخته",
+   "nameEn": "Rainbow trout, farmed, cooked (dry heat)",
+   "category": "seafood",
+   "state": "cooked",
+   "portions": [
+    {
+     "labelFa": "فیله",
+     "grams": 71.0,
+     "usda": "1 fillet"
+    }
+   ]
+  },
+  {
+   "fdcId": 175176,
+   "key": "tilapia_raw",
+   "nameFa": "ماهی تیلاپیا، خام",
+   "nameEn": "Tilapia, raw",
+   "category": "seafood",
+   "state": "raw",
+   "portions": [
+    {
+     "labelFa": "فیله",
+     "grams": 116.0,
+     "usda": "1 fillet"
+    }
+   ]
+  },
+  {
+   "fdcId": 175177,
+   "key": "tilapia_cooked",
+   "nameFa": "ماهی تیلاپیا، پخته",
+   "nameEn": "Tilapia, cooked (dry heat)",
+   "category": "seafood",
+   "state": "cooked",
+   "portions": [
+    {
+     "labelFa": "فیله",
+     "grams": 87.0,
+     "usda": "1 fillet"
+    }
+   ]
+  },
+  {
+   "fdcId": 175179,
+   "key": "shrimp_raw",
+   "nameFa": "میگو، خام",
+   "nameEn": "Shrimp, raw",
+   "category": "seafood",
+   "state": "raw",
+   "portions": []
+  },
+  {
+   "fdcId": 175180,
+   "key": "shrimp_cooked",
+   "nameFa": "میگو، پخته",
+   "nameEn": "Shrimp, cooked",
+   "category": "seafood",
+   "state": "cooked",
+   "portions": []
+  },
+  {
+   "fdcId": 175139,
+   "key": "sardines_canned_oil",
+   "nameFa": "ساردین کنسرو در روغن (با استخوان)، آبکش‌شده",
+   "nameEn": "Sardines, canned in oil, drained, with bone",
+   "category": "seafood",
+   "state": "na",
+   "portions": [
+    {
+     "labelFa": "۲ عدد",
+     "grams": 24.0,
+     "usda": "2 sardines"
+    }
+   ]
+  },
+  {
+   "fdcId": 171287,
+   "key": "egg_whole_raw",
+   "nameFa": "تخم‌مرغ کامل، خام",
+   "nameEn": "Egg, whole, raw",
+   "category": "eggs",
+   "state": "raw",
+   "portions": [
+    {
+     "labelFa": "عدد بزرگ",
+     "grams": 50.0,
+     "usda": "1 large"
+    },
+    {
+     "labelFa": "عدد متوسط",
+     "grams": 44.0,
+     "usda": "1 medium"
+    },
+    {
+     "labelFa": "عدد کوچک",
+     "grams": 38.0,
+     "usda": "1 small"
+    }
+   ]
+  },
+  {
+   "fdcId": 173424,
+   "key": "egg_hard_boiled",
+   "nameFa": "تخم‌مرغ آب‌پز (سفت)",
+   "nameEn": "Egg, whole, hard-boiled",
+   "category": "eggs",
+   "state": "cooked",
+   "portions": [
+    {
+     "labelFa": "عدد بزرگ",
+     "grams": 50.0,
+     "usda": "1 large"
+    }
+   ]
+  },
+  {
+   "fdcId": 173423,
+   "key": "egg_fried",
+   "nameFa": "تخم‌مرغ نیمرو (سرخ‌شده)",
+   "nameEn": "Egg, whole, fried",
+   "category": "eggs",
+   "state": "cooked",
+   "portions": [
+    {
+     "labelFa": "عدد بزرگ",
+     "grams": 46.0,
+     "usda": "1 large"
+    }
+   ]
+  },
+  {
+   "fdcId": 172187,
+   "key": "egg_scrambled",
+   "nameFa": "تخم‌مرغ هم‌زده (اسکرامبل)",
+   "nameEn": "Egg, whole, scrambled",
+   "category": "eggs",
+   "state": "cooked",
+   "portions": [
+    {
+     "labelFa": "عدد بزرگ",
+     "grams": 61.0,
+     "usda": "1 large"
+    },
+    {
+     "labelFa": "قاشق غذاخوری",
+     "grams": 13.7,
+     "usda": "1 tbsp"
+    }
+   ]
+  },
+  {
+   "fdcId": 172183,
+   "key": "egg_white_raw",
+   "nameFa": "سفیده‌ی تخم‌مرغ، خام",
+   "nameEn": "Egg white, raw",
+   "category": "eggs",
+   "state": "raw",
+   "portions": [
+    {
+     "labelFa": "سفیده‌ی تخم‌مرغ بزرگ",
+     "grams": 33.0,
+     "usda": "1 large"
+    },
+    {
+     "labelFa": "پیمانه",
+     "grams": 243.0,
+     "usda": "1 cup"
+    }
+   ]
+  },
+  {
+   "fdcId": 172184,
+   "key": "egg_yolk_raw",
+   "nameFa": "زرده‌ی تخم‌مرغ، خام",
+   "nameEn": "Egg yolk, raw",
+   "category": "eggs",
+   "state": "raw",
+   "portions": [
+    {
+     "labelFa": "زرده‌ی تخم‌مرغ بزرگ",
+     "grams": 17.0,
+     "usda": "1 large"
+    }
+   ]
+  },
+  {
+   "fdcId": 171265,
+   "key": "milk_whole",
+   "nameFa": "شیر پرچرب (۳٫۲۵٪ چربی)",
+   "nameEn": "Milk, whole (3.25%)",
+   "category": "dairy",
+   "state": "na",
+   "portions": [
+    {
+     "labelFa": "پیمانه",
+     "grams": 244.0,
+     "usda": "1 cup"
+    },
+    {
+     "labelFa": "قاشق غذاخوری",
+     "grams": 15.0,
+     "usda": "1 tbsp"
+    }
+   ]
+  },
+  {
+   "fdcId": 171267,
+   "key": "milk_2pct",
+   "nameFa": "شیر کم‌چرب (۲٪ چربی)",
+   "nameEn": "Milk, reduced fat (2%)",
+   "category": "dairy",
+   "state": "na",
+   "portions": [
+    {
+     "labelFa": "پیمانه",
+     "grams": 244.0,
+     "usda": "1 cup"
+    }
+   ]
+  },
+  {
+   "fdcId": 170872,
+   "key": "milk_1pct",
+   "nameFa": "شیر کم‌چرب (۱٪ چربی)",
+   "nameEn": "Milk, low fat (1%)",
+   "category": "dairy",
+   "state": "na",
+   "portions": [
+    {
+     "labelFa": "پیمانه",
+     "grams": 244.0,
+     "usda": "1 cup"
+    }
+   ]
+  },
+  {
+   "fdcId": 171269,
+   "key": "milk_skim",
+   "nameFa": "شیر بدون چربی",
+   "nameEn": "Milk, nonfat (skim)",
+   "category": "dairy",
+   "state": "na",
+   "portions": [
+    {
+     "labelFa": "پیمانه",
+     "grams": 245.0,
+     "usda": "1 cup"
+    }
+   ]
+  },
+  {
+   "fdcId": 171284,
+   "key": "yogurt_plain_whole",
+   "nameFa": "ماست ساده‌ی پرچرب",
+   "nameEn": "Yogurt, plain, whole milk",
+   "category": "dairy",
+   "state": "na",
+   "portions": [
+    {
+     "labelFa": "پیمانه",
+     "grams": 245.0,
+     "usda": "1 cup (8 fl oz)"
+    }
+   ]
+  },
+  {
+   "fdcId": 170886,
+   "key": "yogurt_plain_lowfat",
+   "nameFa": "ماست ساده‌ی کم‌چرب",
+   "nameEn": "Yogurt, plain, low fat",
+   "category": "dairy",
+   "state": "na",
+   "portions": [
+    {
+     "labelFa": "پیمانه",
+     "grams": 245.0,
+     "usda": "1 cup (8 fl oz)"
+    }
+   ]
+  },
+  {
+   "fdcId": 170887,
+   "key": "yogurt_plain_nonfat",
+   "nameFa": "ماست ساده‌ی بدون چربی",
+   "nameEn": "Yogurt, plain, nonfat",
+   "category": "dairy",
+   "state": "na",
+   "portions": [
+    {
+     "labelFa": "پیمانه",
+     "grams": 245.0,
+     "usda": "1 cup (8 fl oz)"
+    }
+   ]
+  },
+  {
+   "fdcId": 170894,
+   "key": "yogurt_greek_nonfat",
+   "nameFa": "ماست یونانی (چکیده) ساده، بدون چربی",
+   "nameEn": "Greek yogurt, plain, nonfat",
+   "category": "dairy",
+   "state": "na",
+   "portions": []
+  },
+  {
+   "fdcId": 171304,
+   "key": "yogurt_greek_whole",
+   "nameFa": "ماست یونانی (چکیده) ساده، پرچرب",
+   "nameEn": "Greek yogurt, plain, whole milk",
+   "category": "dairy",
+   "state": "na",
+   "portions": []
+  },
+  {
+   "fdcId": 173420,
+   "key": "cheese_feta",
+   "nameFa": "پنیر فتا",
+   "nameEn": "Feta cheese",
+   "category": "dairy",
+   "state": "na",
+   "portions": [
+    {
+     "labelFa": "مکعب ۲٫۵ سانتی‌متری",
+     "grams": 17.0,
+     "usda": "1 cubic inch"
+    },
+    {
+     "labelFa": "پیمانه (خردشده)",
+     "grams": 150.0,
+     "usda": "1 cup, crumbled"
+    }
+   ]
+  },
+  {
+   "fdcId": 172179,
+   "key": "cheese_cottage",
+   "nameFa": "پنیر کاتیج",
+   "nameEn": "Cottage cheese, creamed",
+   "category": "dairy",
+   "state": "na",
+   "portions": [
+    {
+     "labelFa": "پیمانه",
+     "grams": 225.0,
+     "usda": "1 cup, small curd (not packed)"
+    }
+   ]
+  },
+  {
+   "fdcId": 171244,
+   "key": "cheese_mozzarella_part_skim",
+   "nameFa": "پنیر موزارلا (پیتزا)، کم‌رطوبت و نیم‌چرب",
+   "nameEn": "Mozzarella, low-moisture, part-skim",
+   "category": "dairy",
+   "state": "na",
+   "portions": [
+    {
+     "labelFa": "برش",
+     "grams": 28.0,
+     "usda": "1 slice (1 oz)"
+    },
+    {
+     "labelFa": "پیمانه (رنده‌شده)",
+     "grams": 113.0,
+     "usda": "1 cup, shredded"
+    }
+   ]
+  },
+  {
+   "fdcId": 173414,
+   "key": "cheese_cheddar",
+   "nameFa": "پنیر چدار",
+   "nameEn": "Cheddar cheese",
+   "category": "dairy",
+   "state": "na",
+   "portions": [
+    {
+     "labelFa": "برش",
+     "grams": 28.0,
+     "usda": "1 slice (1 oz)"
+    },
+    {
+     "labelFa": "پیمانه (رنده‌شده)",
+     "grams": 113.0,
+     "usda": "1 cup, shredded"
+    }
+   ]
+  },
+  {
+   "fdcId": 173418,
+   "key": "cheese_cream",
+   "nameFa": "پنیر خامه‌ای",
+   "nameEn": "Cream cheese",
+   "category": "dairy",
+   "state": "na",
+   "portions": [
+    {
+     "labelFa": "قاشق غذاخوری",
+     "grams": 14.5,
+     "usda": "1 tbsp"
+    }
+   ]
+  },
+  {
+   "fdcId": 170859,
+   "key": "cream_heavy",
+   "nameFa": "خامه‌ی سنگین (قنادی)",
+   "nameEn": "Heavy whipping cream",
+   "category": "dairy",
+   "state": "na",
+   "portions": [
+    {
+     "labelFa": "قاشق غذاخوری",
+     "grams": 15.0,
+     "usda": "1 tbsp"
+    },
+    {
+     "labelFa": "پیمانه (مایع)",
+     "grams": 238.0,
+     "usda": "1 cup, fluid (yields 2 cups whipped)"
+    }
+   ]
+  },
+  {
+   "fdcId": 167575,
+   "key": "ice_cream_vanilla",
+   "nameFa": "بستنی وانیلی",
+   "nameEn": "Ice cream, vanilla",
+   "category": "dairy",
+   "state": "na",
+   "portions": [
+    {
+     "labelFa": "نصف پیمانه",
+     "grams": 66.0,
+     "usda": "1 serving 1/2 cup"
+    }
+   ]
+  },
+  {
+   "fdcId": 170457,
+   "key": "tomato",
+   "nameFa": "گوجه‌فرنگی",
+   "nameEn": "Tomato, red, raw",
+   "category": "vegetables",
+   "state": "raw",
+   "portions": [
+    {
+     "labelFa": "عدد متوسط",
+     "grams": 123.0,
+     "usda": "1 medium whole (2-3/5\" dia)"
+    },
+    {
+     "labelFa": "عدد بزرگ",
+     "grams": 182.0,
+     "usda": "1 large whole (3\" dia)"
+    },
+    {
+     "labelFa": "عدد کوچک",
+     "grams": 91.0,
+     "usda": "1 small whole (2-2/5\" dia)"
+    },
+    {
+     "labelFa": "پیمانه (خردشده)",
+     "grams": 180.0,
+     "usda": "1 cup, chopped or sliced"
+    }
+   ]
+  },
+  {
+   "fdcId": 168409,
+   "key": "cucumber",
+   "nameFa": "خیار (با پوست)",
+   "nameEn": "Cucumber, with peel, raw",
+   "category": "vegetables",
+   "state": "raw",
+   "portions": [
+    {
+     "labelFa": "عدد بلند (حدود ۲۱ سانتی‌متر)",
+     "grams": 301.0,
+     "usda": "1 cucumber (8-1/4\")"
+    },
+    {
+     "labelFa": "نصف پیمانه (حلقه‌شده)",
+     "grams": 52.0,
+     "usda": "0.5 cup slices"
+    }
+   ]
+  },
+  {
+   "fdcId": 170000,
+   "key": "onion",
+   "nameFa": "پیاز",
+   "nameEn": "Onion, raw",
+   "category": "vegetables",
+   "state": "raw",
+   "portions": [
+    {
+     "labelFa": "عدد متوسط",
+     "grams": 110.0,
+     "usda": "1 medium (2-1/2\" dia)"
+    },
+    {
+     "labelFa": "عدد بزرگ",
+     "grams": 150.0,
+     "usda": "1 large"
+    },
+    {
+     "labelFa": "عدد کوچک",
+     "grams": 70.0,
+     "usda": "1 small"
+    },
+    {
+     "labelFa": "پیمانه (خردشده)",
+     "grams": 160.0,
+     "usda": "1 cup, chopped"
+    }
+   ]
+  },
+  {
+   "fdcId": 169230,
+   "key": "garlic",
+   "nameFa": "سیر",
+   "nameEn": "Garlic, raw",
+   "category": "vegetables",
+   "state": "raw",
+   "portions": [
+    {
+     "labelFa": "حبه",
+     "grams": 3.0,
+     "usda": "1 clove"
+    },
+    {
+     "labelFa": "قاشق چای‌خوری",
+     "grams": 2.8,
+     "usda": "1 tsp"
+    }
+   ]
+  },
+  {
+   "fdcId": 170026,
+   "key": "potato_raw",
+   "nameFa": "سیب‌زمینی با پوست، خام",
+   "nameEn": "Potato, flesh and skin, raw",
+   "category": "vegetables",
+   "state": "raw",
+   "portions": [
+    {
+     "labelFa": "عدد متوسط",
+     "grams": 213.0,
+     "usda": "1 Potato medium (2-1/4\" to 3-1/4\" dia)"
+    },
+    {
+     "labelFa": "عدد بزرگ",
+     "grams": 369.0,
+     "usda": "1 Potato large (3\" to 4-1/4\" dia)"
+    },
+    {
+     "labelFa": "عدد کوچک",
+     "grams": 170.0,
+     "usda": "1 Potato small (1-3/4\" to 2-1/2\" dia)"
+    }
+   ]
+  },
+  {
+   "fdcId": 170440,
+   "key": "potato_boiled",
+   "nameFa": "سیب‌زمینی آب‌پز (بدون پوست)",
+   "nameEn": "Potato, boiled without skin",
+   "category": "vegetables",
+   "state": "cooked",
+   "portions": [
+    {
+     "labelFa": "عدد متوسط",
+     "grams": 167.0,
+     "usda": "1 medium (2-1/4\" to 3-1/4\" dia.)"
+    },
+    {
+     "labelFa": "نصف پیمانه",
+     "grams": 78.0,
+     "usda": "0.5 cup"
+    }
+   ]
+  },
+  {
+   "fdcId": 170093,
+   "key": "potato_baked",
+   "nameFa": "سیب‌زمینی تنوری (با پوست)",
+   "nameEn": "Potato, baked, flesh and skin",
+   "category": "vegetables",
+   "state": "cooked",
+   "portions": [
+    {
+     "labelFa": "عدد متوسط",
+     "grams": 173.0,
+     "usda": "1 potato medium"
+    },
+    {
+     "labelFa": "عدد بزرگ",
+     "grams": 299.0,
+     "usda": "1 potato large"
+    }
+   ]
+  },
+  {
+   "fdcId": 168482,
+   "key": "sweet_potato_raw",
+   "nameFa": "سیب‌زمینی شیرین، خام",
+   "nameEn": "Sweet potato, raw",
+   "category": "vegetables",
+   "state": "raw",
+   "portions": [
+    {
+     "labelFa": "عدد (حدود ۱۳ سانتی‌متر)",
+     "grams": 130.0,
+     "usda": "1 sweetpotato, 5\" long"
+    },
+    {
+     "labelFa": "پیمانه (مکعبی)",
+     "grams": 133.0,
+     "usda": "1 cup, cubes"
+    }
+   ]
+  },
+  {
+   "fdcId": 168483,
+   "key": "sweet_potato_baked",
+   "nameFa": "سیب‌زمینی شیرین، پخته در فر",
+   "nameEn": "Sweet potato, baked in skin",
+   "category": "vegetables",
+   "state": "cooked",
+   "portions": [
+    {
+     "labelFa": "عدد متوسط",
+     "grams": 114.0,
+     "usda": "1 medium (2\" dia, 5\" long, raw)"
+    },
+    {
+     "labelFa": "پیمانه",
+     "grams": 200.0,
+     "usda": "1 cup"
+    }
+   ]
+  },
+  {
+   "fdcId": 170393,
+   "key": "carrot",
+   "nameFa": "هویج",
+   "nameEn": "Carrot, raw",
+   "category": "vegetables",
+   "state": "raw",
+   "portions": [
+    {
+     "labelFa": "عدد متوسط",
+     "grams": 61.0,
+     "usda": "1 medium"
+    },
+    {
+     "labelFa": "عدد بزرگ",
+     "grams": 72.0,
+     "usda": "1 large (7-1/4\" to 8-/1/2\" long)"
+    },
+    {
+     "labelFa": "پیمانه (رنده‌شده)",
+     "grams": 110.0,
+     "usda": "1 cup grated"
+    }
+   ]
+  },
+  {
+   "fdcId": 169247,
+   "key": "lettuce_romaine",
+   "nameFa": "کاهو رومی (رسمی)",
+   "nameEn": "Lettuce, romaine, raw",
+   "category": "vegetables",
+   "state": "raw",
+   "portions": [
+    {
+     "labelFa": "پیمانه (خردشده)",
+     "grams": 47.0,
+     "usda": "1 cup shredded"
+    },
+    {
+     "labelFa": "برگ بیرونی",
+     "grams": 28.0,
+     "usda": "1 leaf outer"
+    }
+   ]
+  },
+  {
+   "fdcId": 169975,
+   "key": "cabbage",
+   "nameFa": "کلم سفید (کلم‌پیچ)",
+   "nameEn": "Cabbage, raw",
+   "category": "vegetables",
+   "state": "raw",
+   "portions": [
+    {
+     "labelFa": "پیمانه (خردشده)",
+     "grams": 89.0,
+     "usda": "1 cup, chopped"
+    },
+    {
+     "labelFa": "پیمانه (خلال‌شده)",
+     "grams": 70.0,
+     "usda": "1 cup, shredded"
+    }
+   ]
+  },
+  {
+   "fdcId": 169986,
+   "key": "cauliflower",
+   "nameFa": "گل‌کلم",
+   "nameEn": "Cauliflower, raw",
+   "category": "vegetables",
+   "state": "raw",
+   "portions": [
+    {
+     "labelFa": "پیمانه (خردشده)",
+     "grams": 107.0,
+     "usda": "1 cup chopped (1/2\" pieces)"
+    },
+    {
+     "labelFa": "گل کوچک",
+     "grams": 13.0,
+     "usda": "1 floweret"
+    }
+   ]
+  },
+  {
+   "fdcId": 170379,
+   "key": "broccoli_raw",
+   "nameFa": "کلم بروکلی، خام",
+   "nameEn": "Broccoli, raw",
+   "category": "vegetables",
+   "state": "raw",
+   "portions": [
+    {
+     "labelFa": "پیمانه (خردشده)",
+     "grams": 91.0,
+     "usda": "1 cup chopped"
+    },
+    {
+     "labelFa": "شاخه (حدود ۱۳ سانتی‌متر)",
+     "grams": 31.0,
+     "usda": "1 spear (about 5\" long)"
+    }
+   ]
+  },
+  {
+   "fdcId": 169967,
+   "key": "broccoli_boiled",
+   "nameFa": "کلم بروکلی، آب‌پز",
+   "nameEn": "Broccoli, boiled",
+   "category": "vegetables",
+   "state": "cooked",
+   "portions": [
+    {
+     "labelFa": "نصف پیمانه (خردشده)",
+     "grams": 78.0,
+     "usda": "0.5 cup, chopped"
+    }
+   ]
+  },
+  {
+   "fdcId": 168462,
+   "key": "spinach_raw",
+   "nameFa": "اسفناج، خام",
+   "nameEn": "Spinach, raw",
+   "category": "vegetables",
+   "state": "raw",
+   "portions": [
+    {
+     "labelFa": "پیمانه",
+     "grams": 30.0,
+     "usda": "1 cup"
+    },
+    {
+     "labelFa": "دسته",
+     "grams": 340.0,
+     "usda": "1 bunch"
+    }
+   ]
+  },
+  {
+   "fdcId": 168463,
+   "key": "spinach_boiled",
+   "nameFa": "اسفناج، آب‌پز",
+   "nameEn": "Spinach, boiled",
+   "category": "vegetables",
+   "state": "cooked",
+   "portions": [
+    {
+     "labelFa": "پیمانه",
+     "grams": 180.0,
+     "usda": "1 cup"
+    }
+   ]
+  },
+  {
+   "fdcId": 169228,
+   "key": "eggplant_raw",
+   "nameFa": "بادمجان، خام",
+   "nameEn": "Eggplant, raw",
+   "category": "vegetables",
+   "state": "raw",
+   "portions": [
+    {
+     "labelFa": "پیمانه (مکعبی)",
+     "grams": 82.0,
+     "usda": "1 cup, cubes"
+    },
+    {
+     "labelFa": "عدد درشت پوست‌کنده",
+     "grams": 458.0,
+     "usda": "1 eggplant, peeled (yield from 1-1/4 lb)"
+    }
+   ]
+  },
+  {
+   "fdcId": 169229,
+   "key": "eggplant_boiled",
+   "nameFa": "بادمجان، آب‌پز",
+   "nameEn": "Eggplant, boiled",
+   "category": "vegetables",
+   "state": "cooked",
+   "portions": [
+    {
+     "labelFa": "پیمانه (مکعبی)",
+     "grams": 99.0,
+     "usda": "1 cup (1\" cubes)"
+    }
+   ]
+  },
+  {
+   "fdcId": 169291,
+   "key": "zucchini",
+   "nameFa": "کدو سبز (با پوست)",
+   "nameEn": "Zucchini, with skin, raw",
+   "category": "vegetables",
+   "state": "raw",
+   "portions": [
+    {
+     "labelFa": "عدد متوسط",
+     "grams": 196.0,
+     "usda": "1 medium"
+    },
+    {
+     "labelFa": "عدد کوچک",
+     "grams": 118.0,
+     "usda": "1 small"
+    },
+    {
+     "labelFa": "پیمانه (حلقه‌شده)",
+     "grams": 113.0,
+     "usda": "1 cup, sliced"
+    }
+   ]
+  },
+  {
+   "fdcId": 170427,
+   "key": "pepper_bell_green",
+   "nameFa": "فلفل دلمه‌ای سبز",
+   "nameEn": "Green bell pepper, raw",
+   "category": "vegetables",
+   "state": "raw",
+   "portions": [
+    {
+     "labelFa": "عدد متوسط",
+     "grams": 119.0,
+     "usda": "1 medium (approx 2-3/4\" long, 2-1/2\" dia)"
+    },
+    {
+     "labelFa": "عدد بزرگ",
+     "grams": 164.0,
+     "usda": "1 large (2-1/4 per lb, approx 3-3/4\" long, 3\" dia)"
+    },
+    {
+     "labelFa": "پیمانه (خردشده)",
+     "grams": 149.0,
+     "usda": "1 cup, chopped"
+    }
+   ]
+  },
+  {
+   "fdcId": 170108,
+   "key": "pepper_bell_red",
+   "nameFa": "فلفل دلمه‌ای قرمز",
+   "nameEn": "Red bell pepper, raw",
+   "category": "vegetables",
+   "state": "raw",
+   "portions": [
+    {
+     "labelFa": "عدد متوسط",
+     "grams": 119.0,
+     "usda": "1 medium (approx 2-3/4\" long, 2-1/2 dia.)"
+    },
+    {
+     "labelFa": "عدد بزرگ",
+     "grams": 164.0,
+     "usda": "1 large (2-1/4 per pound, approx 3-3/4\" long, 3\" dia.)"
+    },
+    {
+     "labelFa": "پیمانه (خردشده)",
+     "grams": 149.0,
+     "usda": "1 cup, chopped"
+    }
+   ]
+  },
+  {
+   "fdcId": 169251,
+   "key": "mushroom_white",
+   "nameFa": "قارچ سفید (دکمه‌ای)",
+   "nameEn": "White mushrooms, raw",
+   "category": "vegetables",
+   "state": "raw",
+   "portions": [
+    {
+     "labelFa": "عدد متوسط",
+     "grams": 18.0,
+     "usda": "1 medium"
+    },
+    {
+     "labelFa": "پیمانه (ورقه‌شده)",
+     "grams": 70.0,
+     "usda": "1 cup, pieces or slices"
+    }
+   ]
+  },
+  {
+   "fdcId": 169961,
+   "key": "green_beans_raw",
+   "nameFa": "لوبیا سبز، خام",
+   "nameEn": "Green beans, raw",
+   "category": "vegetables",
+   "state": "raw",
+   "portions": [
+    {
+     "labelFa": "پیمانه (خردشده)",
+     "grams": 100.0,
+     "usda": "1 cup 1/2\" pieces"
+    }
+   ]
+  },
+  {
+   "fdcId": 169141,
+   "key": "green_beans_boiled",
+   "nameFa": "لوبیا سبز، آب‌پز",
+   "nameEn": "Green beans, boiled",
+   "category": "vegetables",
+   "state": "cooked",
+   "portions": [
+    {
+     "labelFa": "پیمانه",
+     "grams": 125.0,
+     "usda": "1 cup"
+    }
+   ]
+  },
+  {
+   "fdcId": 170017,
+   "key": "peas_green_frozen_boiled",
+   "nameFa": "نخودفرنگی سبز (منجمد)، آب‌پز",
+   "nameEn": "Green peas, frozen, boiled",
+   "category": "vegetables",
+   "state": "cooked",
+   "portions": [
+    {
+     "labelFa": "نصف پیمانه",
+     "grams": 80.0,
+     "usda": "0.5 cup"
+    }
+   ]
+  },
+  {
+   "fdcId": 169999,
+   "key": "corn_sweet_boiled",
+   "nameFa": "ذرت شیرین، آب‌پز",
+   "nameEn": "Sweet corn, yellow, boiled",
+   "category": "vegetables",
+   "state": "cooked",
+   "portions": [
+    {
+     "labelFa": "بلال متوسط",
+     "grams": 103.0,
+     "usda": "1 ear medium (6-3/4\" to 7-1/2\" long)"
+    },
+    {
+     "labelFa": "پیمانه (دانه)",
+     "grams": 149.0,
+     "usda": "1 cup cut"
+    }
+   ]
+  },
+  {
+   "fdcId": 169146,
+   "key": "beets_boiled",
+   "nameFa": "چغندر پخته (لبو)",
+   "nameEn": "Beets, boiled",
+   "category": "vegetables",
+   "state": "cooked",
+   "portions": [
+    {
+     "labelFa": "۲ عدد کوچک (قطر ۵ سانتی‌متر)",
+     "grams": 100.0,
+     "usda": "2 beets (2\" dia, sphere)"
+    },
+    {
+     "labelFa": "نصف پیمانه (ورقه‌شده)",
+     "grams": 85.0,
+     "usda": "0.5 cup slices"
+    }
+   ]
+  },
+  {
+   "fdcId": 170058,
+   "key": "turnip_boiled",
+   "nameFa": "شلغم، آب‌پز",
+   "nameEn": "Turnip, boiled",
+   "category": "vegetables",
+   "state": "cooked",
+   "portions": [
+    {
+     "labelFa": "پیمانه (مکعبی)",
+     "grams": 156.0,
+     "usda": "1 cup, cubes"
+    }
+   ]
+  },
+  {
+   "fdcId": 169988,
+   "key": "celery",
+   "nameFa": "کرفس (ساقه)",
+   "nameEn": "Celery, raw",
+   "category": "vegetables",
+   "state": "raw",
+   "portions": [
+    {
+     "labelFa": "ساقه‌ی متوسط",
+     "grams": 40.0,
+     "usda": "1 stalk, medium (7-1/2\" - 8\" long)"
+    },
+    {
+     "labelFa": "پیمانه (خردشده)",
+     "grams": 101.0,
+     "usda": "1 cup chopped"
+    }
+   ]
+  },
+  {
+   "fdcId": 169276,
+   "key": "radish",
+   "nameFa": "تربچه",
+   "nameEn": "Radishes, raw",
+   "category": "vegetables",
+   "state": "raw",
+   "portions": [
+    {
+     "labelFa": "عدد متوسط",
+     "grams": 4.5,
+     "usda": "1 medium (3/4\" to 1\" dia)"
+    },
+    {
+     "labelFa": "نصف پیمانه (حلقه‌شده)",
+     "grams": 58.0,
+     "usda": "0.5 cup slices"
+    }
+   ]
+  },
+  {
+   "fdcId": 169260,
+   "key": "okra",
+   "nameFa": "بامیه",
+   "nameEn": "Okra, raw",
+   "category": "vegetables",
+   "state": "raw",
+   "portions": [
+    {
+     "labelFa": "پیمانه",
+     "grams": 100.0,
+     "usda": "1 cup"
+    },
+    {
+     "labelFa": "۸ عدد",
+     "grams": 95.0,
+     "usda": "8 pods (3\" long)"
+    }
+   ]
+  },
+  {
+   "fdcId": 168448,
+   "key": "pumpkin",
+   "nameFa": "کدو حلوایی",
+   "nameEn": "Pumpkin, raw",
+   "category": "vegetables",
+   "state": "raw",
+   "portions": [
+    {
+     "labelFa": "پیمانه (مکعبی)",
+     "grams": 116.0,
+     "usda": "1 cup (1\" cubes)"
+    }
+   ]
+  },
+  {
+   "fdcId": 169246,
+   "key": "leek",
+   "nameFa": "تره‌فرنگی",
+   "nameEn": "Leeks, raw",
+   "category": "vegetables",
+   "state": "raw",
+   "portions": [
+    {
+     "labelFa": "عدد",
+     "grams": 89.0,
+     "usda": "1 leek"
+    },
+    {
+     "labelFa": "پیمانه",
+     "grams": 89.0,
+     "usda": "1 cup"
+    }
+   ]
+  },
+  {
+   "fdcId": 170416,
+   "key": "parsley_fresh",
+   "nameFa": "جعفری تازه",
+   "nameEn": "Parsley, fresh",
+   "category": "vegetables",
+   "state": "raw",
+   "portions": [
+    {
+     "labelFa": "پیمانه (خردشده)",
+     "grams": 60.0,
+     "usda": "1 cup chopped"
+    },
+    {
+     "labelFa": "قاشق غذاخوری",
+     "grams": 3.8,
+     "usda": "1 tbsp"
+    }
+   ]
+  },
+  {
+   "fdcId": 172233,
+   "key": "dill_fresh",
+   "nameFa": "شوید تازه",
+   "nameEn": "Dill weed, fresh",
+   "category": "vegetables",
+   "state": "raw",
+   "portions": [
+    {
+     "labelFa": "پیمانه (شاخه)",
+     "grams": 8.9,
+     "usda": "1 cup sprigs"
+    }
+   ]
+  },
+  {
+   "fdcId": 169997,
+   "key": "cilantro_fresh",
+   "nameFa": "گشنیز تازه",
+   "nameEn": "Coriander (cilantro) leaves, raw",
+   "category": "vegetables",
+   "state": "raw",
+   "portions": [
+    {
+     "labelFa": "یک‌چهارم پیمانه",
+     "grams": 4.0,
+     "usda": "0.25 cup"
+    },
+    {
+     "labelFa": "۹ شاخه",
+     "grams": 20.0,
+     "usda": "9 sprigs"
+    }
+   ]
+  },
+  {
+   "fdcId": 173475,
+   "key": "mint_fresh",
+   "nameFa": "نعناع تازه",
+   "nameEn": "Spearmint, fresh",
+   "category": "vegetables",
+   "state": "raw",
+   "portions": [
+    {
+     "labelFa": "۲ قاشق غذاخوری",
+     "grams": 11.4,
+     "usda": "2 tbsp"
+    }
+   ]
+  },
+  {
+   "fdcId": 172232,
+   "key": "basil_fresh",
+   "nameFa": "ریحان تازه",
+   "nameEn": "Basil, fresh",
+   "category": "vegetables",
+   "state": "raw",
+   "portions": [
+    {
+     "labelFa": "۵ برگ",
+     "grams": 2.5,
+     "usda": "5 leaves"
+    },
+    {
+     "labelFa": "۲ قاشق غذاخوری (خردشده)",
+     "grams": 5.3,
+     "usda": "2 tbsp, chopped"
+    }
+   ]
+  },
+  {
+   "fdcId": 170459,
+   "key": "tomato_paste",
+   "nameFa": "رب گوجه‌فرنگی (بدون نمک)",
+   "nameEn": "Tomato paste, no salt added",
+   "category": "vegetables",
+   "state": "na",
+   "portions": [
+    {
+     "labelFa": "قاشق غذاخوری",
+     "grams": 16.0,
+     "usda": "1 tbsp"
+    },
+    {
+     "labelFa": "یک‌چهارم پیمانه",
+     "grams": 66.0,
+     "usda": "0.25 cup"
+    }
+   ]
+  },
+  {
+   "fdcId": 168558,
+   "key": "pickles_dill",
+   "nameFa": "خیارشور",
+   "nameEn": "Dill pickles (cucumber)",
+   "category": "vegetables",
+   "state": "na",
+   "portions": [
+    {
+     "labelFa": "عدد بزرگ (حدود ۱۰ سانتی‌متر)",
+     "grams": 135.0,
+     "usda": "1 large (4\" long)"
+    },
+    {
+     "labelFa": "پیمانه (خردشده)",
+     "grams": 143.0,
+     "usda": "1 cup, chopped or diced"
+    }
+   ]
+  },
+  {
+   "fdcId": 169096,
+   "key": "olives_green",
+   "nameFa": "زیتون سبز (شور)",
+   "nameEn": "Green olives, pickled",
+   "category": "vegetables",
+   "state": "na",
+   "portions": [
+    {
+     "labelFa": "عدد",
+     "grams": 2.7,
+     "usda": "1 olive"
+    }
+   ]
+  },
+  {
+   "fdcId": 171688,
+   "key": "apple",
+   "nameFa": "سیب (با پوست)",
+   "nameEn": "Apple, with skin, raw",
+   "category": "fruits",
+   "state": "raw",
+   "portions": [
+    {
+     "labelFa": "عدد متوسط",
+     "grams": 182.0,
+     "usda": "1 medium (3\" dia)"
+    },
+    {
+     "labelFa": "عدد بزرگ",
+     "grams": 223.0,
+     "usda": "1 large (3-1/4\" dia)"
+    },
+    {
+     "labelFa": "عدد کوچک",
+     "grams": 149.0,
+     "usda": "1 small (2-3/4\" dia)"
+    },
+    {
+     "labelFa": "پیمانه (ورقه‌شده)",
+     "grams": 109.0,
+     "usda": "1 cup slices"
+    }
+   ]
+  },
+  {
+   "fdcId": 173944,
+   "key": "banana",
+   "nameFa": "موز",
+   "nameEn": "Banana, raw",
+   "category": "fruits",
+   "state": "raw",
+   "portions": [
+    {
+     "labelFa": "عدد متوسط",
+     "grams": 118.0,
+     "usda": "1 medium (7\" to 7-7/8\" long)"
+    },
+    {
+     "labelFa": "عدد بزرگ",
+     "grams": 136.0,
+     "usda": "1 large (8\" to 8-7/8\" long)"
+    },
+    {
+     "labelFa": "عدد کوچک",
+     "grams": 101.0,
+     "usda": "1 small (6\" to 6-7/8\" long)"
+    }
+   ]
+  },
+  {
+   "fdcId": 169097,
+   "key": "orange",
+   "nameFa": "پرتقال",
+   "nameEn": "Orange, raw",
+   "category": "fruits",
+   "state": "raw",
+   "portions": [
+    {
+     "labelFa": "عدد متوسط",
+     "grams": 131.0,
+     "usda": "1 fruit (2-5/8\" dia)"
+    },
+    {
+     "labelFa": "عدد بزرگ",
+     "grams": 184.0,
+     "usda": "1 large (3-1/16\" dia)"
+    },
+    {
+     "labelFa": "عدد کوچک",
+     "grams": 96.0,
+     "usda": "1 small (2-3/8\" dia)"
+    }
+   ]
+  },
+  {
+   "fdcId": 169105,
+   "key": "tangerine",
+   "nameFa": "نارنگی",
+   "nameEn": "Tangerine (mandarin), raw",
+   "category": "fruits",
+   "state": "raw",
+   "portions": [
+    {
+     "labelFa": "عدد متوسط",
+     "grams": 88.0,
+     "usda": "1 medium (2-1/2\" dia)"
+    },
+    {
+     "labelFa": "عدد بزرگ",
+     "grams": 120.0,
+     "usda": "1 large (2-3/4\" dia)"
+    },
+    {
+     "labelFa": "عدد کوچک",
+     "grams": 76.0,
+     "usda": "1 small (2-1/4\" dia)"
+    }
+   ]
+  },
+  {
+   "fdcId": 174683,
+   "key": "grapes",
+   "nameFa": "انگور (سبز یا قرمز)",
+   "nameEn": "Grapes, red or green, raw",
+   "category": "fruits",
+   "state": "raw",
+   "portions": [
+    {
+     "labelFa": "پیمانه",
+     "grams": 151.0,
+     "usda": "1 cup"
+    },
+    {
+     "labelFa": "۱۰ دانه",
+     "grams": 49.0,
+     "usda": "10 grapes"
+    }
+   ]
+  },
+  {
+   "fdcId": 167765,
+   "key": "watermelon",
+   "nameFa": "هندوانه",
+   "nameEn": "Watermelon, raw",
+   "category": "fruits",
+   "state": "raw",
+   "portions": [
+    {
+     "labelFa": "پیمانه (مکعبی)",
+     "grams": 152.0,
+     "usda": "1 cup, diced"
+    },
+    {
+     "labelFa": "قاچ (یک‌شانزدهم هندوانه‌ی بزرگ)",
+     "grams": 286.0,
+     "usda": "1 wedge (approx 1/16 of melon)"
+    }
+   ]
+  },
+  {
+   "fdcId": 169092,
+   "key": "cantaloupe",
+   "nameFa": "طالبی",
+   "nameEn": "Cantaloupe, raw",
+   "category": "fruits",
+   "state": "raw",
+   "portions": [
+    {
+     "labelFa": "پیمانه (مکعبی)",
+     "grams": 160.0,
+     "usda": "1 cup, cubes"
+    },
+    {
+     "labelFa": "قاچ (یک‌هشتم طالبی متوسط)",
+     "grams": 69.0,
+     "usda": "1 wedge, medium (1/8 of medium melon)"
+    }
+   ]
+  },
+  {
+   "fdcId": 169134,
+   "key": "pomegranate",
+   "nameFa": "انار",
+   "nameEn": "Pomegranate, raw",
+   "category": "fruits",
+   "state": "raw",
+   "portions": [
+    {
+     "labelFa": "عدد (قطر حدود ۱۰ سانتی‌متر)",
+     "grams": 282.0,
+     "usda": "1 pomegranate (4\" dia)"
+    },
+    {
+     "labelFa": "نصف پیمانه دانه",
+     "grams": 87.0,
+     "usda": "0.5 cup arils (seed/juice sacs)"
+    }
+   ]
+  },
+  {
+   "fdcId": 173021,
+   "key": "fig_fresh",
+   "nameFa": "انجیر تازه",
+   "nameEn": "Figs, raw",
+   "category": "fruits",
+   "state": "raw",
+   "portions": [
+    {
+     "labelFa": "عدد متوسط",
+     "grams": 50.0,
+     "usda": "1 medium (2-1/4\" dia)"
+    },
+    {
+     "labelFa": "عدد بزرگ",
+     "grams": 64.0,
+     "usda": "1 large (2-1/2\" dia)"
+    },
+    {
+     "labelFa": "عدد کوچک",
+     "grams": 40.0,
+     "usda": "1 small (1-1/2\" dia)"
+    }
+   ]
+  },
+  {
+   "fdcId": 171726,
+   "key": "dates_deglet_noor",
+   "nameFa": "خرما (دگلت‌نور)",
+   "nameEn": "Dates, deglet noor",
+   "category": "fruits",
+   "state": "na",
+   "portions": [
+    {
+     "labelFa": "عدد (بدون هسته)",
+     "grams": 7.1,
+     "usda": "1 date, pitted"
+    }
+   ]
+  },
+  {
+   "fdcId": 171697,
+   "key": "apricot",
+   "nameFa": "زردآلو",
+   "nameEn": "Apricot, raw",
+   "category": "fruits",
+   "state": "raw",
+   "portions": [
+    {
+     "labelFa": "عدد",
+     "grams": 35.0,
+     "usda": "1 apricot"
+    },
+    {
+     "labelFa": "پیمانه (نصف‌شده)",
+     "grams": 155.0,
+     "usda": "1 cup, halves"
+    }
+   ]
+  },
+  {
+   "fdcId": 171719,
+   "key": "cherries_sweet",
+   "nameFa": "گیلاس",
+   "nameEn": "Sweet cherries, raw",
+   "category": "fruits",
+   "state": "raw",
+   "portions": [
+    {
+     "labelFa": "پیمانه (بدون هسته)",
+     "grams": 154.0,
+     "usda": "1 cup, without pits"
+    },
+    {
+     "labelFa": "دانه",
+     "grams": 8.2,
+     "usda": "1 cherry"
+    }
+   ]
+  },
+  {
+   "fdcId": 173954,
+   "key": "cherries_sour",
+   "nameFa": "آلبالو",
+   "nameEn": "Sour cherries, raw",
+   "category": "fruits",
+   "state": "raw",
+   "portions": [
+    {
+     "labelFa": "پیمانه (بدون هسته)",
+     "grams": 155.0,
+     "usda": "1 cup, without pits"
+    }
+   ]
+  },
+  {
+   "fdcId": 169928,
+   "key": "peach",
+   "nameFa": "هلو",
+   "nameEn": "Peach, yellow, raw",
+   "category": "fruits",
+   "state": "raw",
+   "portions": [
+    {
+     "labelFa": "عدد متوسط",
+     "grams": 150.0,
+     "usda": "1 medium (2-2/3\" dia)"
+    },
+    {
+     "labelFa": "عدد بزرگ",
+     "grams": 175.0,
+     "usda": "1 large (2-3/4\" dia)"
+    },
+    {
+     "labelFa": "عدد کوچک",
+     "grams": 130.0,
+     "usda": "1 small (2-1/2\" dia)"
+    }
+   ]
+  },
+  {
+   "fdcId": 169118,
+   "key": "pear",
+   "nameFa": "گلابی",
+   "nameEn": "Pear, raw",
+   "category": "fruits",
+   "state": "raw",
+   "portions": [
+    {
+     "labelFa": "عدد متوسط",
+     "grams": 178.0,
+     "usda": "1 medium"
+    },
+    {
+     "labelFa": "عدد بزرگ",
+     "grams": 230.0,
+     "usda": "1 large"
+    },
+    {
+     "labelFa": "عدد کوچک",
+     "grams": 148.0,
+     "usda": "1 small"
+    }
+   ]
+  },
+  {
+   "fdcId": 169949,
+   "key": "plum",
+   "nameFa": "آلو",
+   "nameEn": "Plum, raw",
+   "category": "fruits",
+   "state": "raw",
+   "portions": [
+    {
+     "labelFa": "عدد",
+     "grams": 66.0,
+     "usda": "1 fruit (2-1/8\" dia)"
+    }
+   ]
+  },
+  {
+   "fdcId": 168153,
+   "key": "kiwi",
+   "nameFa": "کیوی",
+   "nameEn": "Kiwifruit, green, raw",
+   "category": "fruits",
+   "state": "raw",
+   "portions": [
+    {
+     "labelFa": "عدد",
+     "grams": 69.0,
+     "usda": "1 fruit (2\" dia)"
+    }
+   ]
+  },
+  {
+   "fdcId": 167762,
+   "key": "strawberries",
+   "nameFa": "توت‌فرنگی",
+   "nameEn": "Strawberries, raw",
+   "category": "fruits",
+   "state": "raw",
+   "portions": [
+    {
+     "labelFa": "پیمانه",
+     "grams": 144.0,
+     "usda": "1 cup, whole"
+    },
+    {
+     "labelFa": "عدد متوسط",
+     "grams": 12.0,
+     "usda": "1 medium (1-1/4\" dia)"
+    },
+    {
+     "labelFa": "عدد بزرگ",
+     "grams": 18.0,
+     "usda": "1 large (1-3/8\" dia)"
+    }
+   ]
+  },
+  {
+   "fdcId": 169941,
+   "key": "persimmon",
+   "nameFa": "خرمالو",
+   "nameEn": "Persimmon, japanese, raw",
+   "category": "fruits",
+   "state": "raw",
+   "portions": [
+    {
+     "labelFa": "عدد",
+     "grams": 168.0,
+     "usda": "1 fruit (2-1/2\" dia)"
+    }
+   ]
+  },
+  {
+   "fdcId": 168163,
+   "key": "quince",
+   "nameFa": "به",
+   "nameEn": "Quince, raw",
+   "category": "fruits",
+   "state": "raw",
+   "portions": [
+    {
+     "labelFa": "عدد (بخش خوردنی)",
+     "grams": 92.0,
+     "usda": "1 fruit without refuse"
+    }
+   ]
+  },
+  {
+   "fdcId": 169913,
+   "key": "mulberries",
+   "nameFa": "توت (تازه)",
+   "nameEn": "Mulberries, raw",
+   "category": "fruits",
+   "state": "raw",
+   "portions": [
+    {
+     "labelFa": "پیمانه",
+     "grams": 140.0,
+     "usda": "1 cup"
+    },
+    {
+     "labelFa": "۱۰ دانه",
+     "grams": 15.0,
+     "usda": "10 fruit"
+    }
+   ]
+  },
+  {
+   "fdcId": 173033,
+   "key": "grapefruit",
+   "nameFa": "گریپ‌فروت",
+   "nameEn": "Grapefruit, raw",
+   "category": "fruits",
+   "state": "raw",
+   "portions": [
+    {
+     "labelFa": "نصف عدد متوسط",
+     "grams": 128.0,
+     "usda": "0.5 medium (approx 4\" dia)"
+    }
+   ]
+  },
+  {
+   "fdcId": 169124,
+   "key": "pineapple",
+   "nameFa": "آناناس",
+   "nameEn": "Pineapple, raw",
+   "category": "fruits",
+   "state": "raw",
+   "portions": [
+    {
+     "labelFa": "پیمانه (تکه‌شده)",
+     "grams": 165.0,
+     "usda": "1 cup, chunks"
+    },
+    {
+     "labelFa": "حلقه",
+     "grams": 84.0,
+     "usda": "1 slice (3-1/2\" dia x 3/4\" thick)"
+    }
+   ]
+  },
+  {
+   "fdcId": 169910,
+   "key": "mango",
+   "nameFa": "انبه",
+   "nameEn": "Mango, raw",
+   "category": "fruits",
+   "state": "raw",
+   "portions": [
+    {
+     "labelFa": "عدد (بخش خوردنی)",
+     "grams": 336.0,
+     "usda": "1 fruit without refuse"
+    },
+    {
+     "labelFa": "پیمانه (تکه‌شده)",
+     "grams": 165.0,
+     "usda": "1 cup pieces"
+    }
+   ]
+  },
+  {
+   "fdcId": 174665,
+   "key": "fig_dried",
+   "nameFa": "انجیر خشک",
+   "nameEn": "Figs, dried",
+   "category": "nuts_dried",
+   "state": "na",
+   "portions": [
+    {
+     "labelFa": "عدد",
+     "grams": 8.4,
+     "usda": "1 fig"
+    }
+   ]
+  },
+  {
+   "fdcId": 173941,
+   "key": "apricot_dried",
+   "nameFa": "برگه‌ی زردآلو (زردآلوی خشک)",
+   "nameEn": "Apricots, dried",
+   "category": "nuts_dried",
+   "state": "na",
+   "portions": [
+    {
+     "labelFa": "نیمه",
+     "grams": 3.5,
+     "usda": "1 half"
+    },
+    {
+     "labelFa": "پیمانه",
+     "grams": 130.0,
+     "usda": "1 cup, halves"
+    }
+   ]
+  },
+  {
+   "fdcId": 168165,
+   "key": "raisins",
+   "nameFa": "کشمش (بی‌دانه)",
+   "nameEn": "Raisins, seedless",
+   "category": "nuts_dried",
+   "state": "na",
+   "portions": [
+    {
+     "labelFa": "پیمانه",
+     "grams": 145.0,
+     "usda": "1 cup (not packed)"
+    },
+    {
+     "labelFa": "۵۰ دانه",
+     "grams": 26.0,
+     "usda": "50 raisins"
+    }
+   ]
+  },
+  {
+   "fdcId": 170567,
+   "key": "almonds",
+   "nameFa": "بادام درختی",
+   "nameEn": "Almonds",
+   "category": "nuts_dried",
+   "state": "na",
+   "portions": [
+    {
+     "labelFa": "دانه",
+     "grams": 1.2,
+     "usda": "1 almond"
+    },
+    {
+     "labelFa": "پیمانه",
+     "grams": 143.0,
+     "usda": "1 cup, whole"
+    }
+   ]
+  },
+  {
+   "fdcId": 170187,
+   "key": "walnuts",
+   "nameFa": "گردو",
+   "nameEn": "Walnuts, english",
+   "category": "nuts_dried",
+   "state": "na",
+   "portions": [
+    {
+     "labelFa": "پیمانه (۵۰ نیمه)",
+     "grams": 100.0,
+     "usda": "1 cup shelled (50 halves)"
+    },
+    {
+     "labelFa": "پیمانه (خردشده)",
+     "grams": 117.0,
+     "usda": "1 cup, chopped"
+    }
+   ]
+  },
+  {
+   "fdcId": 169426,
+   "key": "pistachios_roasted_salted",
+   "nameFa": "پسته‌ی بوداده و شور (مغز)",
+   "nameEn": "Pistachios, dry roasted, salted",
+   "category": "nuts_dried",
+   "state": "na",
+   "portions": [
+    {
+     "labelFa": "دانه (مغز)",
+     "grams": 0.7,
+     "usda": "1 kernel"
+    },
+    {
+     "labelFa": "پیمانه (مغز)",
+     "grams": 123.0,
+     "usda": "1 cup"
+    }
+   ]
+  },
+  {
+   "fdcId": 170581,
+   "key": "hazelnuts",
+   "nameFa": "فندق",
+   "nameEn": "Hazelnuts",
+   "category": "nuts_dried",
+   "state": "na",
+   "portions": [
+    {
+     "labelFa": "۱۰ دانه",
+     "grams": 14.0,
+     "usda": "10 nuts"
+    },
+    {
+     "labelFa": "پیمانه",
+     "grams": 135.0,
+     "usda": "1 cup, whole"
+    }
+   ]
+  },
+  {
+   "fdcId": 170571,
+   "key": "cashews_roasted",
+   "nameFa": "بادام هندی بوداده (بی‌نمک)",
+   "nameEn": "Cashews, dry roasted, unsalted",
+   "category": "nuts_dried",
+   "state": "na",
+   "portions": [
+    {
+     "labelFa": "قاشق غذاخوری",
+     "grams": 8.6,
+     "usda": "1 tbsp"
+    },
+    {
+     "labelFa": "پیمانه",
+     "grams": 137.0,
+     "usda": "1 cup, halves and whole"
+    }
+   ]
+  },
+  {
+   "fdcId": 174262,
+   "key": "peanuts_roasted_salted",
+   "nameFa": "بادام‌زمینی بوداده و شور",
+   "nameEn": "Peanuts, dry roasted, salted",
+   "category": "nuts_dried",
+   "state": "na",
+   "portions": [
+    {
+     "labelFa": "دانه",
+     "grams": 1.0,
+     "usda": "1 peanut"
+    }
+   ]
+  },
+  {
+   "fdcId": 174266,
+   "key": "peanut_butter",
+   "nameFa": "کره‌ی بادام‌زمینی",
+   "nameEn": "Peanut butter, smooth",
+   "category": "nuts_dried",
+   "state": "na",
+   "portions": [
+    {
+     "labelFa": "۲ قاشق غذاخوری",
+     "grams": 32.0,
+     "usda": "2 tbsp"
+    }
+   ]
+  },
+  {
+   "fdcId": 170562,
+   "key": "sunflower_kernels",
+   "nameFa": "مغز تخمه‌ی آفتابگردان",
+   "nameEn": "Sunflower seed kernels",
+   "category": "nuts_dried",
+   "state": "na",
+   "portions": [
+    {
+     "labelFa": "پیمانه (مغز)",
+     "grams": 140.0,
+     "usda": "1 cup"
+    },
+    {
+     "labelFa": "مغزِ یک پیمانه تخمه‌ی پوست‌دار",
+     "grams": 46.0,
+     "usda": "1 cup, with hulls, edible yield"
+    }
+   ]
+  },
+  {
+   "fdcId": 168601,
+   "key": "pumpkin_seeds_whole_roasted_salted",
+   "nameFa": "تخمه‌ی کدو (با پوست)، بوداده و شور",
+   "nameEn": "Pumpkin seeds, whole, roasted, salted",
+   "category": "nuts_dried",
+   "state": "na",
+   "portions": [
+    {
+     "labelFa": "پیمانه",
+     "grams": 64.0,
+     "usda": "1 cup"
+    }
+   ]
+  },
+  {
+   "fdcId": 170150,
+   "key": "sesame_seeds",
+   "nameFa": "کنجد",
+   "nameEn": "Sesame seeds, whole, dried",
+   "category": "nuts_dried",
+   "state": "na",
+   "portions": [
+    {
+     "labelFa": "قاشق غذاخوری",
+     "grams": 9.0,
+     "usda": "1 tbsp"
+    }
+   ]
+  },
+  {
+   "fdcId": 170189,
+   "key": "tahini",
+   "nameFa": "ارده (کره‌ی کنجد)",
+   "nameEn": "Tahini (sesame butter)",
+   "category": "nuts_dried",
+   "state": "na",
+   "portions": [
+    {
+     "labelFa": "قاشق غذاخوری",
+     "grams": 15.0,
+     "usda": "1 tbsp"
+    }
+   ]
+  },
+  {
+   "fdcId": 171413,
+   "key": "oil_olive",
+   "nameFa": "روغن زیتون",
+   "nameEn": "Olive oil",
+   "category": "fats",
+   "state": "na",
+   "portions": [
+    {
+     "labelFa": "قاشق غذاخوری",
+     "grams": 13.5,
+     "usda": "1 tablespoon"
+    },
+    {
+     "labelFa": "قاشق چای‌خوری",
+     "grams": 4.5,
+     "usda": "1 tsp"
+    }
+   ]
+  },
+  {
+   "fdcId": 172336,
+   "key": "oil_canola",
+   "nameFa": "روغن کانولا",
+   "nameEn": "Canola oil",
+   "category": "fats",
+   "state": "na",
+   "portions": [
+    {
+     "labelFa": "قاشق غذاخوری",
+     "grams": 14.0,
+     "usda": "1 tbsp"
+    },
+    {
+     "labelFa": "قاشق چای‌خوری",
+     "grams": 4.5,
+     "usda": "1 tsp"
+    }
+   ]
+  },
+  {
+   "fdcId": 171025,
+   "key": "oil_sunflower",
+   "nameFa": "روغن آفتابگردان",
+   "nameEn": "Sunflower oil",
+   "category": "fats",
+   "state": "na",
+   "portions": [
+    {
+     "labelFa": "قاشق غذاخوری",
+     "grams": 13.6,
+     "usda": "1 tbsp"
+    },
+    {
+     "labelFa": "قاشق چای‌خوری",
+     "grams": 4.5,
+     "usda": "1 tsp"
+    }
+   ]
+  },
+  {
+   "fdcId": 171029,
+   "key": "oil_corn",
+   "nameFa": "روغن ذرت",
+   "nameEn": "Corn oil",
+   "category": "fats",
+   "state": "na",
+   "portions": [
+    {
+     "labelFa": "قاشق غذاخوری",
+     "grams": 13.6,
+     "usda": "1 tbsp"
+    },
+    {
+     "labelFa": "قاشق چای‌خوری",
+     "grams": 4.5,
+     "usda": "1 tsp"
+    }
+   ]
+  },
+  {
+   "fdcId": 172370,
+   "key": "oil_soybean",
+   "nameFa": "روغن سویا",
+   "nameEn": "Soybean oil",
+   "category": "fats",
+   "state": "na",
+   "portions": [
+    {
+     "labelFa": "قاشق غذاخوری",
+     "grams": 13.6,
+     "usda": "1 tablespoon"
+    },
+    {
+     "labelFa": "قاشق چای‌خوری",
+     "grams": 4.5,
+     "usda": "1 teaspoon"
+    }
+   ]
+  },
+  {
+   "fdcId": 173430,
+   "key": "butter_unsalted",
+   "nameFa": "کره‌ی حیوانی (بی‌نمک)",
+   "nameEn": "Butter, unsalted",
+   "category": "fats",
+   "state": "na",
+   "portions": [
+    {
+     "labelFa": "قاشق غذاخوری",
+     "grams": 14.2,
+     "usda": "1 tbsp"
+    }
+   ]
+  },
+  {
+   "fdcId": 171314,
+   "key": "ghee",
+   "nameFa": "روغن حیوانی (کره‌ی صاف‌شده)",
+   "nameEn": "Ghee (clarified butter)",
+   "category": "fats",
+   "state": "na",
+   "portions": []
+  },
+  {
+   "fdcId": 171009,
+   "key": "mayonnaise",
+   "nameFa": "سس مایونز",
+   "nameEn": "Mayonnaise, regular",
+   "category": "fats",
+   "state": "na",
+   "portions": [
+    {
+     "labelFa": "قاشق غذاخوری",
+     "grams": 13.8,
+     "usda": "1 tbsp"
+    }
+   ]
+  },
+  {
+   "fdcId": 169655,
+   "key": "sugar_white",
+   "nameFa": "شکر سفید",
+   "nameEn": "Sugar, granulated",
+   "category": "sweets",
+   "state": "na",
+   "portions": [
+    {
+     "labelFa": "قاشق چای‌خوری",
+     "grams": 4.2,
+     "usda": "1 tsp"
+    },
+    {
+     "labelFa": "حبه قند (کوچک)",
+     "grams": 2.3,
+     "usda": "1 serving 1 cube"
+    },
+    {
+     "labelFa": "پیمانه",
+     "grams": 200.0,
+     "usda": "1 cup"
+    }
+   ]
+  },
+  {
+   "fdcId": 169640,
+   "key": "honey",
+   "nameFa": "عسل",
+   "nameEn": "Honey",
+   "category": "sweets",
+   "state": "na",
+   "portions": [
+    {
+     "labelFa": "قاشق غذاخوری",
+     "grams": 21.0,
+     "usda": "1 tbsp"
+    }
+   ]
+  },
+  {
+   "fdcId": 169641,
+   "key": "jam",
+   "nameFa": "مربا",
+   "nameEn": "Jams and preserves",
+   "category": "sweets",
+   "state": "na",
+   "portions": [
+    {
+     "labelFa": "قاشق غذاخوری",
+     "grams": 20.0,
+     "usda": "1 tbsp"
+    }
+   ]
+  },
+  {
+   "fdcId": 170273,
+   "key": "chocolate_dark_70",
+   "nameFa": "شکلات تلخ (۷۰ تا ۸۵٪ کاکائو)",
+   "nameEn": "Dark chocolate, 70-85% cacao",
+   "category": "sweets",
+   "state": "na",
+   "portions": []
+  },
+  {
+   "fdcId": 167587,
+   "key": "chocolate_milk_candy",
+   "nameFa": "شکلات شیری",
+   "nameEn": "Milk chocolate",
+   "category": "sweets",
+   "state": "na",
+   "portions": []
+  },
+  {
+   "fdcId": 171867,
+   "key": "biscuit_marie",
+   "nameFa": "بیسکویت ساده (ماری)",
+   "nameEn": "Marie biscuits",
+   "category": "sweets",
+   "state": "na",
+   "portions": [
+    {
+     "labelFa": "۵ عدد",
+     "grams": 28.0,
+     "usda": "5 cookie"
+    }
+   ]
+  },
+  {
+   "fdcId": 172706,
+   "key": "cake_sponge",
+   "nameFa": "کیک اسفنجی ساده",
+   "nameEn": "Sponge cake",
+   "category": "sweets",
+   "state": "na",
+   "portions": [
+    {
+     "labelFa": "برش",
+     "grams": 38.0,
+     "usda": "1 piece (1/12 of 16 oz cake)"
+    }
+   ]
+  },
+  {
+   "fdcId": 167996,
+   "key": "halva_tahini",
+   "nameFa": "حلوا ارده (حلوای کنجدی)",
+   "nameEn": "Halvah (tahini halva), plain",
+   "category": "sweets",
+   "state": "na",
+   "portions": []
+  },
+  {
+   "fdcId": 169677,
+   "key": "potato_chips",
+   "nameFa": "چیپس سیب‌زمینی (نمکی)",
+   "nameEn": "Potato chips, plain, salted",
+   "category": "sweets",
+   "state": "na",
+   "portions": [
+    {
+     "labelFa": "۲۲ عدد",
+     "grams": 28.0,
+     "usda": "22 chips"
+    }
+   ]
+  },
+  {
+   "fdcId": 169861,
+   "key": "popcorn_oil_popped",
+   "nameFa": "پاپ‌کورن (با روغن)",
+   "nameEn": "Popcorn, oil-popped, unsalted",
+   "category": "sweets",
+   "state": "na",
+   "portions": [
+    {
+     "labelFa": "پیمانه",
+     "grams": 8.0,
+     "usda": "1 cup"
+    }
+   ]
+  },
+  {
+   "fdcId": 173227,
+   "key": "tea_black_brewed",
+   "nameFa": "چای سیاه دم‌کرده (بدون قند)",
+   "nameEn": "Black tea, brewed",
+   "category": "drinks",
+   "state": "na",
+   "portions": [
+    {
+     "labelFa": "پیمانه",
+     "grams": 237.0,
+     "usda": "1 cup (8 fl oz)"
+    }
+   ]
+  },
+  {
+   "fdcId": 171890,
+   "key": "coffee_brewed",
+   "nameFa": "قهوه‌ی دم‌کرده (بدون شکر)",
+   "nameEn": "Coffee, brewed",
+   "category": "drinks",
+   "state": "na",
+   "portions": [
+    {
+     "labelFa": "پیمانه",
+     "grams": 237.0,
+     "usda": "1 cup (8 fl oz)"
+    }
+   ]
+  },
+  {
+   "fdcId": 169098,
+   "key": "orange_juice_fresh",
+   "nameFa": "آب پرتقال طبیعی",
+   "nameEn": "Orange juice, raw (fresh)",
+   "category": "drinks",
+   "state": "na",
+   "portions": [
+    {
+     "labelFa": "پیمانه",
+     "grams": 248.0,
+     "usda": "1 cup"
+    },
+    {
+     "labelFa": "آب حاصل از یک پرتقال",
+     "grams": 86.0,
+     "usda": "1 fruit yields"
+    }
+   ]
+  },
+  {
+   "fdcId": 173933,
+   "key": "apple_juice",
+   "nameFa": "آب سیب (بدون شکر افزوده)",
+   "nameEn": "Apple juice, unsweetened",
+   "category": "drinks",
+   "state": "na",
+   "portions": [
+    {
+     "labelFa": "پیمانه",
+     "grams": 248.0,
+     "usda": "1 cup"
+    }
+   ]
+  },
+  {
+   "fdcId": 174852,
+   "key": "cola",
+   "nameFa": "نوشابه‌ی کولا",
+   "nameEn": "Cola, regular",
+   "category": "drinks",
+   "state": "na",
+   "portions": [
+    {
+     "labelFa": "قوطی (۳۵۵ میلی‌لیتر)",
+     "grams": 370.0,
+     "usda": "1 can or bottle (12 fl oz)"
+    }
+   ]
+  },
+  {
+   "fdcId": 175099,
+   "key": "cola_diet",
+   "nameFa": "نوشابه‌ی کولای رژیمی",
+   "nameEn": "Diet cola (aspartame)",
+   "category": "drinks",
+   "state": "na",
+   "portions": [
+    {
+     "labelFa": "قوطی (۳۵۵ میلی‌لیتر)",
+     "grams": 355.0,
+     "usda": "1 can can 12 fl oz"
+    }
+   ]
+  },
+  {
+   "fdcId": 174863,
+   "key": "malt_beverage",
+   "nameFa": "ماءالشعیر ساده (بدون الکل)",
+   "nameEn": "Malt beverage, non-alcoholic",
+   "category": "drinks",
+   "state": "na",
+   "portions": [
+    {
+     "labelFa": "پیمانه",
+     "grams": 237.0,
+     "usda": "1 cup"
+    }
+   ]
+  },
+  {
+   "fdcId": 168556,
+   "key": "ketchup",
+   "nameFa": "سس گوجه‌فرنگی (کچاپ)",
+   "nameEn": "Ketchup",
+   "category": "condiments",
+   "state": "na",
+   "portions": [
+    {
+     "labelFa": "قاشق غذاخوری",
+     "grams": 17.0,
+     "usda": "1 tbsp"
+    }
+   ]
+  },
+  {
+   "fdcId": 172234,
+   "key": "mustard",
+   "nameFa": "سس خردل",
+   "nameEn": "Mustard, prepared, yellow",
+   "category": "condiments",
+   "state": "na",
+   "portions": [
+    {
+     "labelFa": "قاشق چای‌خوری",
+     "grams": 5.0,
+     "usda": "1 tsp or 1 packet"
+    }
+   ]
+  },
+  {
+   "fdcId": 174277,
+   "key": "soy_sauce",
+   "nameFa": "سس سویا",
+   "nameEn": "Soy sauce (shoyu)",
+   "category": "condiments",
+   "state": "na",
+   "portions": [
+    {
+     "labelFa": "قاشق غذاخوری",
+     "grams": 16.0,
+     "usda": "1 tbsp"
+    },
+    {
+     "labelFa": "قاشق چای‌خوری",
+     "grams": 5.3,
+     "usda": "1 tsp"
+    }
+   ]
+  },
+  {
+   "fdcId": 173468,
+   "key": "salt",
+   "nameFa": "نمک",
+   "nameEn": "Salt, table",
+   "category": "condiments",
+   "state": "na",
+   "portions": [
+    {
+     "labelFa": "قاشق چای‌خوری",
+     "grams": 6.0,
+     "usda": "1 tsp"
+    }
+   ]
+  },
+  {
+   "fdcId": 172237,
+   "key": "vinegar_white",
+   "nameFa": "سرکه‌ی سفید",
+   "nameEn": "Vinegar, distilled",
+   "category": "condiments",
+   "state": "na",
+   "portions": [
+    {
+     "labelFa": "قاشق غذاخوری",
+     "grams": 14.9,
+     "usda": "1 tbsp"
+    }
+   ]
+  },
+  {
+   "fdcId": 167747,
+   "key": "lemon_juice_fresh",
+   "nameFa": "آب‌لیموی تازه",
+   "nameEn": "Lemon juice, raw",
+   "category": "condiments",
+   "state": "na",
+   "portions": [
+    {
+     "labelFa": "آب حاصل از یک لیمو",
+     "grams": 48.0,
+     "usda": "1 lemon yields"
+    },
+    {
+     "labelFa": "آب حاصل از یک قاچ لیمو",
+     "grams": 5.9,
+     "usda": "1 wedge yields"
+    }
+   ]
+  },
+  {
+   "fdcId": 173180,
+   "key": "whey_protein_powder",
+   "nameFa": "پودر پروتئین وی",
+   "nameEn": "Whey protein powder",
+   "category": "supplements",
+   "state": "na",
+   "portions": [
+    {
+     "labelFa": "یک‌سوم پیمانه",
+     "grams": 32.0,
+     "usda": "0.33 cup"
+    }
+   ]
+  }
+ ],
+ "gaps": [
+  "نان سنگک",
+  "نان بربری",
+  "نان لواش",
+  "نان تافتون",
+  "نان شیرمال",
+  "برنج ایرانی (طارم/هاشمی/فجر)",
+  "برنج باسماتی",
+  "دوغ",
+  "کشک",
+  "قره‌قروت",
+  "پنیر سفید ایرانی (UF / نمکی)",
+  "پنیر لیقوان",
+  "خامه‌ی صبحانه",
+  "سرشیر",
+  "لپه (نخود لپه)",
+  "سویای گوشتی (پروتئین بافت‌دار سویا)",
+  "رشته‌ی آش و رشته‌ی پلویی",
+  "سوسیس و کالباس ایرانی",
+  "ماهی سفید دریای خزر",
+  "شیر ماهی",
+  "ماهی کیلکا",
+  "زرشک",
+  "لیمو عمانی",
+  "آلو بخارا",
+  "توت خشک",
+  "لواشک",
+  "خرمای مضافتی/کبکاب",
+  "خربزه و گرمک ایرانی",
+  "سماق",
+  "نخودچی",
+  "رب انار",
+  "آب‌غوره",
+  "شیره‌ی انگور و شیره‌ی خرما",
+  "گلاب",
+  "حلوای سنتی (آرد، روغن، شکر)",
+  "سوهان",
+  "گز",
+  "باقلوا",
+  "زولبیا و بامیه",
+  "نان برنجی و نان نخودچی",
+  "پشمک",
+  "بستنی سنتی",
+  "فالوده"
+ ]
+}

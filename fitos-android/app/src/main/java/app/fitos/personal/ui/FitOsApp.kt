@@ -26,6 +26,7 @@ import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.compose.LifecycleEventEffect
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavDestination.Companion.hasRoute
@@ -38,6 +39,7 @@ import androidx.navigation.toRoute
 import app.fitos.core.designsystem.component.FitEmoji
 import app.fitos.core.designsystem.icon.FitIcons
 import app.fitos.core.designsystem.theme.FitTheme
+import app.fitos.core.domain.nutrition.Meal
 import app.fitos.core.domain.settings.ThemeMode
 import app.fitos.core.domain.training.VariantKind
 import app.fitos.personal.AppContainer
@@ -51,6 +53,21 @@ import app.fitos.personal.feature.body.MeasurementsViewModel
 import app.fitos.personal.feature.body.SiteHistoryScreen
 import app.fitos.personal.feature.home.HomeScreen
 import app.fitos.personal.feature.home.HomeViewModel
+import app.fitos.personal.feature.nutrition.FoodDetailScreen
+import app.fitos.personal.feature.nutrition.FoodDetailViewModel
+import app.fitos.personal.feature.nutrition.FoodFormScreen
+import app.fitos.personal.feature.nutrition.FoodFormViewModel
+import app.fitos.personal.feature.nutrition.FoodPickerScreen
+import app.fitos.personal.feature.nutrition.FoodPickerViewModel
+import app.fitos.personal.feature.nutrition.MealPlanScreen
+import app.fitos.personal.feature.nutrition.MealPlanViewModel
+import app.fitos.personal.feature.nutrition.NutritionScreen
+import app.fitos.personal.feature.nutrition.NutritionViewModel
+import app.fitos.personal.feature.nutrition.PickerMode
+import app.fitos.personal.feature.nutrition.RecipeEditorScreen
+import app.fitos.personal.feature.nutrition.RecipeEditorViewModel
+import app.fitos.personal.feature.nutrition.SavedMealsScreen
+import app.fitos.personal.feature.nutrition.SavedMealsViewModel
 import app.fitos.personal.feature.onboarding.OnboardingScreen
 import app.fitos.personal.feature.onboarding.OnboardingViewModel
 import app.fitos.personal.feature.placeholder.ComingSoonScreen
@@ -117,6 +134,13 @@ import kotlinx.serialization.Serializable
 @Serializable data object SessionRoute
 @Serializable data class SessionDetailRoute(val sessionId: String, val justFinished: Boolean = false)
 @Serializable data object SessionHistoryRoute
+/** [mode] is a [PickerMode] name; [day] an epoch day and [meal] a [Meal] code where the mode needs them. */
+@Serializable data class FoodPickerRoute(val mode: String, val day: Long? = null, val meal: String? = null)
+@Serializable data class FoodDetailRoute(val foodId: String)
+@Serializable data class FoodFormRoute(val foodId: String? = null)
+@Serializable data class RecipeEditorRoute(val recipeId: String? = null)
+@Serializable data object SavedMealsRoute
+@Serializable data object MealPlanRoute
 
 /** The five tabs of the bottom navigation bar, in reading order (right to left on screen). */
 private enum class TopLevel(val route: Any, val routeClass: KClass<*>, val icon: ImageVector, @param:StringRes val label: Int) {
@@ -189,7 +213,7 @@ fun FitOsApp(container: AppContainer, startWithSetup: Boolean) {
             }
             composable<HomeRoute> {
                 HomeScreen(
-                    viewModel = viewModel { HomeViewModel(data.profiles, data.targets, data.weights, data.goals, data.programs, data.workouts) },
+                    viewModel = viewModel { HomeViewModel(data.profiles, data.targets, data.weights, data.goals, data.programs, data.workouts, data.foodLog) },
                     today = today,
                     now = { LocalTime.now(clock) },
                     onOpenSettings = { navController.navigate(SettingsRoute) },
@@ -312,7 +336,74 @@ fun FitOsApp(container: AppContainer, startWithSetup: Boolean) {
                 )
             }
             composable<NutritionRoute> {
-                ComingSoonScreen(R.string.nav_nutrition, FitEmoji.SALAD, R.string.soon_nutrition_title, R.string.soon_nutrition_body)
+                NutritionScreen(
+                    viewModel = viewModel { NutritionViewModel(data.foods, data.foodLog, data.savedMeals, data.targets, data.mealPlans, today) },
+                    today = today,
+                    onAdd = { day, meal -> navController.navigate(FoodPickerRoute(PickerMode.LOG.name, day.toEpochDay(), meal.code)) },
+                    onOpenTargets = { navController.navigate(TargetsRoute) },
+                    onOpenPlan = { navController.navigate(MealPlanRoute) },
+                    onOpenFoods = { navController.navigate(FoodPickerRoute(PickerMode.BROWSE.name)) },
+                    onOpenSavedMeals = { navController.navigate(SavedMealsRoute) },
+                )
+            }
+            composable<FoodPickerRoute> { entry ->
+                val route = entry.toRoute<FoodPickerRoute>()
+                val planName = stringResource(R.string.plan_name_default)
+                FoodPickerScreen(
+                    viewModel = viewModel {
+                        FoodPickerViewModel(
+                            data.foods, data.savedMeals, data.foodLog, data.mealPlans, PickerMode.valueOf(route.mode),
+                            route.day?.let(LocalDate::ofEpochDay), route.meal?.let(Meal::fromCode), planName,
+                        )
+                    },
+                    onBack = { navController.popBackStack() },
+                    onOpenFood = { navController.navigate(FoodDetailRoute(it)) },
+                    onNewFood = { navController.navigate(FoodFormRoute()) },
+                    onNewRecipe = { navController.navigate(RecipeEditorRoute()) },
+                    onIngredient = { id, grams ->
+                        navController.previousBackStackEntry?.savedStateHandle?.set(INGREDIENT_KEY, "$id|$grams")
+                        navController.popBackStack()
+                    },
+                )
+            }
+            composable<FoodDetailRoute> { entry ->
+                val route = entry.toRoute<FoodDetailRoute>()
+                FoodDetailScreen(
+                    viewModel = viewModel { FoodDetailViewModel(data.foods, route.foodId) },
+                    onBack = { navController.popBackStack() },
+                    onEdit = { food -> navController.navigate(if (food.isRecipe) RecipeEditorRoute(food.id) else FoodFormRoute(food.id)) },
+                )
+            }
+            composable<FoodFormRoute> { entry ->
+                val route = entry.toRoute<FoodFormRoute>()
+                FoodFormScreen(
+                    viewModel = viewModel { FoodFormViewModel(data.foods, route.foodId) },
+                    onBack = { navController.popBackStack() },
+                    onSaved = { navController.popBackStack() },
+                )
+            }
+            composable<RecipeEditorRoute> { entry ->
+                val route = entry.toRoute<RecipeEditorRoute>()
+                val picked by entry.savedStateHandle.getStateFlow<String?>(INGREDIENT_KEY, null).collectAsStateWithLifecycle()
+                RecipeEditorScreen(
+                    viewModel = viewModel { RecipeEditorViewModel(data.foods, route.recipeId) },
+                    pickedIngredient = picked?.split('|')?.let { (id, g) -> id to g.toDouble() },
+                    onPicked = { entry.savedStateHandle[INGREDIENT_KEY] = null },
+                    onBack = { navController.popBackStack() },
+                    onAddIngredient = { navController.navigate(FoodPickerRoute(PickerMode.INGREDIENT.name)) },
+                    onSaved = { navController.popBackStack() },
+                )
+            }
+            composable<SavedMealsRoute> {
+                SavedMealsScreen(viewModel { SavedMealsViewModel(data.savedMeals) }, onBack = { navController.popBackStack() })
+            }
+            composable<MealPlanRoute> {
+                val planName = stringResource(R.string.plan_name_default)
+                MealPlanScreen(
+                    viewModel = viewModel { MealPlanViewModel(data.mealPlans, data.targets, today, planName) },
+                    onBack = { navController.popBackStack() },
+                    onAdd = { meal -> navController.navigate(FoodPickerRoute(PickerMode.PLAN.name, meal = meal.code)) },
+                )
             }
             composable<BodyRoute> {
                 BodyScreen(
@@ -416,3 +507,6 @@ private tailrec fun Context.findActivity(): Activity? = when (this) {
     is ContextWrapper -> baseContext.findActivity()
     else -> null
 }
+
+/** Hands an ingredient picked in the food picker back to the recipe editor. */
+private const val INGREDIENT_KEY = "ingredient"

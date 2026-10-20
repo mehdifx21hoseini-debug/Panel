@@ -223,4 +223,67 @@ class ScreenRenderTest {
     @Test fun homeOpenSession() = renderWith("12-home-open-session", program = true, seed = { c, k -> history(c, k, open = true) }) {
         compose.waitForText("جلسه‌ی نیمه‌تمام: سینه و پشت")
     }
+
+    /** A realistic day: breakfast, lunch and a snack from the built-in bank, plus a plan for lunch. */
+    private suspend fun foodDay(container: AppContainer, clock: TestApp.SettableClock) {
+        val foods = container.data.foods.all.first().associateBy { it.builtinKey }
+        val log = container.data.foodLog
+        fun f(key: String) = foods.getValue(key)
+        fun unit(key: String, n: Double, i: Int = 0) = app.fitos.core.domain.nutrition.Amount.of(f(key).portions[i], n)
+        val day = TestApp.today
+        clock.now = TestApp.clock.instant().minusSeconds(3 * 3600)
+        log.add(day, app.fitos.core.domain.nutrition.Meal.BREAKFAST, f("egg_hard_boiled").id, unit("egg_hard_boiled", 2.0))
+        log.add(day, app.fitos.core.domain.nutrition.Meal.BREAKFAST, f("bread_pita_white").id, unit("bread_pita_white", 1.0))
+        log.add(day, app.fitos.core.domain.nutrition.Meal.BREAKFAST, f("cheese_feta").id, app.fitos.core.domain.nutrition.Amount(40.0))
+        log.add(day, app.fitos.core.domain.nutrition.Meal.BREAKFAST, f("tea_black_brewed").id, unit("tea_black_brewed", 1.0))
+        log.add(day, app.fitos.core.domain.nutrition.Meal.LUNCH, f("rice_white_long_cooked").id, unit("rice_white_long_cooked", 1.5))
+        log.add(day, app.fitos.core.domain.nutrition.Meal.LUNCH, f("chicken_breast_grilled").id, app.fitos.core.domain.nutrition.Amount(180.0))
+        log.add(day, app.fitos.core.domain.nutrition.Meal.LUNCH, f("yogurt_plain_lowfat").id, app.fitos.core.domain.nutrition.Amount(150.0))
+        log.add(day, app.fitos.core.domain.nutrition.Meal.SNACK, f("apple").id, unit("apple", 1.0))
+        log.add(day, app.fitos.core.domain.nutrition.Meal.SNACK, f("almonds").id, app.fitos.core.domain.nutrition.Amount(25.0))
+        val plans = container.data.mealPlans
+        val plan = plans.ensureActive("برنامه‌ی روزانه")
+        plans.addItem(plan, app.fitos.core.domain.nutrition.Meal.LUNCH, f("rice_white_long_cooked").id, 200.0)
+        plans.addItem(plan, app.fitos.core.domain.nutrition.Meal.LUNCH, f("chicken_breast_grilled").id, 200.0)
+        plans.addItem(plan, app.fitos.core.domain.nutrition.Meal.DINNER, f("lentils_boiled").id, 250.0)
+    }
+
+    private fun openNutrition() {
+        compose.onNode(androidx.compose.ui.test.hasText("تغذیه") and androidx.compose.ui.test.isSelectable()).performClick()
+        compose.waitForText("صبحانه")
+    }
+
+    @Test fun nutritionDay() = renderWith("70-nutrition", seed = { c, k -> foodDay(c, k) }) { openNutrition(); compose.waitForText("تخم‌مرغ آب‌پز (سفت)") }
+    @Test fun nutritionDayDark() = renderWith("70-nutrition-dark", ThemeMode.DARK, seed = { c, k -> foodDay(c, k) }) { openNutrition(); compose.waitForText("تخم‌مرغ آب‌پز (سفت)") }
+    @Test fun nutritionMeals() = renderWith("71-nutrition-meals", seed = { c, k -> foodDay(c, k) }) {
+        openNutrition()
+        compose.waitForText("برنامه در برابر مصرف")
+    }
+    @Test fun nutritionEmpty() = render("72-nutrition-empty") { openNutrition() }
+    @Test fun foodPicker() = render("73-food-picker") {
+        openNutrition()
+        compose.waitForDescription("افزودن به ناهار").performClick()
+        click("همه")
+        compose.waitForText("برنج سفید دانه‌بلند، خام")
+    }
+    @Test fun foodDetail() = render("74-food-detail") {
+        openNutrition()
+        compose.waitForDescription("بانک غذا").performClick()
+        compose.field("جست‌وجو").performTextInput("سینه‌ی مرغ")
+        compose.waitFor(androidx.compose.ui.test.hasText("سینه‌ی مرغ بدون پوست، کبابی (گریل)") and androidx.compose.ui.test.hasClickAction() and !androidx.compose.ui.test.hasSetTextAction()).performClick()
+        compose.waitForText("منبع داده")
+    }
+    @Test fun foodForm() = render("75-food-form") {
+        openNutrition()
+        compose.waitForDescription("بانک غذا").performClick()
+        click("غذای جدید")
+        compose.field("نام غذا")
+    }
+    @Test fun mealPlan() = renderWith("76-meal-plan", seed = { c, k -> foodDay(c, k) }) {
+        openNutrition()
+        compose.waitForText("برنامه در برابر مصرف")
+        click("ویرایش")
+        compose.waitForText("کل روز")
+    }
+    @Test fun homeWithFood() = renderWith("13-home-food", seed = { c, k -> foodDay(c, k) }) { compose.waitForText("هدف‌های امروز") }
 }

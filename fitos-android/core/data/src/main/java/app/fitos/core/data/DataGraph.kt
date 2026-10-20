@@ -7,6 +7,10 @@ import app.fitos.core.data.backup.BackupCrypto
 import app.fitos.core.data.backup.RoomBackupService
 import app.fitos.core.data.db.FitDatabase
 import app.fitos.core.data.repository.RoomExerciseRepository
+import app.fitos.core.data.repository.RoomFoodLogRepository
+import app.fitos.core.data.repository.RoomFoodRepository
+import app.fitos.core.data.repository.RoomMealPlanRepository
+import app.fitos.core.data.repository.RoomSavedMealRepository
 import app.fitos.core.data.repository.RoomMeasurementRepository
 import app.fitos.core.data.repository.RoomProgramRepository
 import app.fitos.core.data.repository.RoomNutritionTargetRepository
@@ -18,7 +22,11 @@ import app.fitos.core.data.repository.RoomWorkoutRepository
 import app.fitos.core.domain.backup.BackupService
 import app.fitos.core.domain.body.MeasurementRepository
 import app.fitos.core.domain.body.WeightRepository
+import app.fitos.core.domain.nutrition.FoodLogRepository
+import app.fitos.core.domain.nutrition.FoodRepository
+import app.fitos.core.domain.nutrition.MealPlanRepository
 import app.fitos.core.domain.nutrition.NutritionTargetRepository
+import app.fitos.core.domain.nutrition.SavedMealRepository
 import app.fitos.core.domain.profile.ProfileRepository
 import app.fitos.core.domain.profile.SetupRepository
 import app.fitos.core.domain.profile.WeightGoalRepository
@@ -50,7 +58,19 @@ class DataGraph private constructor(
     val exercises: ExerciseRepository = exerciseRepo
     val programs: ProgramRepository = RoomProgramRepository(db, exerciseRepo, clock)
     val workouts: WorkoutRepository = RoomWorkoutRepository(db, clock)
-    val backup: BackupService = RoomBackupService(context.applicationContext, db, settings, clock, app, backupIterations, afterRestore = exerciseRepo::reseed)
+    private val foodRepo = RoomFoodRepository(db, clock)
+    val foods: FoodRepository = foodRepo
+    val foodLog: FoodLogRepository = RoomFoodLogRepository(db, clock)
+    val savedMeals: SavedMealRepository = RoomSavedMealRepository(db, clock)
+    val mealPlans: MealPlanRepository = RoomMealPlanRepository(db, clock)
+    val backup: BackupService = RoomBackupService(
+        context.applicationContext, db, settings, clock, app, backupIterations,
+        // An older backup may lack built-in exercises or foods.
+        afterRestore = {
+            exerciseRepo.reseed()
+            foodRepo.reseed()
+        },
+    )
 
     fun close() = db.close()
 

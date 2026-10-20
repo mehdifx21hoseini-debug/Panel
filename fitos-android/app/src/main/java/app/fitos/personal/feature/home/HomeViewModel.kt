@@ -4,6 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.fitos.core.domain.body.WeightEntry
 import app.fitos.core.domain.body.WeightRepository
+import app.fitos.core.domain.nutrition.FoodLogRepository
+import app.fitos.core.domain.nutrition.NutrientTotals
 import app.fitos.core.domain.nutrition.NutritionTarget
 import app.fitos.core.domain.nutrition.NutritionTargetRepository
 import app.fitos.core.domain.profile.ProfileRepository
@@ -35,6 +37,8 @@ data class HomeState(
     val goal: WeightGoal? = null,
     /** Null while loading. */
     val training: HomeTraining? = null,
+    /** What was logged today; null when nothing was. */
+    val eaten: NutrientTotals? = null,
 )
 
 /** The active program's next day (both null without an active program), an open session, and whether today is done. */
@@ -47,6 +51,7 @@ class HomeViewModel(
     goals: WeightGoalRepository,
     programs: ProgramRepository,
     workouts: WorkoutRepository,
+    foodLog: FoodLogRepository,
 ) : ViewModel() {
     private val today = MutableStateFlow<LocalDate?>(null)
 
@@ -58,7 +63,7 @@ class HomeViewModel(
     @OptIn(ExperimentalCoroutinesApi::class)
     val state: StateFlow<HomeState> = combine(
         profiles.profile,
-        today.filterNotNull().flatMapLatest { targets.effectiveOn(it) },
+        today.filterNotNull().flatMapLatest { d -> combine(targets.effectiveOn(d), foodLog.totals(d, d)) { t, totals -> t to totals[d] } },
         weights.latest,
         goals.activeGoal,
         combine(
@@ -70,8 +75,11 @@ class HomeViewModel(
             val program = pair?.first
             HomeTraining(program?.id, program?.let { Schedule.nextAfter(it, pair.second, day) }, open, history.any { it.day == day })
         },
-    ) { profile, target, weight, goal, training ->
-        HomeState(name = profile?.displayName, target = target, latestWeight = weight, goal = goal, training = training)
+    ) { profile, targetAndEaten, weight, goal, training ->
+        HomeState(
+            name = profile?.displayName, target = targetAndEaten.first, latestWeight = weight, goal = goal, training = training,
+            eaten = targetAndEaten.second?.takeIf { it.count > 0 },
+        )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), HomeState())
 
     fun addWeight(input: WeightInput) {
