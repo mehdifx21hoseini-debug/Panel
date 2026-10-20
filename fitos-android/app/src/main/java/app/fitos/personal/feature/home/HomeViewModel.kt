@@ -18,6 +18,8 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
+import app.fitos.personal.feature.body.WeightInput
 
 data class HomeState(
     val name: String? = null,
@@ -29,7 +31,7 @@ data class HomeState(
 class HomeViewModel(
     profiles: ProfileRepository,
     targets: NutritionTargetRepository,
-    weights: WeightRepository,
+    private val weights: WeightRepository,
     goals: WeightGoalRepository,
 ) : ViewModel() {
     private val today = MutableStateFlow<LocalDate?>(null)
@@ -48,4 +50,8 @@ class HomeViewModel(
     ) { profile, target, weight, goal ->
         HomeState(name = profile?.displayName, target = target, latestWeight = weight, goal = goal)
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), HomeState())
+
+    fun addWeight(input: WeightInput) {
+        viewModelScope.launch { weights.add(input.weightKg, input.day, input.time, input.condition, input.note) }
+    }
 }

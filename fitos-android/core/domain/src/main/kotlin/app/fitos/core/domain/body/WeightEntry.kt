@@ -3,6 +3,7 @@ package app.fitos.core.domain.body
 import app.fitos.core.domain.common.DataSource
 import java.time.Instant
 import java.time.LocalDate
+import java.time.LocalTime
 import java.time.ZoneId
 import kotlinx.coroutines.flow.Flow
 
@@ -35,5 +36,19 @@ data class WeightEntry(
 interface WeightRepository {
     val latest: Flow<WeightEntry?>
 
+    /** Every weigh-in that is not deleted, oldest first. */
+    val all: Flow<List<WeightEntry>>
+
+    /** Logs a weigh-in now. */
     suspend fun add(weightKg: Double, condition: WeightCondition?, note: String?): WeightEntry
+
+    /** Logs a weigh-in at a chosen local day and time (for entries made later). */
+    suspend fun add(weightKg: Double, day: LocalDate, time: LocalTime, condition: WeightCondition?, note: String?): WeightEntry
+
+    suspend fun update(id: String, weightKg: Double, day: LocalDate, time: LocalTime, condition: WeightCondition?, note: String?)
+
+    /** Soft delete; [restore] brings it back (used by "undo"). */
+    suspend fun delete(id: String)
+
+    suspend fun restore(id: String)
 }

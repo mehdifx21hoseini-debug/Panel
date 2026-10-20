@@ -25,9 +25,13 @@ class ScreenRenderTest {
 
     @get:Rule val compose = createAndroidComposeRule<ComponentActivity>()
 
-    private fun render(name: String, theme: ThemeMode = ThemeMode.LIGHT, setupDone: Boolean = true, steps: () -> Unit = {}) {
+    private fun render(name: String, theme: ThemeMode = ThemeMode.LIGHT, setupDone: Boolean = true, steps: () -> Unit = {}) =
+        renderWith(name, theme, setupDone, weights = 0, steps)
+
+    private fun renderWith(name: String, theme: ThemeMode = ThemeMode.LIGHT, setupDone: Boolean = true, weights: Int, steps: () -> Unit = {}) {
         val container = TestApp.container(theme)
         if (setupDone) TestApp.completeSetup(container)
+        if (weights > 0) TestApp.addWeights(container, weights)
         compose.setContent { FitOsRoot(themeMode = theme, container = container, startWithSetup = !setupDone) }
         steps()
         compose.waitForIdle()
@@ -70,6 +74,22 @@ class ScreenRenderTest {
     @Test fun homeDark() = render("10-home-dark", ThemeMode.DARK) { compose.waitForText("هدف‌های امروز") }
     @Test fun settings() = render("20-settings") { compose.waitForDescription("تنظیمات").performClick() }
     @Test fun targetsEdit() = render("21-targets-edit") { click("ویرایش"); compose.waitForText("از سه‌شنبه ۲۸ مهر ۱۴۰۵") }
+    @Test fun bodyEmptyGoal() = render("30-body-new") { compose.onNode(androidx.compose.ui.test.hasText("بدن") and androidx.compose.ui.test.isSelectable()).performClick(); compose.waitForText("آخرین وزن") }
+    @Test fun bodyWithData() = renderWith("31-body-data", weights = 45) { compose.onNode(androidx.compose.ui.test.hasText("بدن") and androidx.compose.ui.test.isSelectable()).performClick(); compose.waitForText("آخرین وزن") }
+    @Test fun bodyWithDataDark() = renderWith("31-body-data-dark", ThemeMode.DARK, weights = 45) { compose.onNode(androidx.compose.ui.test.hasText("بدن") and androidx.compose.ui.test.isSelectable()).performClick(); compose.waitForText("آخرین وزن") }
+    @Test fun bodyScrolled() = renderWith("32-body-goal", weights = 45) {
+        compose.onNode(androidx.compose.ui.test.hasText("بدن") and androidx.compose.ui.test.isSelectable()).performClick()
+        compose.waitForText("هدف وزن")
+    }
+    @Test fun measurementsEntry() = render("34-measurements") {
+        compose.onNode(androidx.compose.ui.test.hasText("بدن") and androidx.compose.ui.test.isSelectable()).performClick()
+        click("ثبت اندازه‌ها")
+        compose.field("دور شکم (روی ناف)")
+    }
+    @Test fun backup() = render("40-backup") {
+        compose.waitForDescription("تنظیمات").performClick()
+        click("پشتیبان‌گیری و بازیابی")
+    }
     @Test fun profileEdit() = render("22-profile-edit") {
         compose.waitForDescription("تنظیمات").performClick()
         click("مشخصات و هدف")

@@ -18,8 +18,9 @@ android {
     testOptions {
         unitTests.isIncludeAndroidResources = true
     }
-    // Exported schemas double as test assets, so every version can be created and migrated in tests.
-    sourceSets.getByName("test").assets.srcDir(files("$projectDir/schemas"))
+    // Exported schemas ship as assets: restore rebuilds a backup's schema version from them,
+    // and migration tests create every version from them.
+    sourceSets.getByName("main").assets.srcDir(files("$projectDir/schemas"))
 }
 
 // Every schema version is committed under schemas/ and checked by migration tests.

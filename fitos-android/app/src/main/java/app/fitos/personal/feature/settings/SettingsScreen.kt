@@ -49,6 +49,7 @@ import app.fitos.core.designsystem.theme.FitTheme
 import app.fitos.core.domain.format.PersianNumbers
 import app.fitos.core.domain.settings.SettingsRepository
 import app.fitos.core.domain.settings.ThemeMode
+import app.fitos.core.domain.time.DateFormats
 import app.fitos.personal.BuildConfig
 import app.fitos.personal.R
 import kotlinx.coroutines.flow.SharingStarted
@@ -81,7 +82,13 @@ private val ThemeMode.icon: ImageVector
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SettingsScreen(settingsRepository: SettingsRepository, onBack: () -> Unit, onOpenProfile: () -> Unit, onOpenTargets: () -> Unit) {
+fun SettingsScreen(
+    settingsRepository: SettingsRepository,
+    onBack: () -> Unit,
+    onOpenProfile: () -> Unit,
+    onOpenTargets: () -> Unit,
+    onOpenBackup: () -> Unit,
+) {
     val viewModel: SettingsViewModel = viewModel { SettingsViewModel(settingsRepository) }
     val mode by viewModel.themeMode.collectAsStateWithLifecycle()
     val colors = FitTheme.colors
@@ -115,6 +122,18 @@ fun SettingsScreen(settingsRepository: SettingsRepository, onBack: () -> Unit, o
                 SettingsRow(FitEmoji.MUSCLE_FLAG, R.string.settings_profile_row, R.string.settings_profile_row_body, onOpenProfile)
                 HorizontalDivider(color = colors.outlineVariant)
                 SettingsRow(FitEmoji.BULLSEYE, R.string.settings_targets_row, R.string.settings_targets_row_body, onOpenTargets)
+            }
+
+            SectionLabel(R.string.settings_backup)
+            FitCard {
+                val last by settingsRepository.lastBackupAt.collectAsStateWithLifecycle(initialValue = null)
+                SettingsRow(
+                    FitEmoji.FLOPPY,
+                    R.string.settings_backup_row,
+                    last?.let { stringResource(R.string.backup_last, DateFormats.longDate(it.atZone(java.time.ZoneId.systemDefault()).toLocalDate())) }
+                        ?: stringResource(R.string.backup_never),
+                    onOpenBackup,
+                )
             }
 
             SectionLabel(R.string.settings_appearance)
@@ -169,7 +188,11 @@ fun SettingsScreen(settingsRepository: SettingsRepository, onBack: () -> Unit, o
 }
 
 @Composable
-private fun SettingsRow(emoji: FitEmoji, @StringRes title: Int, @StringRes body: Int, onClick: () -> Unit) {
+private fun SettingsRow(emoji: FitEmoji, @StringRes title: Int, @StringRes body: Int, onClick: () -> Unit) =
+    SettingsRow(emoji, title, stringResource(body), onClick)
+
+@Composable
+private fun SettingsRow(emoji: FitEmoji, @StringRes title: Int, body: String, onClick: () -> Unit) {
     val colors = FitTheme.colors
     Row(
         Modifier
@@ -184,7 +207,7 @@ private fun SettingsRow(emoji: FitEmoji, @StringRes title: Int, @StringRes body:
         EmojiTile(emoji, size = 40.dp, tint = colors.primaryContainer)
         Column(Modifier.weight(1f)) {
             Text(stringResource(title), style = MaterialTheme.typography.titleSmall)
-            Text(stringResource(body), style = MaterialTheme.typography.bodySmall, color = colors.onSurfaceVariant)
+            Text(body, style = MaterialTheme.typography.bodySmall, color = colors.onSurfaceVariant)
         }
         Icon(FitIcons.ChevronRight, contentDescription = null, tint = colors.onSurfaceVariant)
     }

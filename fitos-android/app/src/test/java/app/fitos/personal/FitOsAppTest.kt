@@ -130,7 +130,7 @@ class FitOsAppTest {
         tab("تغذیه").performClick()
         compose.onNodeWithText("غذا و کالری").assertIsDisplayed()
         tab("بدن").performClick()
-        compose.onNodeWithText("وزن و اندازه‌ها").assertIsDisplayed()
+        compose.waitForText("آخرین وزن").assertIsDisplayed()
     }
 
     @Test

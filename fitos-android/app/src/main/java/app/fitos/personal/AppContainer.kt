@@ -2,6 +2,7 @@ package app.fitos.personal
 
 import android.content.Context
 import app.fitos.core.data.DataGraph
+import app.fitos.core.data.backup.AppInfo
 import app.fitos.core.data.settings.DataStoreSettingsRepository
 import app.fitos.core.domain.settings.SettingsRepository
 import java.time.Clock
@@ -15,7 +16,9 @@ class AppContainer(
     companion object {
         fun create(context: Context): AppContainer {
             val clock = Clock.systemDefaultZone()
-            return AppContainer(DataStoreSettingsRepository(context), DataGraph.open(context, clock), clock)
+            val settings = DataStoreSettingsRepository(context)
+            val app = AppInfo(BuildConfig.VERSION_NAME, BuildConfig.VERSION_CODE)
+            return AppContainer(settings, DataGraph.open(context, clock, settings, app), clock)
         }
     }
 }

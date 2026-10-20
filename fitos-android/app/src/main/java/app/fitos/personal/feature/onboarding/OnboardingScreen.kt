@@ -43,6 +43,7 @@ import app.fitos.core.designsystem.component.FitCard
 import app.fitos.core.designsystem.component.FitEmoji
 import app.fitos.core.designsystem.component.FitNote
 import app.fitos.core.designsystem.component.FitPrimaryButton
+import app.fitos.core.designsystem.component.FitSecondaryButton
 import app.fitos.core.designsystem.component.FitTextButton
 import app.fitos.core.designsystem.icon.FitIcons
 import app.fitos.core.designsystem.theme.FitSpacing
@@ -56,7 +57,7 @@ import app.fitos.personal.feature.targets.TargetFields
 import app.fitos.personal.ui.Fmt
 
 @Composable
-fun OnboardingScreen(viewModel: OnboardingViewModel, onFinished: () -> Unit) {
+fun OnboardingScreen(viewModel: OnboardingViewModel, onFinished: () -> Unit, onRestore: () -> Unit) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     LaunchedEffect(state.done) { if (state.done) onFinished() }
     BackHandler(enabled = state.step != OnboardingStep.WELCOME) { viewModel.back() }
@@ -127,6 +128,9 @@ fun OnboardingScreen(viewModel: OnboardingViewModel, onFinished: () -> Unit) {
                 enabled = !state.saving,
                 modifier = Modifier.fillMaxWidth(),
             )
+            if (state.step == OnboardingStep.WELCOME) {
+                FitSecondaryButton(stringResource(R.string.welcome_restore), onClick = onRestore, icon = FitIcons.Upload, modifier = Modifier.fillMaxWidth())
+            }
         }
     }
 }

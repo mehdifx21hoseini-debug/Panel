@@ -15,7 +15,7 @@
     <string name="home_meter_description">پیشرفت امروز %1$s. هنوز چیزی ثبت نشده است.</string>
     <string name="home_not_logged">ثبت نشده</string>
     <string name="home_start_title">ثبت روزانه در راه است</string>
-    <string name="home_start_body">ثبت وزن در مرحله‌ی بعد اضافه می‌شود و بعد از آن تمرین، غذا و عادت‌ها. تا وقتی چیزی ثبت نکنی، هیچ عددی ساختگی نشان داده نمی‌شود.</string>
+    <string name="home_start_body">تمرین، غذا و عادت‌ها مرحله به مرحله به همین صفحه اضافه می‌شوند. تا وقتی چیزی ثبت نکنی، هیچ عددی ساختگی نشان داده نمی‌شود.</string>
 
     <string name="module_training">تمرین</string>
     <string name="module_calories">کالری</string>
@@ -28,8 +28,6 @@
     <string name="soon_training_body">برنامه‌های تمرینی، حالت جلسه، رکوردها و پیشرفت وزنه‌ها در مرحله ۳ و ۴ ساخته می‌شود.</string>
     <string name="soon_nutrition_title">غذا و کالری</string>
     <string name="soon_nutrition_body">بانک غذا، دستور پخت، وعده‌های ذخیره‌شده و هدف‌های روزانه در مرحله ۵ ساخته می‌شود.</string>
-    <string name="soon_body_title">وزن و اندازه‌ها</string>
-    <string name="soon_body_body">ثبت وزن، دورها، نمودارها و عکس‌های خصوصی در مرحله ۲ ساخته می‌شود.</string>
     <string name="soon_habits_title">عادت‌ها، آب و خواب</string>
     <string name="soon_habits_body">عادت‌ها، یادآورها و برگشت به برنامه در مرحله ۶ ساخته می‌شود.</string>
 
@@ -198,4 +196,128 @@
     <string name="home_goal_remaining">%1$s کیلوگرم تا هدف</string>
     <string name="home_goal_reached">به هدف رسیدی</string>
     <string name="home_goal_none">هدف وزنی تعیین نشده است.</string>
+
+    <!-- Body tab -->
+    <string name="body_title">بدن</string>
+    <string name="body_log_weight">ثبت وزن</string>
+    <string name="body_latest">آخرین وزن</string>
+    <string name="body_trend">وزن روند: %1$s کیلوگرم</string>
+    <string name="body_rate">%1$s کیلوگرم در هفته</string>
+    <string name="body_rate_label">سرعت تغییر (۴ هفته‌ی اخیر)</string>
+    <string name="body_rate_unknown">برای سرعت تغییر، دست‌کم ۶ روز وزن‌کشی در دو هفته لازم است.</string>
+    <string name="body_trend_note">وزن روند، نوسان روزانه (آب، نمک، غذا) را صاف می‌کند؛ تصمیم‌ها بر اساس آن است، نه یک روز.</string>
+    <string name="body_empty_title">هنوز وزنی ثبت نشده</string>
+    <string name="body_empty_body">با اولین ثبت، روند و نمودار شروع می‌شود. بهتر است هر روز صبح، ناشتا و بعد از دستشویی وزن کنی.</string>
+    <string name="chart_title">نمودار وزن</string>
+    <string name="range_month">۱ ماه</string>
+    <string name="range_quarter">۳ ماه</string>
+    <string name="range_year">۱ سال</string>
+    <string name="range_all">همه</string>
+    <string name="chart_not_enough">برای نمودار، دست‌کم ۳ روز وزن‌کشی در این بازه لازم است. تا الان: %1$s روز.</string>
+    <string name="chart_description">نمودار وزن از %1$s تا %2$s. آخرین وزن روند %3$s کیلوگرم.</string>
+    <string name="chart_goal">هدف %1$s</string>
+    <string name="chart_tooltip">%1$s · %2$s کیلوگرم</string>
+    <string name="weekly_title">میانگین هفتگی</string>
+    <string name="weekly_row">هفته‌ی %1$s</string>
+    <string name="weekly_days">%1$s روز</string>
+    <string name="history_title">همه‌ی ثبت‌ها</string>
+    <string name="weight_deleted">وزن حذف شد.</string>
+    <string name="action_undo">بازگردانی</string>
+    <string name="goal_card_title">هدف وزن</string>
+    <string name="goal_card_none">هدف وزنی نداری. از تنظیمات، «مشخصات و هدف» می‌توانی تعیینش کنی.</string>
+    <string name="goal_start">شروع</string>
+    <string name="goal_now">الان</string>
+    <string name="goal_target">هدف</string>
+    <string name="goal_progress">%1$s٪ از مسیر</string>
+    <string name="goal_review_due">زمان بازبینی هدف رسیده. نتیجه را ببین و هدف بعدی را تعیین کن، یا زمان را تمدید کن.</string>
+    <string name="goal_new">تعیین هدف جدید</string>
+    <string name="goal_extend">تمدید ۴ هفته</string>
+    <string name="measurements_title">اندازه‌ها</string>
+    <string name="measurements_log">ثبت اندازه‌ها</string>
+    <string name="measurements_empty">هنوز اندازه‌ای ثبت نشده. دور شکم، روند چربی را بهتر از وزن نشان می‌دهد.</string>
+    <string name="measurement_change">%1$s از %2$s</string>
+    <string name="measurement_others">%1$s محل دیگر بدون ثبت</string>
+    <string name="value_cm">%1$s سانتی‌متر</string>
+
+    <!-- Weight sheet -->
+    <string name="weight_sheet_add">ثبت وزن</string>
+    <string name="weight_sheet_edit">ویرایش وزن</string>
+    <string name="field_weight_value">وزن</string>
+    <string name="field_date">تاریخ</string>
+    <string name="field_time">ساعت</string>
+    <string name="field_condition">شرایط وزن‌کشی</string>
+    <string name="condition_fasted">ناشتا</string>
+    <string name="condition_after_meal">بعد از غذا</string>
+    <string name="condition_other">سایر</string>
+    <string name="field_note">یادداشت</string>
+    <string name="action_delete">حذف</string>
+
+    <!-- Measurements entry and history -->
+    <string name="measurements_entry_title">ثبت اندازه‌ها</string>
+    <string name="measurements_entry_hint">فقط محل‌هایی را که اندازه گرفتی پر کن. متر را صاف و بدون فشار نگه دار.</string>
+    <string name="measurements_none_filled">دست‌کم یک اندازه وارد کن.</string>
+    <string name="measurement_range">عددی بین ۱۰ تا ۲۵۰ سانتی‌متر وارد کن.</string>
+    <string name="sites_manage">محل‌های اندازه‌گیری</string>
+    <string name="site_add">افزودن محل</string>
+    <string name="site_name">نام محل</string>
+    <string name="site_hidden">پنهان</string>
+    <string name="site_history_empty">برای این محل هنوز چیزی ثبت نشده.</string>
+    <string name="measurement_edit">ویرایش اندازه</string>
+    <string name="measurement_delete_confirm">این اندازه حذف شود؟</string>
+    <string name="chart_not_enough_short">برای نمودار، دست‌کم ۳ ثبت لازم است.</string>
+
+    <!-- Backup -->
+    <string name="backup_title">پشتیبان‌گیری و بازیابی</string>
+    <string name="backup_intro">پشتیبان یک فایل است که خودت نگه می‌داری؛ مثلاً در گوگل‌درایو، فلش یا پیام‌های ذخیره‌شده‌ی تلگرام. اپ آن را جایی نمی‌فرستد. اگر گوشی گم شود یا اپ حذف شود، فقط همین فایل اطلاعاتت را برمی‌گرداند.</string>
+    <string name="backup_last">آخرین پشتیبان: %1$s</string>
+    <string name="backup_never">هنوز پشتیبانی نساخته‌ای.</string>
+    <string name="backup_create_title">ساخت پشتیبان</string>
+    <string name="backup_encrypt">رمزگذاری با رمز عبور</string>
+    <string name="backup_encrypt_hint">پیشنهاد می‌شود، چون فایل اطلاعات بدن و سلامت توست.</string>
+    <string name="backup_password">رمز عبور</string>
+    <string name="backup_password_repeat">تکرار رمز عبور</string>
+    <string name="backup_password_warning">اگر رمز را فراموش کنی، این فایل هرگز باز نمی‌شود؛ هیچ راه بازیابی وجود ندارد.</string>
+    <string name="backup_password_short">رمز باید دست‌کم ۸ حرف باشد.</string>
+    <string name="backup_password_mismatch">دو رمز یکی نیستند.</string>
+    <string name="backup_create">ساخت فایل پشتیبان</string>
+    <string name="backup_working">در حال ساخت…</string>
+    <string name="backup_done">پشتیبان ذخیره شد: %1$s</string>
+    <string name="restore_title">بازیابی</string>
+    <string name="restore_pick">انتخاب فایل پشتیبان</string>
+    <string name="restore_password_needed">این فایل رمز دارد. رمزش را وارد کن.</string>
+    <string name="restore_open">باز کردن فایل</string>
+    <string name="restore_checking">در حال بررسی فایل…</string>
+    <string name="restore_preview_title">محتوای پشتیبان</string>
+    <string name="restore_preview_date">ساخته‌شده در %1$s، ساعت %2$s</string>
+    <string name="restore_preview_app">با نسخه‌ی %1$s اپ</string>
+    <string name="restore_preview_encrypted">رمزدار</string>
+    <string name="restore_replace">جایگزینی همه‌ی داده‌ها با این پشتیبان</string>
+    <string name="restore_confirm_title">همه‌ی داده‌ها جایگزین شوند؟</string>
+    <string name="restore_confirm_body">همه‌ی داده‌های فعلی این گوشی با محتوای این فایل جایگزین می‌شود. پیش از آن، یک نسخه‌ی ایمنی از داده‌های فعلی خودکار نگه داشته می‌شود.</string>
+    <string name="restore_confirm_yes">جایگزین کن</string>
+    <string name="action_cancel">انصراف</string>
+    <string name="restore_working">در حال بازیابی…</string>
+    <string name="restore_done">بازیابی انجام شد.</string>
+    <string name="restore_go_home">رفتن به خانه</string>
+    <string name="safety_title">نسخه‌های ایمنی خودکار</string>
+    <string name="safety_body">پیش از هر بازیابی، داده‌های قبلی این‌جا نگه داشته می‌شوند (سه نسخه‌ی آخر، فقط روی همین گوشی).</string>
+    <string name="safety_row">%1$s، ساعت %2$s</string>
+    <string name="safety_restore">بازیابی</string>
+    <string name="count_profile">پروفایل</string>
+    <string name="count_weight">ثبت وزن: %1$s</string>
+    <string name="count_measurements">اندازه: %1$s</string>
+    <string name="count_targets">هدف روزانه: %1$s</string>
+    <string name="count_goals">هدف وزن: %1$s</string>
+    <string name="count_photos">عکس: %1$s</string>
+    <string name="count_other">و %1$s ردیف دیگر</string>
+    <string name="backup_error_not_backup">این فایل، پشتیبان FitOS نیست. فایلی با پسوند fitbak انتخاب کن.</string>
+    <string name="backup_error_password_needed">این فایل رمز دارد. رمزش را وارد کن.</string>
+    <string name="backup_error_wrong_password">رمز درست نیست، یا فایل تغییر کرده است. رمز را دوباره بررسی کن.</string>
+    <string name="backup_error_damaged">فایل ناقص یا خراب است و بازیابی نمی‌شود. داده‌های فعلی دست‌نخورده ماند. اگر نسخه‌ی دیگری از فایل داری، آن را امتحان کن.</string>
+    <string name="backup_error_newer">این پشتیبان با نسخه‌ی جدیدتری از اپ ساخته شده. اول اپ را به‌روز کن.</string>
+    <string name="backup_error_io">خواندن یا نوشتن فایل انجام نشد. فضای گوشی و محل فایل را بررسی کن و دوباره امتحان کن.</string>
+    <string name="settings_backup">پشتیبان</string>
+    <string name="settings_backup_row">پشتیبان‌گیری و بازیابی</string>
+    <string name="welcome_restore">بازیابی از فایل پشتیبان</string>
+    <string name="home_log_weight">ثبت وزن</string>
 </resources>

@@ -19,11 +19,12 @@ import app.fitos.core.domain.profile.WeightGoal
 import app.fitos.core.domain.profile.WeightGoalRepository
 import java.time.Clock
 import java.time.LocalDate
+import java.time.LocalTime
 import java.util.UUID
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-private fun newId(): String = UUID.randomUUID().toString()
+internal fun newId(): String = UUID.randomUUID().toString()
 
 class RoomProfileRepository(private val db: FitDatabase, private val clock: Clock) : ProfileRepository {
     private val dao = db.profileDao()
@@ -97,12 +98,55 @@ class RoomWeightRepository(private val db: FitDatabase, private val clock: Clock
 
     override val latest: Flow<WeightEntry?> = dao.observeLatest().map { it?.toDomain() }
 
+    override val all: Flow<List<WeightEntry>> = dao.observeAll().map { list -> list.map { it.toDomain() } }
+
     override suspend fun add(weightKg: Double, condition: WeightCondition?, note: String?): WeightEntry {
         val entity = newWeightEntry(clock, weightKg, condition, note)
         dao.insert(entity)
         return entity.toDomain()
     }
+
+    override suspend fun add(weightKg: Double, day: LocalDate, time: LocalTime, condition: WeightCondition?, note: String?): WeightEntry {
+        val now = clock.millis()
+        val entity = WeightEntryEntity(
+            id = newId(),
+            day = day.toEpochDay(),
+            measuredAt = day.atTime(time).atZone(clock.zone).toInstant().toEpochMilli(),
+            zoneId = clock.zone.id,
+            weightKg = weightKg,
+            condition = condition?.code,
+            note = note.clean(),
+            source = DataSource.MANUAL.code,
+            createdAt = now,
+            updatedAt = now,
+            deletedAt = null,
+        )
+        dao.insert(entity)
+        return entity.toDomain()
+    }
+
+    override suspend fun update(id: String, weightKg: Double, day: LocalDate, time: LocalTime, condition: WeightCondition?, note: String?) {
+        val old = dao.get(id) ?: return
+        // An edit keeps the zone the entry was logged in, so its local day and time stay as typed.
+        val zone = java.time.ZoneId.of(old.zoneId)
+        dao.update(
+            old.copy(
+                day = day.toEpochDay(),
+                measuredAt = day.atTime(time).atZone(zone).toInstant().toEpochMilli(),
+                weightKg = weightKg,
+                condition = condition?.code,
+                note = note.clean(),
+                updatedAt = clock.millis(),
+            ),
+        )
+    }
+
+    override suspend fun delete(id: String) = dao.softDelete(id, clock.millis())
+
+    override suspend fun restore(id: String) = dao.restore(id, clock.millis())
 }
+
+internal fun String?.clean(): String? = this?.trim()?.takeIf { it.isNotEmpty() }
 
 /** The local day is fixed at logging time from the clock's zone (see WeightEntry). */
 internal fun newWeightEntry(clock: Clock, weightKg: Double, condition: WeightCondition?, note: String?): WeightEntryEntity {
@@ -114,7 +158,7 @@ internal fun newWeightEntry(clock: Clock, weightKg: Double, condition: WeightCon
         zoneId = clock.zone.id,
         weightKg = weightKg,
         condition = condition?.code,
-        note = note?.trim()?.takeIf { it.isNotEmpty() },
+        note = note.clean(),
         source = DataSource.MANUAL.code,
         createdAt = now.toEpochMilli(),
         updatedAt = now.toEpochMilli(),

@@ -5,6 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.migration.Migration
+import app.fitos.core.data.db.dao.MeasurementDao
 import app.fitos.core.data.db.dao.NutritionTargetDao
 import app.fitos.core.data.db.dao.ProfileDao
 import app.fitos.core.data.db.dao.WeightEntryDao
@@ -97,6 +98,7 @@ abstract class FitDatabase : RoomDatabase() {
     abstract fun nutritionTargetDao(): NutritionTargetDao
     abstract fun weightGoalDao(): WeightGoalDao
     abstract fun weightEntryDao(): WeightEntryDao
+    abstract fun measurementDao(): MeasurementDao
 
     companion object {
         const val NAME = "fitos.db"

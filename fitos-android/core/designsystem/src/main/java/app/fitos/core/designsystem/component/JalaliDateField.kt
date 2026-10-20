@@ -34,7 +34,7 @@ import java.time.LocalDate
 /**
  * Jalali date input as three menus (day, month, year), right to left like a written Persian date.
  * Reports a date only once all three parts are chosen; the day is clamped to the month's length.
- * [years] lists the selectable Jalali years, shown newest first.
+ * [years] lists the selectable Jalali years, shown newest first. Days after [latest] cannot be picked.
  */
 @Composable
 fun JalaliDateField(
@@ -45,6 +45,7 @@ fun JalaliDateField(
     modifier: Modifier = Modifier,
     error: String? = null,
     hint: String? = null,
+    latest: LocalDate? = null,
 ) {
     val colors = FitTheme.colors
     val initial = date?.let(JalaliDate::of)
@@ -57,7 +58,8 @@ fun JalaliDateField(
         val m = month ?: return
         val d = (day ?: return).coerceAtMost(JalaliCalendar.monthLength(y, m))
         day = d
-        onDateChange(JalaliCalendar.toLocalDate(y, m, d))
+        val picked = JalaliCalendar.toLocalDate(y, m, d)
+        onDateChange(if (latest != null && picked.isAfter(latest)) latest else picked)
     }
 
     val maxDay = if (year != null && month != null) JalaliCalendar.monthLength(year!!, month!!) else 31
@@ -106,7 +108,7 @@ fun JalaliDateField(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun <T> DatePartMenu(
+internal fun <T> DatePartMenu(
     label: String,
     value: String?,
     options: List<T>,

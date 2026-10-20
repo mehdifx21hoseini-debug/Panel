@@ -27,19 +27,27 @@ import androidx.compose.ui.res.stringResource
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LifecycleEventEffect
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.toRoute
 import app.fitos.core.designsystem.component.FitEmoji
 import app.fitos.core.designsystem.icon.FitIcons
 import app.fitos.core.designsystem.theme.FitTheme
-import androidx.lifecycle.viewmodel.compose.viewModel
 import app.fitos.core.domain.settings.ThemeMode
 import app.fitos.personal.AppContainer
 import app.fitos.personal.R
+import app.fitos.personal.feature.backup.BackupScreen
+import app.fitos.personal.feature.backup.BackupViewModel
+import app.fitos.personal.feature.body.BodyScreen
+import app.fitos.personal.feature.body.BodyViewModel
+import app.fitos.personal.feature.body.MeasurementsEntryScreen
+import app.fitos.personal.feature.body.MeasurementsViewModel
+import app.fitos.personal.feature.body.SiteHistoryScreen
 import app.fitos.personal.feature.home.HomeScreen
 import app.fitos.personal.feature.home.HomeViewModel
 import app.fitos.personal.feature.onboarding.OnboardingScreen
@@ -51,6 +59,7 @@ import app.fitos.personal.feature.settings.SettingsScreen
 import app.fitos.personal.feature.targets.TargetsScreen
 import app.fitos.personal.feature.targets.TargetsViewModel
 import java.time.LocalDate
+import java.time.LocalTime
 import kotlin.reflect.KClass
 import kotlinx.serialization.Serializable
 
@@ -63,6 +72,9 @@ import kotlinx.serialization.Serializable
 @Serializable data object OnboardingRoute
 @Serializable data object ProfileEditRoute
 @Serializable data object TargetsRoute
+@Serializable data object MeasurementsEntryRoute
+@Serializable data class SiteHistoryRoute(val siteId: String)
+@Serializable data class BackupRoute(val restoreOnly: Boolean = false)
 
 /** The five tabs of the bottom navigation bar, in reading order (right to left on screen). */
 private enum class TopLevel(val route: Any, val routeClass: KClass<*>, val icon: ImageVector, @param:StringRes val label: Int) {
@@ -130,12 +142,14 @@ fun FitOsApp(container: AppContainer, startWithSetup: Boolean) {
                     onFinished = {
                         navController.navigate(HomeRoute) { popUpTo(OnboardingRoute) { inclusive = true } }
                     },
+                    onRestore = { navController.navigate(BackupRoute(restoreOnly = true)) },
                 )
             }
             composable<HomeRoute> {
                 HomeScreen(
                     viewModel = viewModel { HomeViewModel(data.profiles, data.targets, data.weights, data.goals) },
                     today = today,
+                    now = { LocalTime.now(clock) },
                     onOpenSettings = { navController.navigate(SettingsRoute) },
                     onOpenTargets = { navController.navigate(TargetsRoute) },
                 )
@@ -147,7 +161,36 @@ fun FitOsApp(container: AppContainer, startWithSetup: Boolean) {
                 ComingSoonScreen(R.string.nav_nutrition, FitEmoji.SALAD, R.string.soon_nutrition_title, R.string.soon_nutrition_body)
             }
             composable<BodyRoute> {
-                ComingSoonScreen(R.string.nav_body, FitEmoji.SCALE, R.string.soon_body_title, R.string.soon_body_body)
+                BodyScreen(
+                    viewModel = viewModel { BodyViewModel(data.weights, data.goals, data.measurements, clock) },
+                    onLogMeasurements = { navController.navigate(MeasurementsEntryRoute) },
+                    onOpenSite = { navController.navigate(SiteHistoryRoute(it)) },
+                    onNewGoal = { navController.navigate(ProfileEditRoute) },
+                )
+            }
+            composable<MeasurementsEntryRoute> {
+                MeasurementsEntryScreen(
+                    viewModel = viewModel { MeasurementsViewModel(data.measurements, clock) },
+                    onDone = { navController.popBackStack() },
+                )
+            }
+            composable<SiteHistoryRoute> { entry ->
+                SiteHistoryScreen(
+                    viewModel = viewModel { MeasurementsViewModel(data.measurements, clock) },
+                    siteId = entry.toRoute<SiteHistoryRoute>().siteId,
+                    onBack = { navController.popBackStack() },
+                )
+            }
+            composable<BackupRoute> { entry ->
+                val route = entry.toRoute<BackupRoute>()
+                BackupScreen(
+                    viewModel = viewModel { BackupViewModel(data.backup, container.settingsRepository, clock) },
+                    restoreOnly = route.restoreOnly,
+                    onBack = { navController.popBackStack() },
+                    onRestored = {
+                        navController.navigate(HomeRoute) { popUpTo(navController.graph.id) { inclusive = true } }
+                    },
+                )
             }
             composable<HabitsRoute> {
                 ComingSoonScreen(R.string.nav_habits, FitEmoji.SPARKLES, R.string.soon_habits_title, R.string.soon_habits_body)
@@ -158,6 +201,7 @@ fun FitOsApp(container: AppContainer, startWithSetup: Boolean) {
                     onBack = { navController.popBackStack() },
                     onOpenProfile = { navController.navigate(ProfileEditRoute) },
                     onOpenTargets = { navController.navigate(TargetsRoute) },
+                    onOpenBackup = { navController.navigate(BackupRoute()) },
                 )
             }
             composable<ProfileEditRoute> {

@@ -14,6 +14,7 @@ import app.fitos.core.domain.profile.Sex
 import app.fitos.core.domain.settings.SettingsRepository
 import app.fitos.core.domain.settings.ThemeMode
 import java.time.Clock
+import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -24,6 +25,10 @@ class FakeSettingsRepository(initial: ThemeMode = ThemeMode.LIGHT) : SettingsRep
     override suspend fun setThemeMode(mode: ThemeMode) {
         themeMode.value = mode
     }
+    override val lastBackupAt = MutableStateFlow<Instant?>(null)
+    override suspend fun setLastBackupAt(at: Instant) {
+        lastBackupAt.value = at
+    }
 }
 
 /** Fixed day for every UI test: Tuesday 20 Oct 2026 = سه‌شنبه ۲۸ مهر ۱۴۰۵, Tehran time. */
@@ -32,11 +37,21 @@ object TestApp {
     val today: LocalDate = LocalDate.of(2026, 10, 20)
     val clock: Clock = Clock.fixed(today.atTime(9, 0).atZone(zone).toInstant(), zone)
 
-    fun container(theme: ThemeMode = ThemeMode.LIGHT): AppContainer = AppContainer(
-        settingsRepository = FakeSettingsRepository(theme),
-        data = DataGraph.inMemory(ApplicationProvider.getApplicationContext<Context>(), clock),
-        clock = clock,
-    )
+    fun container(theme: ThemeMode = ThemeMode.LIGHT): AppContainer {
+        val settings = FakeSettingsRepository(theme)
+        return AppContainer(
+            settingsRepository = settings,
+            data = DataGraph.inMemory(ApplicationProvider.getApplicationContext<Context>(), clock, settings),
+            clock = clock,
+        )
+    }
+
+    /** Weigh-ins on the [days] before today (oldest first), losing 0.1 kg a day from 91 kg. */
+    fun addWeights(container: AppContainer, days: Int) = runBlocking {
+        (days downTo 1).forEach { ago ->
+            container.data.weights.add(91.0 - (days - ago) * 0.1, today.minusDays(ago.toLong()), java.time.LocalTime.of(7, 30), null, null)
+        }
+    }
 
     val profile = Profile(
         displayName = "آرش",

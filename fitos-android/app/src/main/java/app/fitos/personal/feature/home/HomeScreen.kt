@@ -34,6 +34,12 @@ import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.fitos.core.designsystem.component.EmojiTile
 import app.fitos.core.designsystem.component.FitTextButton
+import app.fitos.core.designsystem.component.FitSecondaryButton
+import app.fitos.personal.feature.body.WeightEntrySheet
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import androidx.compose.foundation.layout.fillMaxWidth
+import java.time.LocalTime
 import app.fitos.core.designsystem.theme.numeralStyle
 import app.fitos.core.domain.body.WeightEntry
 import app.fitos.core.domain.nutrition.NutritionTarget
@@ -74,14 +80,28 @@ private enum class Module(@param:StringRes val label: Int, val emoji: FitEmoji, 
  * until then every module honestly reads "not logged" and the meter stays at zero.
  */
 @Composable
-fun HomeScreen(viewModel: HomeViewModel, today: LocalDate, onOpenSettings: () -> Unit, onOpenTargets: () -> Unit) {
+fun HomeScreen(viewModel: HomeViewModel, today: LocalDate, now: () -> LocalTime, onOpenSettings: () -> Unit, onOpenTargets: () -> Unit) {
     LaunchedEffect(today) { viewModel.setToday(today) }
     val state by viewModel.state.collectAsStateWithLifecycle()
-    HomeContent(state, today, onOpenSettings, onOpenTargets)
+    var logging by remember { mutableStateOf(false) }
+    HomeContent(state, today, onOpenSettings, onOpenTargets, onLogWeight = { logging = true })
+    if (logging) {
+        WeightEntrySheet(
+            editing = null,
+            lastWeightKg = state.latestWeight?.weightKg,
+            today = today,
+            now = now(),
+            onDismiss = { logging = false },
+            onSave = { input ->
+                viewModel.addWeight(input)
+                logging = false
+            },
+        )
+    }
 }
 
 @Composable
-private fun HomeContent(state: HomeState, today: LocalDate, onOpenSettings: () -> Unit, onOpenTargets: () -> Unit) {
+private fun HomeContent(state: HomeState, today: LocalDate, onOpenSettings: () -> Unit, onOpenTargets: () -> Unit, onLogWeight: () -> Unit) {
     val colors = FitTheme.colors
     val week = remember(today) { weekOf(today) }
     Column(
@@ -120,7 +140,7 @@ private fun HomeContent(state: HomeState, today: LocalDate, onOpenSettings: () -
         ) {
             TodayLoadCard(Modifier.pullUp(56.dp))
             state.target?.let { TargetsCard(it, onOpenTargets) }
-            WeightCard(state.latestWeight, state.goal)
+            WeightCard(state.latestWeight, state.goal, onLogWeight)
             FitCard {
                 Row(horizontalArrangement = Arrangement.spacedBy(FitSpacing.s12), verticalAlignment = Alignment.CenterVertically) {
                     EmojiTile(FitEmoji.ROCKET, tint = colors.primaryContainer)
@@ -217,7 +237,7 @@ private fun TargetsCard(target: NutritionTarget, onEdit: () -> Unit) {
 
 /** Latest weigh-in and the active goal; never invents progress that was not logged. */
 @Composable
-private fun WeightCard(latest: WeightEntry?, goal: WeightGoal?) {
+private fun WeightCard(latest: WeightEntry?, goal: WeightGoal?, onLog: () -> Unit) {
     val colors = FitTheme.colors
     FitCard {
         Row(horizontalArrangement = Arrangement.spacedBy(FitSpacing.s12), verticalAlignment = Alignment.CenterVertically) {
@@ -259,6 +279,7 @@ private fun WeightCard(latest: WeightEntry?, goal: WeightGoal?) {
                 }
             }
         }
+        FitSecondaryButton(stringResource(R.string.home_log_weight), onClick = onLog, icon = FitIcons.Plus, modifier = Modifier.fillMaxWidth())
     }
 }
 
