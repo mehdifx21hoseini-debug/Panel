@@ -35,7 +35,8 @@ object PersianNumbers {
      */
     fun format(value: Double, maxFractionDigits: Int = 1, grouped: Boolean = true): String {
         require(!value.isNaN() && !value.isInfinite()) { "not a finite number" }
-        val rounded = BigDecimal(value).setScale(maxFractionDigits, RoundingMode.HALF_UP).stripTrailingZeros()
+        // valueOf uses the shortest decimal form (0.15, not 0.1499…), so halves round as people expect.
+        val rounded = BigDecimal.valueOf(value).setScale(maxFractionDigits, RoundingMode.HALF_UP).stripTrailingZeros()
         val plain = rounded.abs().toPlainString()
         val intPart = plain.substringBefore('.')
         val fraction = plain.substringAfter('.', "")
@@ -64,6 +65,34 @@ object PersianNumbers {
                 c == GROUP_SEPARATOR || c == ',' || c == ' ' || c == '‌' -> Unit
                 else -> append(c)
             }
+        }
+    }
+
+    /**
+     * Cleans text typed into a number field as the user types: digits of any script become
+     * Persian, '.', ',', '/' and '٫' become a single '٫' (only when [allowDecimal]), everything
+     * else is dropped. Integer and fraction lengths are capped so values stay plausible.
+     */
+    fun sanitizeInput(raw: String, allowDecimal: Boolean, maxIntegerDigits: Int = 4, maxFractionDigits: Int = 1): String {
+        val intPart = StringBuilder()
+        val fraction = StringBuilder()
+        var seenSeparator = false
+        for (c in raw) {
+            val digit = when {
+                c in '0'..'9' -> c - '0'
+                PERSIAN.indexOf(c) >= 0 -> PERSIAN.indexOf(c)
+                ARABIC.indexOf(c) >= 0 -> ARABIC.indexOf(c)
+                else -> -1
+            }
+            when {
+                digit >= 0 && !seenSeparator && intPart.length < maxIntegerDigits -> intPart.append(PERSIAN[digit])
+                digit >= 0 && seenSeparator && fraction.length < maxFractionDigits -> fraction.append(PERSIAN[digit])
+                digit < 0 && allowDecimal && !seenSeparator && (c == '.' || c == ',' || c == '/' || c == DECIMAL_SEPARATOR) -> seenSeparator = true
+            }
+        }
+        return when {
+            !seenSeparator -> intPart.toString()
+            else -> (if (intPart.isEmpty()) "۰" else intPart.toString()) + DECIMAL_SEPARATOR + fraction
         }
     }
 

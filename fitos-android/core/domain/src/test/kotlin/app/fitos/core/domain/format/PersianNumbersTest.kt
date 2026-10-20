@@ -25,6 +25,8 @@ class PersianNumbersTest {
         assertEquals("۲۲٫۵", PersianNumbers.format(22.5))
         assertEquals("۰٫۴۵", PersianNumbers.format(0.454, maxFractionDigits = 2))
         assertEquals("−۱٫۶", PersianNumbers.format(-1.6))
+        assertEquals("۰٫۲", PersianNumbers.format(0.15)) // not 0.1 from binary 0.1499…
+        assertEquals("۰", PersianNumbers.format(0.0))
     }
 
     @Test fun parseAnyDigitSystem() {
@@ -43,5 +45,18 @@ class PersianNumbersTest {
         assertNull(PersianNumbers.parse("   "))
         assertNull(PersianNumbers.parse("abc"))
         assertNull(PersianNumbers.parse("۱۱۳٫۴kg"))
+    }
+
+    @Test fun sanitizeInputWhileTyping() {
+        assertEquals("۱۱۵", PersianNumbers.sanitizeInput("115", allowDecimal = true))
+        assertEquals("۱۱۵٫۴", PersianNumbers.sanitizeInput("115.4", allowDecimal = true))
+        assertEquals("۱۱۵٫۴", PersianNumbers.sanitizeInput("۱۱۵,۴۵", allowDecimal = true)) // one fraction digit
+        assertEquals("۱۱۵٫", PersianNumbers.sanitizeInput("١١٥/", allowDecimal = true)) // still typing
+        assertEquals("۰٫۵", PersianNumbers.sanitizeInput(".5", allowDecimal = true))
+        assertEquals("۱۱۵", PersianNumbers.sanitizeInput("1a1-5", allowDecimal = false))
+        assertEquals("۱۲۳", PersianNumbers.sanitizeInput("12345", allowDecimal = false, maxIntegerDigits = 3))
+        assertEquals("۱٫۲", PersianNumbers.sanitizeInput("1.2.3", allowDecimal = true))
+        assertEquals("", PersianNumbers.sanitizeInput("abc", allowDecimal = true))
+        assertEquals(115.4, PersianNumbers.parse(PersianNumbers.sanitizeInput("115.4", allowDecimal = true))!!, 1e-9)
     }
 }

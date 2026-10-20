@@ -14,8 +14,8 @@
     <string name="home_today_load_hint">هر هدف کامل، یک وزنه کامل</string>
     <string name="home_meter_description">پیشرفت امروز %1$s. هنوز چیزی ثبت نشده است.</string>
     <string name="home_not_logged">ثبت نشده</string>
-    <string name="home_start_title">نسخه پایه آماده است</string>
-    <string name="home_start_body">ثبت تمرین، غذا، وزن و عادت‌ها مرحله به مرحله به همین صفحه اضافه می‌شود. تا وقتی چیزی ثبت نکنی، هیچ عددی ساختگی نشان داده نمی‌شود.</string>
+    <string name="home_start_title">ثبت روزانه در راه است</string>
+    <string name="home_start_body">ثبت وزن در مرحله‌ی بعد اضافه می‌شود و بعد از آن تمرین، غذا و عادت‌ها. تا وقتی چیزی ثبت نکنی، هیچ عددی ساختگی نشان داده نمی‌شود.</string>
 
     <string name="module_training">تمرین</string>
     <string name="module_calories">کالری</string>
@@ -48,4 +48,154 @@
     <string name="licence_vazirmatn">فونت وزیرمتن، صابر راستی‌کردار، مجوز SIL OFL 1.1</string>
     <string name="licence_changa">فونت Changa، ادواردو تونی، مجوز SIL OFL 1.1</string>
     <string name="licence_fluent">ایموجی‌های Fluent، مایکروسافت، مجوز MIT</string>
+
+    <!-- Units and formats -->
+    <string name="unit_kg">کیلوگرم</string>
+    <string name="unit_cm">سانتی‌متر</string>
+    <string name="unit_g">گرم</string>
+    <string name="unit_kcal">کیلوکالری</string>
+    <string name="unit_liter">لیتر</string>
+    <string name="unit_hour">ساعت</string>
+
+    <!-- Common actions -->
+    <string name="action_continue">ادامه</string>
+    <string name="action_back">بازگشت</string>
+    <string name="action_save">ذخیره</string>
+    <string name="action_decrease">کم کردن</string>
+    <string name="action_increase">زیاد کردن</string>
+    <string name="optional">اختیاری</string>
+
+    <!-- Input errors -->
+    <string name="error_required">این مورد لازم است.</string>
+    <string name="error_height">قد را بین ۱۲۰ تا ۲۳۰ سانتی‌متر وارد کن.</string>
+    <string name="error_weight">وزن را بین ۳۵ تا ۳۰۰ کیلوگرم وارد کن.</string>
+    <string name="error_age">این فرمول برای سن ۱۶ تا ۹۰ سال است. تاریخ تولد را بررسی کن.</string>
+    <string name="error_target_weight">وزن هدف را بین ۳۵ تا ۳۰۰ کیلوگرم وارد کن.</string>
+    <string name="error_target_not_below">برای کاهش چربی، وزن هدف باید کمتر از وزن فعلی باشد.</string>
+    <string name="error_target_not_above">برای افزایش عضله، وزن هدف باید بیشتر از وزن فعلی باشد.</string>
+    <string name="error_review_date">تاریخ بازبینی باید بعد از امروز باشد.</string>
+    <string name="error_range">عددی بین %1$s و %2$s وارد کن.</string>
+    <string name="error_save_failed">ذخیره نشد. دوباره امتحان کن؛ اطلاعات واردشده سر جایش است.</string>
+
+    <!-- Onboarding -->
+    <string name="welcome_title">به FitOS خوش آمدی</string>
+    <string name="welcome_body">برنامه‌ی تمرین، غذا، وزن و عادت‌هایت در یک جا. اول چند سؤال کوتاه می‌پرسم تا هدف‌های روزانه‌ات را حساب کنم؛ حدود یک دقیقه.</string>
+    <string name="welcome_privacy">اطلاعاتت فقط روی همین گوشی می‌ماند. این اپ اجازه‌ی اینترنت ندارد.</string>
+    <string name="welcome_start">شروع کنیم</string>
+    <string name="step_of">مرحله‌ی %1$s از %2$s</string>
+
+    <string name="about_title">درباره‌ی تو</string>
+    <string name="about_subtitle">برای محاسبه‌ی انرژی روزانه لازم است. همه‌چیز بعداً از تنظیمات قابل تغییر است.</string>
+    <string name="field_name">اسم</string>
+    <string name="field_name_hint">اختیاری؛ برای سلام صفحه‌ی خانه</string>
+    <string name="field_sex">جنسیت</string>
+    <string name="field_sex_hint">فقط در فرمول انرژی استفاده می‌شود.</string>
+    <string name="sex_male">مرد</string>
+    <string name="sex_female">زن</string>
+    <string name="field_birth_date">تاریخ تولد</string>
+    <string name="field_height">قد</string>
+    <string name="field_weight">وزن امروز</string>
+    <string name="field_weight_hint">اولین ثبت وزن تو می‌شود.</string>
+
+    <string name="activity_title">تمرین و فعالیت</string>
+    <string name="activity_subtitle">ضریب فعالیت، انرژی روزانه را تعیین می‌کند. اگر مطمئن نیستی، پیشنهاد را نگه دار.</string>
+    <string name="field_training_days">جلسه‌ی تمرین در هفته</string>
+    <string name="field_activity">سطح فعالیت کلی</string>
+    <string name="activity_suggested">پیشنهاد</string>
+    <string name="activity_sedentary">کم‌تحرک</string>
+    <string name="activity_sedentary_body">کار پشت میز، تقریباً بدون ورزش (×۱٫۲)</string>
+    <string name="activity_light">سبک</string>
+    <string name="activity_light_body">۱ تا ۳ جلسه ورزش در هفته (×۱٫۳۷۵)</string>
+    <string name="activity_moderate">متوسط</string>
+    <string name="activity_moderate_body">۳ تا ۵ جلسه ورزش در هفته (×۱٫۵۵)</string>
+    <string name="activity_active">زیاد</string>
+    <string name="activity_active_body">۶ تا ۷ جلسه ورزش، یا کار سرپا و بدنی (×۱٫۷۲۵)</string>
+    <string name="activity_very_active">خیلی زیاد</string>
+    <string name="activity_very_active_body">کار بدنی سنگین به‌علاوه‌ی تمرین (×۱٫۹)</string>
+    <string name="field_training_time">زمان معمول تمرین</string>
+    <string name="time_morning">صبح</string>
+    <string name="time_noon">ظهر</string>
+    <string name="time_afternoon">عصر</string>
+    <string name="time_evening">شب</string>
+    <string name="time_varies">متغیر</string>
+    <string name="field_home_minutes">زمان تمرین خانگی در روز شلوغ</string>
+    <string name="minutes_value">%1$s دقیقه</string>
+    <string name="field_equipment">وسایل تمرین در خانه</string>
+    <string name="field_equipment_hint">اگر هیچ‌کدام را نداری، خالی بگذار؛ تمرین با وزن بدن پیشنهاد می‌شود.</string>
+    <string name="equipment_dumbbells">دمبل</string>
+    <string name="equipment_bands">کش</string>
+    <string name="equipment_pull_up_bar">میله‌ی بارفیکس</string>
+    <string name="equipment_kettlebell">کتل‌بل</string>
+    <string name="equipment_bench">نیمکت</string>
+
+    <string name="goal_title">هدف</string>
+    <string name="goal_subtitle">هدف اصلی، کالری روزانه را تعیین می‌کند. وزن هدف اختیاری است.</string>
+    <string name="goal_fat_loss">کاهش چربی</string>
+    <string name="goal_fat_loss_body">کسری کالری، با پروتئین بالا برای حفظ عضله</string>
+    <string name="goal_maintain">حفظ وزن</string>
+    <string name="goal_maintain_body">کالری برابر مصرف روزانه</string>
+    <string name="goal_muscle_gain">افزایش عضله</string>
+    <string name="goal_muscle_gain_body">مازاد ۱۰٪ کالری</string>
+    <string name="field_pace">شدت کسری کالری</string>
+    <string name="pace_gentle">ملایم ۱۰٪</string>
+    <string name="pace_standard">معمول ۲۰٪</string>
+    <string name="pace_firm">جدی ۲۵٪</string>
+    <string name="pace_hint">بیشتر از ۲۵٪ پیشنهاد نمی‌شود و کالری هیچ‌وقت از متابولیسم پایه کمتر نمی‌شود.</string>
+    <string name="field_target_weight">وزن هدف</string>
+    <string name="field_target_weight_hint">اختیاری. اگر بنویسی، پروتئین بر اساس آن حساب می‌شود.</string>
+    <string name="field_review_date">تاریخ بازبینی هدف</string>
+    <string name="field_review_date_hint">آن روز با هم نتیجه را می‌بینیم و هدف بعدی را تعیین می‌کنیم.</string>
+
+    <string name="targets_title">هدف‌های روزانه</string>
+    <string name="targets_subtitle">این‌ها نقطه‌ی شروع‌اند. هر عدد را می‌توانی تغییر دهی.</string>
+    <string name="field_kcal">کالری</string>
+    <string name="field_protein">پروتئین</string>
+    <string name="field_carbs">کربوهیدرات</string>
+    <string name="field_fat">چربی</string>
+    <string name="field_fiber">فیبر</string>
+    <string name="field_water">آب</string>
+    <string name="field_sleep">خواب</string>
+    <string name="targets_macro_sum">مجموع درشت‌مغذی‌ها: حدود %1$s کیلوکالری</string>
+    <string name="targets_below_bmr">این مقدار از متابولیسم پایه‌ات (%1$s کیلوکالری) کمتر است و توصیه نمی‌شود.</string>
+    <string name="targets_reset">بازگرداندن پیشنهاد</string>
+    <string name="targets_finish">ذخیره و شروع</string>
+    <string name="assumptions_title">این اعداد از کجا آمده‌اند؟</string>
+    <string name="assumption_bmr">متابولیسم پایه: %1$s کیلوکالری (فرمول Mifflin-St Jeor، برای %2$s سال، %3$s کیلوگرم، %4$s سانتی‌متر)</string>
+    <string name="assumption_tdee">مصرف روزانه با فعالیت «%1$s» (×%2$s): %3$s کیلوکالری</string>
+    <string name="assumption_deficit">کسری %1$s٪ برای کاهش چربی</string>
+    <string name="assumption_maintain">بدون کسری یا مازاد، برای حفظ وزن</string>
+    <string name="assumption_surplus">مازاد %1$s٪ برای افزایش عضله</string>
+    <string name="assumption_floor">کالری به حداقل ایمن رسانده شد (نه کمتر از متابولیسم پایه).</string>
+    <string name="assumption_protein">پروتئین %1$s و چربی %2$s گرم برای هر کیلو از وزن مرجع (%3$s کیلوگرم)</string>
+    <string name="assumption_fat_min">چربی به ۲۰٪ کالری رسانده شد.</string>
+    <string name="assumption_rest">کربوهیدرات، بقیه‌ی کالری است. فیبر ۱۴ گرم به ازای هر ۱۰۰۰ کیلوکالری، آب ۳۰ میلی‌لیتر برای هر کیلو.</string>
+    <string name="assumption_disclaimer">این‌ها توصیه‌ی پزشکی نیستند. بعد از چند هفته، با روند واقعی وزن تنظیم می‌شوند.</string>
+
+    <!-- Profile and targets in settings -->
+    <string name="settings_profile">پروفایل</string>
+    <string name="settings_profile_row">مشخصات و هدف</string>
+    <string name="settings_profile_row_body">قد، تاریخ تولد، فعالیت، هدف وزن</string>
+    <string name="settings_targets_row">هدف‌های روزانه</string>
+    <string name="settings_targets_row_body">کالری، درشت‌مغذی‌ها، آب و خواب</string>
+    <string name="profile_edit_title">مشخصات و هدف</string>
+    <string name="profile_edit_note">تغییر مشخصات، هدف‌های روزانه را خودکار عوض نمی‌کند. بعد از ذخیره، از «هدف‌های روزانه» دوباره حساب کن.</string>
+    <string name="section_about">درباره‌ی تو</string>
+    <string name="section_activity">تمرین و فعالیت</string>
+    <string name="section_goal">هدف</string>
+    <string name="targets_since">از %1$s</string>
+    <string name="targets_recalculate">محاسبه‌ی دوباره با مشخصات فعلی</string>
+    <string name="targets_saved_note">با ذخیره، این هدف‌ها از امروز اعمال می‌شوند. روزهای گذشته با هدف همان روزها سنجیده می‌شوند.</string>
+    <string name="targets_missing_weight">برای محاسبه، وزن ثبت‌شده لازم است.</string>
+
+    <!-- Home: targets and weight -->
+    <string name="greeting_named">سلام، %1$s</string>
+    <string name="home_targets_title">هدف‌های امروز</string>
+    <string name="home_targets_edit">ویرایش</string>
+    <string name="home_weight_title">وزن</string>
+    <string name="home_weight_last">آخرین ثبت: %1$s</string>
+    <string name="home_goal_line">هدف: %1$s کیلوگرم</string>
+    <string name="home_goal_review">بازبینی: %1$s</string>
+    <string name="home_goal_remaining">%1$s کیلوگرم تا هدف</string>
+    <string name="home_goal_reached">به هدف رسیدی</string>
+    <string name="home_goal_none">هدف وزنی تعیین نشده است.</string>
 </resources>

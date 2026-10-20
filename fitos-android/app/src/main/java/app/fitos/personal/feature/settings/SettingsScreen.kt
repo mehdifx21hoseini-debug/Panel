@@ -1,6 +1,7 @@
 package app.fitos.personal.feature.settings
 
 import androidx.annotation.StringRes
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -11,6 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
@@ -27,17 +29,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.lifecycle.viewmodel.initializer
-import androidx.lifecycle.viewmodel.viewModelFactory
 import app.fitos.core.designsystem.component.EmojiTile
 import app.fitos.core.designsystem.component.FitCard
 import app.fitos.core.designsystem.component.FitEmoji
@@ -79,8 +81,8 @@ private val ThemeMode.icon: ImageVector
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SettingsScreen(settingsRepository: SettingsRepository, onBack: () -> Unit) {
-    val viewModel: SettingsViewModel = viewModel(factory = viewModelFactory { initializer { SettingsViewModel(settingsRepository) } })
+fun SettingsScreen(settingsRepository: SettingsRepository, onBack: () -> Unit, onOpenProfile: () -> Unit, onOpenTargets: () -> Unit) {
+    val viewModel: SettingsViewModel = viewModel { SettingsViewModel(settingsRepository) }
     val mode by viewModel.themeMode.collectAsStateWithLifecycle()
     val colors = FitTheme.colors
 
@@ -108,6 +110,13 @@ fun SettingsScreen(settingsRepository: SettingsRepository, onBack: () -> Unit) {
                 .padding(horizontal = FitSpacing.gutter, vertical = FitSpacing.s8),
             verticalArrangement = Arrangement.spacedBy(FitSpacing.s12),
         ) {
+            SectionLabel(R.string.settings_profile)
+            FitCard {
+                SettingsRow(FitEmoji.MUSCLE_FLAG, R.string.settings_profile_row, R.string.settings_profile_row_body, onOpenProfile)
+                HorizontalDivider(color = colors.outlineVariant)
+                SettingsRow(FitEmoji.BULLSEYE, R.string.settings_targets_row, R.string.settings_targets_row_body, onOpenTargets)
+            }
+
             SectionLabel(R.string.settings_appearance)
             FitCard {
                 Column(Modifier.selectableGroup()) {
@@ -156,6 +165,28 @@ fun SettingsScreen(settingsRepository: SettingsRepository, onBack: () -> Unit) {
                 }
             }
         }
+    }
+}
+
+@Composable
+private fun SettingsRow(emoji: FitEmoji, @StringRes title: Int, @StringRes body: Int, onClick: () -> Unit) {
+    val colors = FitTheme.colors
+    Row(
+        Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(12.dp))
+            .clickable(onClick = onClick)
+            .heightIn(min = FitSpacing.target)
+            .padding(vertical = FitSpacing.s4),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(FitSpacing.s12),
+    ) {
+        EmojiTile(emoji, size = 40.dp, tint = colors.primaryContainer)
+        Column(Modifier.weight(1f)) {
+            Text(stringResource(title), style = MaterialTheme.typography.titleSmall)
+            Text(stringResource(body), style = MaterialTheme.typography.bodySmall, color = colors.onSurfaceVariant)
+        }
+        Icon(FitIcons.ChevronRight, contentDescription = null, tint = colors.onSurfaceVariant)
     }
 }
 

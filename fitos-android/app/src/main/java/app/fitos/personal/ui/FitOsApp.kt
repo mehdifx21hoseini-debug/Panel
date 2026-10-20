@@ -36,13 +36,20 @@ import androidx.navigation.compose.rememberNavController
 import app.fitos.core.designsystem.component.FitEmoji
 import app.fitos.core.designsystem.icon.FitIcons
 import app.fitos.core.designsystem.theme.FitTheme
-import app.fitos.core.domain.settings.SettingsRepository
+import androidx.lifecycle.viewmodel.compose.viewModel
 import app.fitos.core.domain.settings.ThemeMode
+import app.fitos.personal.AppContainer
 import app.fitos.personal.R
 import app.fitos.personal.feature.home.HomeScreen
+import app.fitos.personal.feature.home.HomeViewModel
+import app.fitos.personal.feature.onboarding.OnboardingScreen
+import app.fitos.personal.feature.onboarding.OnboardingViewModel
 import app.fitos.personal.feature.placeholder.ComingSoonScreen
+import app.fitos.personal.feature.profile.ProfileEditScreen
+import app.fitos.personal.feature.profile.ProfileEditViewModel
 import app.fitos.personal.feature.settings.SettingsScreen
-import java.time.Clock
+import app.fitos.personal.feature.targets.TargetsScreen
+import app.fitos.personal.feature.targets.TargetsViewModel
 import java.time.LocalDate
 import kotlin.reflect.KClass
 import kotlinx.serialization.Serializable
@@ -53,6 +60,9 @@ import kotlinx.serialization.Serializable
 @Serializable data object BodyRoute
 @Serializable data object HabitsRoute
 @Serializable data object SettingsRoute
+@Serializable data object OnboardingRoute
+@Serializable data object ProfileEditRoute
+@Serializable data object TargetsRoute
 
 /** The five tabs of the bottom navigation bar, in reading order (right to left on screen). */
 private enum class TopLevel(val route: Any, val routeClass: KClass<*>, val icon: ImageVector, @param:StringRes val label: Int) {
@@ -63,21 +73,26 @@ private enum class TopLevel(val route: Any, val routeClass: KClass<*>, val icon:
     Habits(HabitsRoute, HabitsRoute::class, FitIcons.Habits, R.string.nav_habits),
 }
 
-/** Theme + app shell. Separate from the activity so tests can run it with fakes and a fixed clock. */
+/**
+ * Theme + app shell. Separate from the activity so tests can run it with an in-memory database
+ * and a fixed clock. [startWithSetup] opens first-run setup instead of Home.
+ */
 @Composable
-fun FitOsRoot(themeMode: ThemeMode, settingsRepository: SettingsRepository, clock: Clock) {
+fun FitOsRoot(themeMode: ThemeMode, container: AppContainer, startWithSetup: Boolean) {
     val dark = when (themeMode) {
         ThemeMode.LIGHT -> false
         ThemeMode.DARK -> true
         ThemeMode.SYSTEM -> isSystemInDarkTheme()
     }
     FitTheme(darkTheme = dark) {
-        FitOsApp(settingsRepository, clock)
+        FitOsApp(container, startWithSetup)
     }
 }
 
 @Composable
-fun FitOsApp(settingsRepository: SettingsRepository, clock: Clock) {
+fun FitOsApp(container: AppContainer, startWithSetup: Boolean) {
+    val data = container.data
+    val clock = container.clock
     val navController = rememberNavController()
     val backStack by navController.currentBackStackEntryAsState()
     val destination = backStack?.destination
@@ -104,8 +119,27 @@ fun FitOsApp(settingsRepository: SettingsRepository, clock: Clock) {
             }
         },
     ) { padding ->
-        NavHost(navController, startDestination = HomeRoute, modifier = Modifier.padding(padding)) {
-            composable<HomeRoute> { HomeScreen(today = today, onOpenSettings = { navController.navigate(SettingsRoute) }) }
+        NavHost(
+            navController,
+            startDestination = if (startWithSetup) OnboardingRoute else HomeRoute,
+            modifier = Modifier.padding(padding),
+        ) {
+            composable<OnboardingRoute> {
+                OnboardingScreen(
+                    viewModel = viewModel { OnboardingViewModel(data.setup, clock) },
+                    onFinished = {
+                        navController.navigate(HomeRoute) { popUpTo(OnboardingRoute) { inclusive = true } }
+                    },
+                )
+            }
+            composable<HomeRoute> {
+                HomeScreen(
+                    viewModel = viewModel { HomeViewModel(data.profiles, data.targets, data.weights, data.goals) },
+                    today = today,
+                    onOpenSettings = { navController.navigate(SettingsRoute) },
+                    onOpenTargets = { navController.navigate(TargetsRoute) },
+                )
+            }
             composable<TrainingRoute> {
                 ComingSoonScreen(R.string.nav_training, FitEmoji.LIFTING, R.string.soon_training_title, R.string.soon_training_body)
             }
@@ -119,7 +153,24 @@ fun FitOsApp(settingsRepository: SettingsRepository, clock: Clock) {
                 ComingSoonScreen(R.string.nav_habits, FitEmoji.SPARKLES, R.string.soon_habits_title, R.string.soon_habits_body)
             }
             composable<SettingsRoute> {
-                SettingsScreen(settingsRepository = settingsRepository, onBack = { navController.popBackStack() })
+                SettingsScreen(
+                    settingsRepository = container.settingsRepository,
+                    onBack = { navController.popBackStack() },
+                    onOpenProfile = { navController.navigate(ProfileEditRoute) },
+                    onOpenTargets = { navController.navigate(TargetsRoute) },
+                )
+            }
+            composable<ProfileEditRoute> {
+                ProfileEditScreen(
+                    viewModel = viewModel { ProfileEditViewModel(data.profiles, data.goals, data.weights, clock) },
+                    onDone = { navController.popBackStack() },
+                )
+            }
+            composable<TargetsRoute> {
+                TargetsScreen(
+                    viewModel = viewModel { TargetsViewModel(data.targets, data.profiles, data.weights, data.goals, clock) },
+                    onDone = { navController.popBackStack() },
+                )
             }
         }
     }

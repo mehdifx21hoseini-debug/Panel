@@ -11,8 +11,8 @@
 | مرحله | موضوع | وضعیت |
 |---|---|---|
 | ۰ | زیرساخت، سیستم طراحی «آبی پرانرژی»، تم روشن/تیره، ناوبری | انجام شد |
-| ۱ | پایگاه داده، شروع کار، پروفایل، هدف‌ها | بعدی |
-| ۲ | پشتیبان‌گیری و بازیابی، وزن و اندازه‌ها | |
+| ۱ | پایگاه داده، شروع کار، پروفایل، هدف‌ها | انجام شد |
+| ۲ | پشتیبان‌گیری و بازیابی، وزن و اندازه‌ها | بعدی |
 | ۳ و ۴ | برنامه تمرینی، جلسه تمرین | |
 | ۵ | تغذیه | |
 | ۶ | عادت‌ها، یادآورها، برگشت به برنامه | |
@@ -52,13 +52,13 @@ echo "sdk.dir=/path/to/android-sdk" > local.properties
 fitos-android/
 ├─ app/                  صفحه‌ها، ناوبری، ظرف وابستگی‌ها
 ├─ core/domain/          منطق خالص کاتلین: تقویم شمسی، اعداد فارسی، مدل‌ها و قواعد
-├─ core/data/            ذخیره‌سازی: DataStore (و Room از مرحله ۱)
+├─ core/data/            ذخیره‌سازی: Room (Schema در schemas/) و DataStore
 ├─ core/designsystem/    سیستم طراحی: رنگ، فونت، شکل، آیکون، ایموجی، اجزای مشترک
 ├─ docs/                 معماری، امضا، سیستم طراحی (HTML)
 └─ tools/                ابزار تولید آیکون‌ها از اسپرایت سیستم طراحی
 ```
 
-معماری در [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) و سیستم طراحی در [docs/design-system/](docs/design-system/README.md).
+معماری در [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)، فرمول‌ها در [docs/formulas.md](docs/formulas.md)، پایگاه داده در [docs/database.md](docs/database.md) و سیستم طراحی در [docs/design-system/](docs/design-system/README.md).
 
 ## حریم خصوصی
 

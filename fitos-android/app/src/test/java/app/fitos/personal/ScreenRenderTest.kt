@@ -3,20 +3,14 @@ package app.fitos.personal
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import androidx.activity.ComponentActivity
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
-import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.performScrollTo
+import androidx.compose.ui.test.performTextInput
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import app.fitos.core.domain.settings.SettingsRepository
 import app.fitos.core.domain.settings.ThemeMode
 import app.fitos.personal.ui.FitOsRoot
 import java.io.File
-import java.time.Clock
-import java.time.LocalDate
-import java.time.ZoneId
-import kotlinx.coroutines.flow.MutableStateFlow
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -31,29 +25,54 @@ class ScreenRenderTest {
 
     @get:Rule val compose = createAndroidComposeRule<ComponentActivity>()
 
-    private val zone = ZoneId.of("Asia/Tehran")
-    private val clock = Clock.fixed(LocalDate.of(2026, 10, 20).atTime(9, 0).atZone(zone).toInstant(), zone)
-
-    private fun render(mode: ThemeMode, name: String, openSettings: Boolean = false) {
-        val settings = object : SettingsRepository {
-            override val themeMode = MutableStateFlow(mode)
-            override suspend fun setThemeMode(mode: ThemeMode) { themeMode.value = mode }
-        }
-        compose.setContent {
-            val current by settings.themeMode.collectAsState()
-            FitOsRoot(themeMode = current, settingsRepository = settings, clock = clock)
-        }
-        if (openSettings) compose.onNodeWithContentDescription("تنظیمات").performClick()
+    private fun render(name: String, theme: ThemeMode = ThemeMode.LIGHT, setupDone: Boolean = true, steps: () -> Unit = {}) {
+        val container = TestApp.container(theme)
+        if (setupDone) TestApp.completeSetup(container)
+        compose.setContent { FitOsRoot(themeMode = theme, container = container, startWithSetup = !setupDone) }
+        steps()
         compose.waitForIdle()
-        val out = File("build/screens").apply { mkdirs() }
         val view = compose.activity.window.decorView
         val bitmap = Bitmap.createBitmap(view.width, view.height, Bitmap.Config.ARGB_8888)
         compose.runOnUiThread { view.draw(Canvas(bitmap)) }
+        val out = File("build/screens").apply { mkdirs() }
         File(out, "$name.png").outputStream().use { bitmap.compress(Bitmap.CompressFormat.PNG, 100, it) }
     }
 
-    @Test fun homeLight() = render(ThemeMode.LIGHT, "home-light")
-    @Test fun homeDark() = render(ThemeMode.DARK, "home-dark")
-    @Test fun settingsLight() = render(ThemeMode.LIGHT, "settings-light", openSettings = true)
-    @Test fun settingsDark() = render(ThemeMode.DARK, "settings-dark", openSettings = true)
+    private fun click(text: String) = compose.tapText(text)
+    private fun type(label: String, value: String) = compose.field(label).scrollIfNeeded().performTextInput(value)
+    private fun pick(menu: String, option: String) = compose.pickFromMenu(menu, option)
+
+    private fun fillAbout() {
+        click("شروع کنیم")
+        type("اسم", "آرش")
+        click("مرد")
+        pick("روز", "۳۰")
+        pick("ماه", "خرداد")
+        pick("سال", "۱۳۷۵")
+        type("قد", "180")
+        type("وزن امروز", "90")
+    }
+
+    @Test fun welcome() = render("01-welcome", setupDone = false)
+    @Test fun welcomeDark() = render("01-welcome-dark", ThemeMode.DARK, setupDone = false)
+    @Test fun aboutErrors() = render("02-about-errors", setupDone = false) { click("شروع کنیم"); click("ادامه") }
+    @Test fun about() = render("02-about", setupDone = false) { fillAbout() }
+    @Test fun activity() = render("03-activity", setupDone = false) { fillAbout(); click("ادامه") }
+    @Test fun goal() = render("04-goal", setupDone = false) { fillAbout(); click("ادامه"); click("ادامه"); type("وزن هدف (اختیاری)", "80") }
+    @Test fun targets() = render("05-targets", setupDone = false) {
+        fillAbout(); click("ادامه"); click("ادامه"); type("وزن هدف (اختیاری)", "80"); click("ادامه")
+    }
+    @Test fun targetsDark() = render("05-targets-dark", ThemeMode.DARK, setupDone = false) {
+        fillAbout(); click("ادامه"); click("ادامه"); type("وزن هدف (اختیاری)", "80"); click("ادامه")
+    }
+    @Test fun homeLight() = render("10-home") { compose.waitForText("هدف‌های امروز") }
+    @Test fun homeLightScrolled() = render("10-home-scrolled") { compose.waitForText("هدف: ۸۰ کیلوگرم").performScrollTo() }
+    @Test fun homeDark() = render("10-home-dark", ThemeMode.DARK) { compose.waitForText("هدف‌های امروز") }
+    @Test fun settings() = render("20-settings") { compose.waitForDescription("تنظیمات").performClick() }
+    @Test fun targetsEdit() = render("21-targets-edit") { click("ویرایش"); compose.waitForText("از سه‌شنبه ۲۸ مهر ۱۴۰۵") }
+    @Test fun profileEdit() = render("22-profile-edit") {
+        compose.waitForDescription("تنظیمات").performClick()
+        click("مشخصات و هدف")
+        compose.field("قد")
+    }
 }
