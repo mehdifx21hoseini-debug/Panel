@@ -7,15 +7,30 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import app.fitos.core.data.backup.AppInfo
 import app.fitos.core.data.backup.RoomBackupService
 import app.fitos.core.data.db.FitDatabase
+import app.fitos.core.data.repository.RoomActivityRepository
+import app.fitos.core.data.repository.RoomHabitRepository
 import app.fitos.core.data.repository.RoomMeasurementRepository
+import app.fitos.core.data.repository.RoomReminderRepository
+import app.fitos.core.data.repository.RoomReturnPlanRepository
 import app.fitos.core.data.repository.RoomSetupRepository
+import app.fitos.core.data.repository.RoomSleepRepository
+import app.fitos.core.data.repository.RoomWaterRepository
 import app.fitos.core.data.repository.RoomWeightRepository
 import app.fitos.core.domain.backup.BackupError
 import app.fitos.core.domain.backup.BackupException
+import app.fitos.core.domain.habits.ActivityInput
+import app.fitos.core.domain.habits.ActivityKind
+import app.fitos.core.domain.habits.HabitFrequency
+import app.fitos.core.domain.habits.HabitInput
+import app.fitos.core.domain.habits.HabitKind
+import app.fitos.core.domain.habits.HabitStatus
+import app.fitos.core.domain.habits.ReminderInput
+import app.fitos.core.domain.habits.ReminderType
 import app.fitos.core.domain.settings.ThemeMode
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.io.File
+import java.time.DayOfWeek
 import java.time.LocalTime
 import java.util.zip.ZipEntry
 import java.util.zip.ZipInputStream
@@ -65,6 +80,15 @@ class BackupServiceTest {
             val sites = measurements.sites.first()
             measurements.add(TestData.today, sites.take(3).associate { it.id to 100.5 }, null)
             measurements.addSite("ساق")
+            // Stage 6: habits with answers and reminders, water, sleep, activity and a return-to-plan event.
+            val habits = RoomHabitRepository(db, clock)
+            val read = habits.add(HabitInput("کتاب", "BOOK", HabitKind.QUANTITY, null, HabitFrequency.DAILY, 10.0, "صفحه", setOf(DayOfWeek.SATURDAY)))
+            habits.setLog(read, TestData.today.minusDays(1), HabitStatus.NOT_DONE, 4.0)
+            RoomReminderRepository(db, clock).save(null, ReminderInput(ReminderType.HABIT, read, LocalTime.of(21, 30), emptySet()))
+            RoomWaterRepository(db, clock).add(TestData.today, 250)
+            RoomSleepRepository(db, clock).save(TestData.today, LocalTime.of(23, 30), LocalTime.of(7, 0), 4, null)
+            RoomActivityRepository(db, clock).add(TestData.today, ActivityInput(ActivityKind.WALK, 4200, 35, null))
+            RoomReturnPlanRepository(db, clock).open(5)
         }
     }
 
@@ -106,6 +130,8 @@ class BackupServiceTest {
         val staged = restore.stage(ByteArrayInputStream(bytes), null)
         assertEquals(41, staged.summary.counts["weight_entry"]) // first weigh-in from setup + 40
         assertEquals(1, staged.summary.counts["profile"])
+        assertEquals(1, staged.summary.counts["habit_log"])
+        assertEquals(1, staged.summary.counts["reminder"])
         assertFalse(staged.summary.encrypted)
         assertEquals(FitDatabase.VERSION, staged.summary.schemaVersion)
         restore.restore(staged)

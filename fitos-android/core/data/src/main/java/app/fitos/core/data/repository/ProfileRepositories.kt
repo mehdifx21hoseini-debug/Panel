@@ -44,6 +44,8 @@ class RoomNutritionTargetRepository(private val db: FitDatabase, private val clo
     override fun effectiveOn(date: LocalDate): Flow<NutritionTarget?> =
         dao.observeEffectiveOn(date.toEpochDay()).map { it?.toDomain() }
 
+    override val history: Flow<List<NutritionTarget>> = dao.observeHistory().map { list -> list.map { it.toDomain() } }
+
     override suspend fun save(target: NutritionTarget) = upsertTarget(db, target, clock.millis())
 }
 

@@ -63,6 +63,12 @@ interface NutritionTargetRepository {
     /** The target that applies on [date], or null before any target exists. */
     fun effectiveOn(date: LocalDate): Flow<NutritionTarget?>
 
+    /** Every saved target, newest first, for judging a range of past days. */
+    val history: Flow<List<NutritionTarget>>
+
     /** Saves a target; a target with the same [NutritionTarget.effectiveFrom] is replaced, older ones stay as history. */
     suspend fun save(target: NutritionTarget)
 }
+
+/** The target in force on [day] from a [NutritionTargetRepository.history] list (newest first). */
+fun List<NutritionTarget>.on(day: LocalDate): NutritionTarget? = firstOrNull { it.effectiveFrom <= day }

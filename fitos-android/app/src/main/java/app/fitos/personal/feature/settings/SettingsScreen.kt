@@ -88,6 +88,7 @@ fun SettingsScreen(
     onOpenProfile: () -> Unit,
     onOpenTargets: () -> Unit,
     onOpenBackup: () -> Unit,
+    onOpenReminders: () -> Unit,
 ) {
     val viewModel: SettingsViewModel = viewModel { SettingsViewModel(settingsRepository) }
     val mode by viewModel.themeMode.collectAsStateWithLifecycle()
@@ -122,6 +123,11 @@ fun SettingsScreen(
                 SettingsRow(FitEmoji.MUSCLE_FLAG, R.string.settings_profile_row, R.string.settings_profile_row_body, onOpenProfile)
                 HorizontalDivider(color = colors.outlineVariant)
                 SettingsRow(FitEmoji.BULLSEYE, R.string.settings_targets_row, R.string.settings_targets_row_body, onOpenTargets)
+            }
+
+            SectionLabel(R.string.settings_reminders)
+            FitCard {
+                SettingsRow(FitEmoji.BELL, R.string.settings_reminders_row, R.string.settings_reminders_row_body, onOpenReminders)
             }
 
             SectionLabel(R.string.settings_backup)

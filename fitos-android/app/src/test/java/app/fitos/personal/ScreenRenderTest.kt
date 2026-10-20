@@ -286,4 +286,94 @@ class ScreenRenderTest {
         compose.waitForText("کل روز")
     }
     @Test fun homeWithFood() = renderWith("13-home-food", seed = { c, k -> foodDay(c, k) }) { compose.waitForText("هدف‌های امروز") }
+
+    // ---- Stage 6: habits, reminders, return to plan, automatic backup ----
+
+    /** Three weeks of habits: some days missed, one skipped, water, sleep and a walk today. */
+    private suspend fun habitWeeks(container: AppContainer, clock: TestApp.SettableClock) {
+        val d = container.data
+        val today = TestApp.today
+        clock.now = today.minusDays(20).atTime(8, 0).atZone(TestApp.zone).toInstant()
+        val names = mapOf(
+            app.fitos.core.domain.habits.SystemHabit.WATER to "نوشیدن آب",
+            app.fitos.core.domain.habits.SystemHabit.SLEEP to "خواب کافی",
+            app.fitos.core.domain.habits.SystemHabit.WEIGH_IN to "ثبت وزن",
+        )
+        names.forEach { (s, n) -> d.habits.add(app.fitos.personal.feature.habits.systemInput(s, n, 4)) }
+        val read = d.habits.add(app.fitos.core.domain.habits.HabitInput("مطالعه", "BULB", app.fitos.core.domain.habits.HabitKind.QUANTITY, null, app.fitos.core.domain.habits.HabitFrequency.DAILY, 10.0, "صفحه", emptySet()))
+        val calm = d.habits.add(app.fitos.core.domain.habits.HabitInput("مدیتیشن", "LOTUS", app.fitos.core.domain.habits.HabitKind.BOOLEAN, null, app.fitos.core.domain.habits.HabitFrequency.DAILY, null, null, emptySet()))
+        val walk = d.habits.add(app.fitos.core.domain.habits.HabitInput("پیاده‌روی با دوست", "SHOE", app.fitos.core.domain.habits.HabitKind.BOOLEAN, null, app.fitos.core.domain.habits.HabitFrequency.WEEKLY, 3.0, null, emptySet()))
+        (1L..20L).forEach { ago ->
+            val day = today.minusDays(ago)
+            d.habits.setLog(read, day, if (ago % 4 == 0L) app.fitos.core.domain.habits.HabitStatus.NOT_DONE else app.fitos.core.domain.habits.HabitStatus.DONE, if (ago % 4 == 0L) 5.0 else 12.0)
+            if (ago % 6 != 0L) d.habits.setLog(calm, day, app.fitos.core.domain.habits.HabitStatus.DONE)
+            if (ago == 9L) d.habits.setLog(calm, day, app.fitos.core.domain.habits.HabitStatus.SKIPPED)
+            if (ago % 3 == 0L) d.habits.setLog(walk, day, app.fitos.core.domain.habits.HabitStatus.DONE)
+            d.water.add(day, if (ago % 5 == 0L) 1500 else 2500)
+            if (ago % 7 != 3L) d.sleep.save(day, java.time.LocalTime.of(23, 30), java.time.LocalTime.of(if (ago % 2 == 0L) 7 else 6, 30), 4, null)
+        }
+        clock.now = TestApp.clock.instant()
+        d.water.add(today, 500)
+        d.water.add(today, 250)
+        d.sleep.save(today, java.time.LocalTime.of(23, 45), java.time.LocalTime.of(7, 0), 4, null)
+        d.habits.setLog(read, today, app.fitos.core.domain.habits.HabitStatus.NOT_DONE, 4.0)
+        d.activity.add(today, app.fitos.core.domain.habits.ActivityInput(app.fitos.core.domain.habits.ActivityKind.WALK, 4200, 35, null))
+        d.reminders.save(null, app.fitos.core.domain.habits.ReminderInput(app.fitos.core.domain.habits.ReminderType.HABIT, calm, java.time.LocalTime.of(21, 30), emptySet()))
+        d.reminders.save(null, app.fitos.core.domain.habits.ReminderInput(app.fitos.core.domain.habits.ReminderType.WEIGH_IN, null, java.time.LocalTime.of(7, 30), emptySet()))
+        d.reminders.save(null, app.fitos.core.domain.habits.ReminderInput(app.fitos.core.domain.habits.ReminderType.BACKUP, null, java.time.LocalTime.of(20, 0), setOf(java.time.DayOfWeek.FRIDAY)))
+    }
+
+    private fun openHabits() {
+        compose.onNode(androidx.compose.ui.test.hasText("عادت‌ها") and androidx.compose.ui.test.isSelectable()).performClick()
+        compose.waitForText("آب")
+    }
+
+    @Test fun habits() = renderWith("80-habits", seed = { c, k -> habitWeeks(c, k) }) { openHabits(); compose.waitForText("پایبندی ۴ هفته‌ی اخیر") }
+    @Test fun habitsDark() = renderWith("80-habits-dark", ThemeMode.DARK, seed = { c, k -> habitWeeks(c, k) }) { openHabits(); compose.waitForText("پایبندی ۴ هفته‌ی اخیر") }
+    @Test fun habitsList() = renderWith("80-habits-list", seed = { c, k -> habitWeeks(c, k) }) { openHabits(); compose.waitForText("مدیتیشن") }
+    @Test fun habitsLogs() = renderWith("81-habits-logs", seed = { c, k -> habitWeeks(c, k) }) {
+        openHabits()
+        compose.waitForText("پیاده‌روی · ۳۵ دقیقه · ۴٬۲۰۰ قدم").performScrollTo()
+    }
+    @Test fun habitsEmpty() = render("82-habits-empty") { openHabits(); compose.waitForText("هنوز عادتی نساخته‌ای") }
+    @Test fun habitEditor() = render("83-habit-editor") {
+        openHabits()
+        click("عادت جدید")
+        type("نام عادت", "مطالعه")
+        click("مقدار")
+        type("هدف روزانه", "10")
+        type("واحد (مثلاً صفحه)", "صفحه")
+    }
+    @Test fun habitDetail() = renderWith("84-habit-detail", seed = { c, k -> habitWeeks(c, k) }) {
+        openHabits()
+        click("مدیتیشن")
+        click("جزئیات و سابقه")
+        compose.waitForText("۵ هفته‌ی اخیر")
+    }
+    @Test fun reminders() = renderWith("87-reminders", seed = { c, k -> habitWeeks(c, k) }) {
+        compose.waitForDescription("تنظیمات").performClick()
+        click("یادآورها و برگشت به برنامه")
+        compose.waitForText("۷:۳۰ · هر روز")
+    }
+    @Test fun autoBackup() = render("88-auto-backup") {
+        compose.waitForDescription("تنظیمات").performClick()
+        click("پشتیبان‌گیری و بازیابی")
+        compose.waitForText("پشتیبان خودکار هفتگی").performScrollTo()
+    }
+    @Test fun homeWithHabits() = renderWith("14-home-habits", seed = { c, k -> habitWeeks(c, k) }) { compose.waitForText("عادت‌های امروز").performScrollTo() }
+
+    /** The last workout six days ago. */
+    private suspend fun breakOfSixDays(container: AppContainer, clock: TestApp.SettableClock) {
+        val program = container.data.programs.active.first()!!
+        clock.now = TestApp.today.minusDays(6).atTime(18, 0).atZone(TestApp.zone).toInstant()
+        val id = container.data.workouts.start(program.id, program.days.first().id, app.fitos.core.domain.training.VariantKind.FULL)
+        container.data.workouts.finish(id, 6, null)
+    }
+
+    @Test fun homeReturn() = renderWith("15-home-return", program = true, seed = { c, k -> breakOfSixDays(c, k) }) { compose.waitForText("۵ روز تمرینی ثبت نشده") }
+    @Test fun trainingEasy() = renderWith("67-training-easy", program = true, seed = { c, k -> breakOfSixDays(c, k) }) {
+        click("دو جلسه‌ی سبک‌تر")
+        openTraining()
+        compose.waitForText("شروع جلسه‌ی سبک‌تر")
+    }
 }

@@ -77,7 +77,13 @@ private fun dateTime(at: Instant, zone: ZoneId = ZoneId.systemDefault()): Pair<S
  * up yet; [onRestored] then continues into the app.
  */
 @Composable
-fun BackupScreen(viewModel: BackupViewModel, restoreOnly: Boolean, onBack: () -> Unit, onRestored: () -> Unit) {
+fun BackupScreen(
+    viewModel: BackupViewModel,
+    restoreOnly: Boolean,
+    onBack: () -> Unit,
+    onRestored: () -> Unit,
+    autoBackup: AutoBackupViewModel? = null,
+) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     val lastBackup by viewModel.lastBackupAt.collectAsStateWithLifecycle()
     val resolver = LocalContext.current.contentResolver
@@ -133,6 +139,11 @@ fun BackupScreen(viewModel: BackupViewModel, restoreOnly: Boolean, onBack: () ->
                     modifier = Modifier.fillMaxWidth(),
                 )
             }
+        }
+
+        if (!restoreOnly && autoBackup != null) {
+            SectionTitle(stringResource(R.string.auto_backup_title))
+            AutoBackupSection(autoBackup)
         }
 
         SectionTitle(stringResource(R.string.restore_title))
@@ -209,7 +220,7 @@ fun BackupScreen(viewModel: BackupViewModel, restoreOnly: Boolean, onBack: () ->
 }
 
 @Composable
-private fun PasswordField(value: String, onChange: (String) -> Unit, label: String, error: String?) {
+internal fun PasswordField(value: String, onChange: (String) -> Unit, label: String, error: String?) {
     val colors = FitTheme.colors
     OutlinedTextField(
         value = value,

@@ -8,12 +8,16 @@ import androidx.room.migration.Migration
 import app.fitos.core.data.db.dao.ExerciseDao
 import app.fitos.core.data.db.dao.FoodDao
 import app.fitos.core.data.db.dao.FoodLogDao
+import app.fitos.core.data.db.dao.HabitDao
+import app.fitos.core.data.db.dao.LifestyleDao
 import app.fitos.core.data.db.dao.MealDao
 import app.fitos.core.data.db.dao.MeasurementDao
 import app.fitos.core.data.db.dao.ProgramDao
 import app.fitos.core.data.db.dao.WorkoutDao
 import app.fitos.core.data.db.dao.NutritionTargetDao
 import app.fitos.core.data.db.dao.ProfileDao
+import app.fitos.core.data.db.dao.ReminderDao
+import app.fitos.core.data.db.dao.ReturnPlanDao
 import app.fitos.core.data.db.dao.WeightEntryDao
 import app.fitos.core.data.db.dao.WeightGoalDao
 import app.fitos.core.data.db.entity.ActivityLogEntity
@@ -111,6 +115,10 @@ abstract class FitDatabase : RoomDatabase() {
     abstract fun foodDao(): FoodDao
     abstract fun foodLogDao(): FoodLogDao
     abstract fun mealDao(): MealDao
+    abstract fun habitDao(): HabitDao
+    abstract fun lifestyleDao(): LifestyleDao
+    abstract fun reminderDao(): ReminderDao
+    abstract fun returnPlanDao(): ReturnPlanDao
 
     companion object {
         const val NAME = "fitos.db"

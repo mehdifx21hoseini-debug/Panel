@@ -16,6 +16,7 @@ import app.fitos.core.domain.training.ExercisePerformance
 import app.fitos.core.domain.training.PersonalRecord
 import app.fitos.core.domain.training.RecordType
 import app.fitos.core.domain.training.Records
+import app.fitos.core.domain.training.ReturnPlan
 import app.fitos.core.domain.training.SessionExercise
 import app.fitos.core.domain.training.SessionReport
 import app.fitos.core.domain.training.SessionStatus
@@ -69,7 +70,7 @@ class RoomWorkoutRepository(private val db: FitDatabase, private val clock: Cloc
 
     // ---- session lifecycle ----
 
-    override suspend fun start(programId: String, dayId: String, kind: VariantKind): String = db.withTransaction {
+    override suspend fun start(programId: String, dayId: String, kind: VariantKind, lighter: Boolean): String = db.withTransaction {
         if (dao.active() != null) throw SessionInProgressException()
         val day = programDao.day(dayId)?.takeIf { it.programId == programId } ?: error("program day not found")
         val variant = programDao.variant(day.id, kind.code)
@@ -88,7 +89,7 @@ class RoomWorkoutRepository(private val db: FitDatabase, private val clock: Cloc
             planned.mapIndexed { index, p ->
                 SessionExerciseEntity(
                     id = newId(), sessionId = id, exerciseId = p.exerciseId, position = index, plannedExerciseId = p.id,
-                    replacedExerciseId = null, skipped = false, targetSets = p.sets, targetRepMin = p.repMin, targetRepMax = p.repMax,
+                    replacedExerciseId = null, skipped = false, targetSets = if (lighter) ReturnPlan.lighterSets(p.sets) else p.sets, targetRepMin = p.repMin, targetRepMax = p.repMax,
                     targetRir = p.targetRir, targetWeightKg = p.startWeightKg, targetDurationSec = p.durationSec, restSec = p.restSec,
                     note = p.note, createdAt = at, updatedAt = at,
                 )

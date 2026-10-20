@@ -95,6 +95,8 @@ enum class SuggestionReason {
     BREAK,
     /** No progression rule: repeat last time. */
     NO_RULE,
+    /** An easier session chosen after a break ([ReturnPlan]). */
+    EASY_RETURN,
 }
 
 /** A suggestion is only ever shown with its reason; the user can reject or edit it. */

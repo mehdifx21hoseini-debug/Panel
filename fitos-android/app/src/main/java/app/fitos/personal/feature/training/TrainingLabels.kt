@@ -6,6 +6,7 @@ import app.fitos.core.domain.format.PersianNumbers
 import app.fitos.core.domain.training.LogType
 import app.fitos.core.domain.training.Muscle
 import app.fitos.core.domain.training.PlannedExercise
+import app.fitos.core.domain.training.ProgramDay
 import app.fitos.core.domain.training.VariantKind
 import app.fitos.personal.R
 import app.fitos.personal.ui.Fmt
@@ -55,3 +56,7 @@ fun plannedSummary(p: PlannedExercise): String {
     }
     return parts.joinToString(" · ")
 }
+
+/** Whether the day has a minimal version with exercises in it. */
+val ProgramDay.hasMinimal: Boolean
+    get() = variant(VariantKind.MINIMAL)?.exercises?.isNotEmpty() == true

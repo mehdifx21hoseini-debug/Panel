@@ -51,6 +51,8 @@ import app.fitos.core.domain.training.PlannedTargets
 import app.fitos.core.domain.training.PlannedVolume
 import app.fitos.core.domain.training.Program
 import app.fitos.core.domain.training.ProgramRepository
+import app.fitos.core.domain.training.ReturnPlan
+import app.fitos.core.domain.training.ReturnPlanRepository
 import app.fitos.core.domain.training.SessionEstimate
 import app.fitos.core.domain.training.TrainingRules
 import app.fitos.core.domain.training.VariantKind
@@ -60,6 +62,7 @@ import app.fitos.personal.R
 import app.fitos.personal.feature.profile.FieldLabel
 import app.fitos.personal.ui.EditScaffold
 import app.fitos.personal.ui.Fmt
+import java.time.Clock
 import java.time.DayOfWeek
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -69,12 +72,23 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
-class DayEditorViewModel(private val programs: ProgramRepository, private val workouts: WorkoutRepository, private val programId: String, val dayId: String) : ViewModel() {
+class DayEditorViewModel(
+    private val programs: ProgramRepository,
+    private val workouts: WorkoutRepository,
+    private val returnPlan: ReturnPlanRepository,
+    private val clock: Clock,
+    private val programId: String,
+    val dayId: String,
+) : ViewModel() {
     val open: StateFlow<WorkoutSession?> = workouts.active.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), null)
 
-    /** Starts this day in the selected version, or opens the session already running. */
+    /** Starts this day in the selected version (lighter during an easy start after a break), or opens the session already running. */
     fun start(onReady: () -> Unit) = viewModelScope.launch {
-        if (workouts.active.first() == null) workouts.start(programId, dayId, kind.value)
+        if (workouts.active.first() == null) {
+            val easy = ReturnPlan.next(returnPlan.latest.first(), clock.instant(), workouts.history.first().map { it.startedAt })
+            val day = programs.program(programId).first()?.days?.firstOrNull { it.id == dayId }
+            workouts.start(programId, dayId, kind.value, lighter = ReturnPlan.lightens(easy, kind.value, day?.hasMinimal == true))
+        }
         onReady()
     }
 

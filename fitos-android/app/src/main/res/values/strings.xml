@@ -15,8 +15,6 @@
     <string name="home_meter_description">پیشرفت امروز %1$s.</string>
     <string name="home_not_logged">ثبت نشده</string>
     <string name="home_done">انجام شد</string>
-    <string name="home_start_title">ثبت روزانه در راه است</string>
-    <string name="home_start_body">ثبت جلسه‌ی تمرین، غذا و عادت‌ها مرحله به مرحله به همین صفحه اضافه می‌شوند. تا وقتی چیزی ثبت نکنی، هیچ عددی ساختگی نشان داده نمی‌شود.</string>
 
     <string name="module_training">تمرین</string>
     <string name="module_calories">کالری</string>
@@ -25,8 +23,6 @@
     <string name="module_sleep">خواب</string>
     <string name="module_habits">عادت‌ها</string>
 
-    <string name="soon_habits_title">عادت‌ها، آب و خواب</string>
-    <string name="soon_habits_body">عادت‌ها، یادآورها و برگشت به برنامه در مرحله ۶ ساخته می‌شود.</string>
 
     <string name="settings_title">تنظیمات</string>
     <string name="settings_back">بازگشت</string>

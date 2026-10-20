@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Stage 6: habits, water, sleep, activity, reminders, return to plan and automatic backup. -->
+<resources>
+    <!-- Habits tab -->
+    <string name="habits_title">عادت‌ها</string>
+    <string name="habits_today">امروز</string>
+    <string name="habits_yesterday">دیروز</string>
+    <string name="habits_adherence_title">پایبندی ۴ هفته‌ی اخیر</string>
+    <string name="habits_adherence_none">هنوز چیزی برای سنجیدن نیست؛ از پایان اولین روز معلوم می‌شود.</string>
+    <string name="habits_adherence_note">یک روز جاافتاده فقط همان یک روز حساب می‌شود و هیچ چیزی صفر نمی‌شود. روزهای «رد شده» در میانگین نمی‌آیند.</string>
+    <string name="habits_trend_description">پایبندی هفتگی از قدیم به جدید: %1$s</string>
+    <string name="habits_trend_no_data">بدون داده</string>
+    <string name="habits_list_title">فهرست روز</string>
+    <string name="habits_empty_title">هنوز عادتی نساخته‌ای</string>
+    <string name="habits_empty_body">عادت‌هایی که از ثبت‌های خود اپ پر می‌شوند را با یک لمس اضافه کن، یا یک عادت دلخواه بساز.</string>
+    <string name="habits_suggestions">افزودن سریع</string>
+    <string name="habits_new">عادت جدید</string>
+    <string name="habits_archived">بایگانی‌شده</string>
+    <string name="habits_none_due">برای این روز عادتی در برنامه نیست.</string>
+
+    <string name="habit_status_done">انجام شد</string>
+    <string name="habit_status_not_done">انجام نشد</string>
+    <string name="habit_status_skipped">رد شد؛ حساب نمی‌شود</string>
+    <string name="habit_status_not_logged">ثبت نشده</string>
+    <string name="habit_status_amount">%1$s از %2$s</string>
+    <string name="habit_status_week">این هفته %1$s از %2$s بار</string>
+    <string name="habit_status_auto">خودکار · %1$s</string>
+    <string name="habit_adherence_short">پایبندی %1$s</string>
+    <string name="habit_mark_done">علامت انجام «%1$s»</string>
+    <string name="habit_unmark">برداشتن علامت «%1$s»</string>
+    <string name="habit_action_done">انجام شد</string>
+    <string name="habit_action_not_done">انجام نشد</string>
+    <string name="habit_action_skip">رد کردن این روز</string>
+    <string name="habit_action_clear">پاک کردن پاسخ</string>
+    <string name="habit_action_log">ثبت</string>
+    <string name="habit_action_details">جزئیات و سابقه</string>
+    <string name="habit_value_title">%1$s · %2$s</string>
+    <string name="habit_value_label">مقدار (%1$s)</string>
+    <string name="habit_value_label_plain">مقدار</string>
+
+    <string name="system_water">نوشیدن آب</string>
+    <string name="system_sleep">خواب کافی</string>
+    <string name="system_training">انجام تمرین</string>
+    <string name="system_nutrition">رعایت برنامه‌ی غذایی</string>
+    <string name="system_weigh_in">ثبت وزن</string>
+    <string name="system_activity">پیاده‌روی و فعالیت</string>
+    <string name="system_home_activity">فعالیت کوتاه خانگی</string>
+    <string name="system_water_about">از ثبت آب پر می‌شود؛ هدف از «هدف‌های روزانه» می‌آید.</string>
+    <string name="system_sleep_about">از ثبت خواب پر می‌شود؛ هدف از «هدف‌های روزانه» می‌آید.</string>
+    <string name="system_training_about">هر جلسه‌ی تمرینِ تمام‌شده یک بار حساب می‌شود.</string>
+    <string name="system_nutrition_about">روزی که کالری در محدوده‌ی ±۱۰٪ هدف باشد و دست‌کم ۹۰٪ پروتئین هدف خورده شود.</string>
+    <string name="system_weigh_in_about">هر روزی که وزن ثبت شود.</string>
+    <string name="system_activity_about">جمع دقیقه‌ها یا قدم‌های فعالیت‌های ثبت‌شده‌ی همان روز.</string>
+    <string name="system_home_activity_about">نسخه‌ی خانگی یا حداقلی یک روز تمرین، یا یک فعالیت «تمرین خانگی».</string>
+
+    <!-- Water, sleep, activity -->
+    <string name="water_title">آب</string>
+    <string name="water_progress">%1$s از %2$s لیتر</string>
+    <string name="water_total">%1$s لیتر</string>
+    <string name="water_none">هنوز آبی ثبت نشده.</string>
+    <string name="water_add_description">افزودن %1$s میلی‌لیتر آب</string>
+    <string name="water_add_other">مقدار دلخواه</string>
+    <string name="water_add_other_short">دلخواه</string>
+    <string name="water_glass">یک لیوان</string>
+    <string name="water_glass_home">یک لیوان آب</string>
+    <string name="water_amount">مقدار (میلی‌لیتر)</string>
+    <string name="water_amount_error">بین ۵۰ تا ۳۰۰۰ میلی‌لیتر.</string>
+    <string name="water_entry">%1$s · %2$s میلی‌لیتر</string>
+    <string name="water_delete">حذف %1$s میلی‌لیتر</string>
+    <string name="water_deleted">%1$s میلی‌لیتر آب حذف شد</string>
+
+    <string name="sleep_title">خواب</string>
+    <string name="sleep_night_of">شبِ منتهی به %1$s</string>
+    <string name="sleep_none">خواب این شب ثبت نشده.</string>
+    <string name="sleep_range">از %1$s تا %2$s</string>
+    <string name="sleep_quality_line">کیفیت %1$s از ۵</string>
+    <string name="sleep_target">هدف %1$s</string>
+    <string name="sleep_log">ثبت خواب</string>
+    <string name="sleep_edit">ویرایش خواب</string>
+    <string name="sleep_bedtime">زمان خوابیدن</string>
+    <string name="sleep_wake">زمان بیدار شدن</string>
+    <string name="sleep_quality">کیفیت خواب (اختیاری)</string>
+    <string name="sleep_duration">مدت: %1$s</string>
+    <string name="sleep_invalid">مدت خواب باید بین نیم ساعت تا ۱۶ ساعت باشد.</string>
+    <string name="sleep_deleted">خواب این شب حذف شد</string>
+
+    <string name="activity_card_title">فعالیت</string>
+    <string name="activity_none">فعالیتی ثبت نشده.</string>
+    <string name="activity_log">ثبت فعالیت</string>
+    <string name="activity_kind_walk">پیاده‌روی</string>
+    <string name="activity_kind_steps">فقط قدم‌ها</string>
+    <string name="activity_kind_home">تمرین خانگی</string>
+    <string name="activity_kind_other">سایر</string>
+    <string name="activity_minutes">مدت (دقیقه)</string>
+    <string name="activity_steps">تعداد قدم (اختیاری)</string>
+    <string name="activity_steps_required">تعداد قدم</string>
+    <string name="activity_note">یادداشت (اختیاری)</string>
+    <string name="activity_error_empty">مدت یا تعداد قدم را بنویس.</string>
+    <string name="activity_error_minutes">مدت بین ۱ تا ۶۰۰ دقیقه.</string>
+    <string name="activity_error_steps">قدم‌ها بین ۱ تا ۱۰۰٬۰۰۰.</string>
+    <string name="activity_deleted">فعالیت حذف شد</string>
+
+    <string name="amount_minutes">%1$s دقیقه</string>
+    <string name="amount_hours">%1$s ساعت</string>
+    <string name="amount_hours_minutes">%1$s ساعت و %2$s دقیقه</string>
+    <string name="amount_liters">%1$s لیتر</string>
+    <string name="amount_steps">%1$s قدم</string>
+
+    <!-- Habit editor and detail -->
+    <string name="habit_new_title">عادت جدید</string>
+    <string name="habit_edit_title">ویرایش عادت</string>
+    <string name="habit_name">نام عادت</string>
+    <string name="habit_name_error">نامی تا ۴۰ حرف بنویس.</string>
+    <string name="habit_emoji">نشانه</string>
+    <string name="habit_emoji_option">نشانه‌ی %1$s</string>
+    <string name="habit_kind">نوع ثبت</string>
+    <string name="habit_kind_boolean">انجام شد/نشد</string>
+    <string name="habit_kind_quantity">مقدار</string>
+    <string name="habit_kind_duration">زمان</string>
+    <string name="habit_frequency">تکرار</string>
+    <string name="habit_daily">روزانه</string>
+    <string name="habit_weekly">چند بار در هفته</string>
+    <string name="habit_days">روزهای انجام</string>
+    <string name="habit_days_hint">اگر روزی انتخاب نکنی، هر روز حساب می‌شود.</string>
+    <string name="habit_times_week">بار در هفته</string>
+    <string name="habit_times_error">بین ۱ تا ۷ بار.</string>
+    <string name="habit_target">هدف روزانه</string>
+    <string name="habit_target_minutes">هدف روزانه (دقیقه)</string>
+    <string name="habit_target_error">هدفی بزرگ‌تر از صفر بنویس.</string>
+    <string name="habit_unit">واحد (مثلاً صفحه)</string>
+    <string name="habit_activity_unit">واحد</string>
+    <string name="unit_minutes_word">دقیقه</string>
+    <string name="unit_steps_word">قدم</string>
+    <string name="habit_target_from_targets">هدف از «هدف‌های روزانه» می‌آید: %1$s.</string>
+    <string name="habit_open_targets">تغییر هدف‌ها</string>
+    <string name="habit_reminders">یادآورها</string>
+    <string name="habit_reminders_hint">یادآور فقط وقتی می‌آید که عادت آن روز هنوز انجام نشده باشد.</string>
+    <string name="habit_manage">بایگانی و حذف</string>
+    <string name="habit_archive">بایگانی</string>
+    <string name="habit_unarchive">خروج از بایگانی</string>
+    <string name="habit_archive_hint">عادت بایگانی‌شده در فهرست روز و میانگین‌ها نمی‌آید و یادآورش خاموش می‌ماند؛ سابقه‌اش حفظ می‌شود.</string>
+    <string name="habit_delete">حذف عادت</string>
+    <string name="habit_delete_title">«%1$s» حذف شود؟</string>
+    <string name="habit_delete_body">عادت و سابقه‌اش از فهرست و میانگین‌ها برداشته می‌شود و یادآورهایش دیگر نمی‌آیند. اگر فقط می‌خواهی مدتی کنار بگذاری، «بایگانی» بهتر است.</string>
+    <string name="habit_system_label">از ثبت‌های اپ</string>
+
+    <string name="habit_detail_counted_days">%1$s روز سنجیده شد، %2$s روز کامل</string>
+    <string name="habit_detail_counted_weeks">%1$s هفته سنجیده شد، %2$s هفته کامل</string>
+    <string name="habit_detail_trend">۸ هفته‌ی اخیر</string>
+    <string name="habit_detail_calendar">۵ هفته‌ی اخیر</string>
+    <string name="habit_detail_calendar_hint">روی هر روز بزن تا پاسخش را تغییر دهی.</string>
+    <string name="habit_legend_done">کامل</string>
+    <string name="habit_legend_partial">بخشی</string>
+    <string name="habit_legend_missed">انجام نشد یا ثبت نشد</string>
+    <string name="habit_legend_skipped">رد شد</string>
+    <string name="habit_day_cell">%1$s: %2$s</string>
+    <string name="habit_not_due">در برنامه نیست</string>
+    <string name="habit_edit">ویرایش</string>
+
+    <!-- Reminders -->
+    <string name="reminders_title">یادآورها</string>
+    <string name="reminders_about">هر یادآور روزی یک بار، و فقط وقتی کاری مانده، می‌آید. پیام تکراری یا سرزنش‌آمیز فرستاده نمی‌شود.</string>
+    <string name="reminders_permission_title">اعلان‌ها خاموش است</string>
+    <string name="reminders_permission_body">برای رسیدن یادآورها، اجازه‌ی اعلان لازم است.</string>
+    <string name="reminders_permission_button">اجازه‌ی اعلان</string>
+    <string name="reminders_exact_body">اندروید اجازه‌ی زمان‌بندی دقیق را نداده؛ ممکن است یادآورها چند دقیقه دیرتر برسند.</string>
+    <string name="reminders_exact_button">زمان‌بندی دقیق</string>
+    <string name="reminders_battery_title">اگر یادآورها نمی‌رسند</string>
+    <string name="reminders_battery_body">بعضی گوشی‌ها (مثل شیائومی، سامسونگ و هواوی) برنامه‌ها را برای صرفه‌جویی باتری می‌بندند. FitOS را از «بهینه‌سازی باتری» خارج کن.</string>
+    <string name="reminders_battery_button">تنظیمات باتری</string>
+    <string name="reminder_type_weigh_in">وزن‌کشی</string>
+    <string name="reminder_type_water">آب</string>
+    <string name="reminder_type_workout">تمرین</string>
+    <string name="reminder_type_backup">پشتیبان‌گیری</string>
+    <string name="reminder_type_habits">عادت‌ها</string>
+    <string name="reminder_weigh_about">فقط اگر آن روز وزن ثبت نشده باشد.</string>
+    <string name="reminder_water_about">فقط اگر هنوز به هدف آب نرسیده باشی.</string>
+    <string name="reminder_workout_about">فقط اگر آن روز تمرین نکرده باشی و جلسه‌ای باز نباشد.</string>
+    <string name="reminder_backup_about">فقط اگر بیش از ۷ روز از آخرین پشتیبان گذشته باشد.</string>
+    <string name="reminders_habits_empty">یادآور هر عادت را در صفحه‌ی ویرایش همان عادت بساز.</string>
+    <string name="reminder_add_time">افزودن زمان</string>
+    <string name="reminder_every_day">هر روز</string>
+    <string name="reminder_line">%1$s · %2$s</string>
+    <string name="reminder_sheet_title">زمان یادآور</string>
+    <string name="reminder_time">ساعت یادآور</string>
+    <string name="reminder_days">روزها</string>
+    <string name="reminder_days_hint">اگر روزی انتخاب نکنی، هر روز می‌آید.</string>
+    <string name="reminder_toggle">یادآور %1$s</string>
+    <string name="return_settings_title">برگشت به برنامه</string>
+    <string name="return_settings_body">بعد از چند روز بدون تمرین، اپ یک بار می‌پرسد چطور برگردی: ادامه‌ی عادی، دو جلسه‌ی سبک‌تر یا نسخه‌ی حداقلی.</string>
+    <string name="return_threshold">بعد از چند روز</string>
+    <string name="return_threshold_value">%1$s روز</string>
+    <string name="return_notify">یک اعلان برای هر وقفه</string>
+
+    <!-- Notifications -->
+    <string name="channel_reminders">یادآورها</string>
+    <string name="channel_system">پشتیبان و برگشت به برنامه</string>
+    <string name="reminder_habit_open">امروز هنوز ثبت نشده.</string>
+    <string name="reminder_habit_amount">تا الان %1$s</string>
+    <string name="reminder_habit_week">این هفته %1$s از %2$s بار</string>
+    <string name="reminder_water_title">آب</string>
+    <string name="reminder_water_none">امروز هنوز آبی ثبت نشده.</string>
+    <string name="reminder_water_body">تا الان %1$s از %2$s لیتر</string>
+    <string name="reminder_weigh_title">وزن امروز</string>
+    <string name="reminder_weigh_body">اگر وقتش است، با دو لمس ثبتش کن.</string>
+    <string name="reminder_workout_title">تمرین امروز</string>
+    <string name="reminder_workout_body">جلسه‌ی بعد: %1$s. نسخه‌ی کوتاه هم آماده است.</string>
+    <string name="reminder_workout_generic">جلسه‌ی بعدی آماده است.</string>
+    <string name="reminder_backup_title">پشتیبان‌گیری</string>
+    <string name="reminder_backup_body">از آخرین پشتیبان %1$s روز گذشته.</string>
+    <string name="reminder_backup_never">هنوز از اطلاعاتت پشتیبان نگرفته‌ای.</string>
+    <string name="reminder_action_done">انجام شد</string>
+    <string name="reminder_action_water">+%1$s میلی‌لیتر</string>
+    <string name="return_notification_title">برگشت به برنامه</string>
+    <string name="return_notification_body">چند روزی تمرین ثبت نشده. هر وقت آماده بودی، می‌توانی با جلسه‌های سبک‌تر شروع کنی.</string>
+    <string name="auto_backup_failed_title">پشتیبان خودکار انجام نشد</string>
+    <string name="auto_backup_error_folder">به پوشه‌ی پشتیبان دسترسی نیست. در صفحه‌ی پشتیبان‌گیری دوباره پوشه را انتخاب کن.</string>
+    <string name="auto_backup_error_write">نوشتن فایل ممکن نشد (شاید حافظه پر است). دوباره امتحان می‌شود.</string>
+    <string name="auto_backup_error_password">رمز پشتیبان خودکار خوانده نشد. در صفحه‌ی پشتیبان‌گیری دوباره رمز بگذار.</string>
+
+    <!-- Home -->
+    <string name="home_return_title">%1$s روز تمرینی ثبت نشده</string>
+    <string name="home_return_body">اشکالی ندارد؛ پیش می‌آید. دوست داری چطور برگردی؟</string>
+    <string name="home_return_continue">ادامه‌ی برنامه‌ی عادی</string>
+    <string name="home_return_lighter">دو جلسه‌ی سبک‌تر</string>
+    <string name="home_return_lighter_body">یک ست کمتر و وزنه‌ها حدود ۱۰٪ سبک‌تر</string>
+    <string name="home_return_minimal">نسخه‌ی حداقلی</string>
+    <string name="home_return_minimal_body">دو جلسه‌ی بعد با نسخه‌ی کوتاه روزهای شلوغ</string>
+    <string name="home_return_later">بعداً</string>
+    <string name="home_habits_title">عادت‌های امروز</string>
+    <string name="home_habits_all">همه</string>
+    <string name="home_habits_empty">هنوز عادتی نساخته‌ای. از تب «عادت‌ها» با یک لمس اضافه کن.</string>
+    <string name="home_backup_title">وقت پشتیبان‌گیری است</string>
+    <string name="home_backup_body">%1$s روز از آخرین پشتیبان گذشته. اگر گوشی گم یا خراب شود، اطلاعات بعد از آن برنمی‌گردد.</string>
+    <string name="home_backup_never">هنوز پشتیبانی نگرفته‌ای. اگر گوشی گم یا خراب شود، اطلاعات برنمی‌گردد.</string>
+    <string name="home_backup_now">پشتیبان‌گیری</string>
+    <string name="home_habits_status">%1$s از %2$s</string>
+    <string name="home_sleep_status">%1$s ساعت</string>
+
+    <!-- Training: easier start after a break -->
+    <string name="easy_banner_lighter">برگشت آرام · جلسه‌ی %1$s از %2$s: یک ست کمتر و وزنه‌ها حدود ۱۰٪ سبک‌تر.</string>
+    <string name="easy_banner_minimal">برگشت آرام · جلسه‌ی %1$s از %2$s: نسخه‌ی حداقلی پیشنهاد می‌شود.</string>
+    <string name="training_start_lighter">شروع جلسه‌ی سبک‌تر</string>
+    <string name="reason_easy_return">برگشت آرام بعد از وقفه: حدود ۱۰٪ سبک‌تر از معمول.</string>
+
+    <!-- Automatic backup -->
+    <string name="auto_backup_title">پشتیبان خودکار هفتگی</string>
+    <string name="auto_backup_body">هر هفته یک فایل پشتیبان در پوشه‌ای که انتخاب می‌کنی ساخته می‌شود. فقط فایل‌های خودکارِ قدیمی‌تر پاک می‌شوند؛ فایل‌های دیگر پوشه دست نمی‌خورند.</string>
+    <string name="auto_backup_cloud_note">اگر پوشه‌ی یک سرویس ابری (مثل گوگل‌درایو) را انتخاب کنی، فایل‌ها به همان‌جا فرستاده می‌شوند. این انتخاب با خودت است؛ برای این کار رمز گذاشتن را پیشنهاد می‌کنم.</string>
+    <string name="auto_backup_folder_none">هنوز پوشه‌ای انتخاب نشده</string>
+    <string name="auto_backup_folder">پوشه: %1$s</string>
+    <string name="auto_backup_pick">انتخاب پوشه</string>
+    <string name="auto_backup_change">تغییر پوشه</string>
+    <string name="auto_backup_switch">پشتیبان خودکار روشن باشد</string>
+    <string name="auto_backup_keep">تعداد فایل‌های نگه‌داشته</string>
+    <string name="auto_backup_password_switch">رمز برای فایل‌های خودکار</string>
+    <string name="auto_backup_password_body">رمز با کلید امن اندروید فقط روی همین گوشی نگه داشته می‌شود تا پشتیبان بی‌آنکه چیزی بپرسد ساخته شود. برای بازیابی روی گوشی دیگر باید رمز را بدانی.</string>
+    <string name="auto_backup_password_save">ذخیره‌ی رمز</string>
+    <string name="auto_backup_password_saved">رمز ذخیره شده است.</string>
+    <string name="auto_backup_now">پشتیبان همین حالا</string>
+    <string name="auto_backup_last">آخرین پشتیبان خودکار: %1$s</string>
+    <string name="auto_backup_never">هنوز پشتیبان خودکاری ساخته نشده.</string>
+    <string name="auto_backup_done">پشتیبان خودکار ساخته شد.</string>
+
+    <!-- Settings -->
+    <string name="settings_reminders">یادآورها</string>
+    <string name="settings_reminders_row">یادآورها و برگشت به برنامه</string>
+    <string name="settings_reminders_row_body">وزن‌کشی، آب، تمرین، پشتیبان و عادت‌ها</string>
+</resources>

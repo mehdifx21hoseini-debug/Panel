@@ -46,10 +46,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.LiveRegionMode
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.liveRegion
-import androidx.compose.ui.semantics.LiveRegionMode
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -78,6 +78,7 @@ import app.fitos.core.domain.training.Suggestion
 import app.fitos.core.domain.training.SuggestionReason
 import app.fitos.core.domain.training.WorkoutSession
 import app.fitos.personal.R
+import app.fitos.personal.feature.home.easyText
 import app.fitos.personal.feature.training.label
 import app.fitos.personal.feature.training.muscleNames
 import app.fitos.personal.ui.Fmt
@@ -212,6 +213,7 @@ fun SessionScreen(
                 FitNote(stringResource(R.string.session_paused), warning = true)
                 FitSecondaryButton(stringResource(R.string.session_resume), onClick = { viewModel.resume() }, icon = FitIcons.Play, modifier = Modifier.fillMaxWidth())
             }
+            ui.easy?.let { FitNote(easyText(it)) }
             val restEnd = ui.restEndsAt
             if (restEnd != null && restEnd.isAfter(now) && !session.isPaused) {
                 RestCard(Duration.between(now, restEnd).seconds + 1, item?.exercise?.nameFa.orEmpty(), viewModel::adjustRest, viewModel::skipRest)
@@ -414,6 +416,7 @@ private fun reasonText(s: Suggestion, type: LogType): String {
         SuggestionReason.PAIN -> stringResource(R.string.reason_pain)
         SuggestionReason.BREAK -> stringResource(R.string.reason_break, Fmt.int((s.daysSince ?: 0).toInt()))
         SuggestionReason.NO_RULE -> stringResource(R.string.reason_no_rule)
+        SuggestionReason.EASY_RETURN -> stringResource(R.string.reason_easy_return)
     }
 }
 

@@ -15,6 +15,7 @@ import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -26,8 +27,8 @@ import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.compose.LifecycleEventEffect
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -36,7 +37,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
-import app.fitos.core.designsystem.component.FitEmoji
 import app.fitos.core.designsystem.icon.FitIcons
 import app.fitos.core.designsystem.theme.FitTheme
 import app.fitos.core.domain.nutrition.Meal
@@ -44,6 +44,7 @@ import app.fitos.core.domain.settings.ThemeMode
 import app.fitos.core.domain.training.VariantKind
 import app.fitos.personal.AppContainer
 import app.fitos.personal.R
+import app.fitos.personal.feature.backup.AutoBackupViewModel
 import app.fitos.personal.feature.backup.BackupScreen
 import app.fitos.personal.feature.backup.BackupViewModel
 import app.fitos.personal.feature.body.BodyScreen
@@ -51,6 +52,14 @@ import app.fitos.personal.feature.body.BodyViewModel
 import app.fitos.personal.feature.body.MeasurementsEntryScreen
 import app.fitos.personal.feature.body.MeasurementsViewModel
 import app.fitos.personal.feature.body.SiteHistoryScreen
+import app.fitos.personal.feature.habits.HabitDetailScreen
+import app.fitos.personal.feature.habits.HabitDetailViewModel
+import app.fitos.personal.feature.habits.HabitEditorScreen
+import app.fitos.personal.feature.habits.HabitEditorViewModel
+import app.fitos.personal.feature.habits.HabitsScreen
+import app.fitos.personal.feature.habits.HabitsViewModel
+import app.fitos.personal.feature.habits.RemindersScreen
+import app.fitos.personal.feature.habits.RemindersViewModel
 import app.fitos.personal.feature.home.HomeScreen
 import app.fitos.personal.feature.home.HomeViewModel
 import app.fitos.personal.feature.nutrition.FoodDetailScreen
@@ -70,7 +79,6 @@ import app.fitos.personal.feature.nutrition.SavedMealsScreen
 import app.fitos.personal.feature.nutrition.SavedMealsViewModel
 import app.fitos.personal.feature.onboarding.OnboardingScreen
 import app.fitos.personal.feature.onboarding.OnboardingViewModel
-import app.fitos.personal.feature.placeholder.ComingSoonScreen
 import app.fitos.personal.feature.profile.ProfileEditScreen
 import app.fitos.personal.feature.profile.ProfileEditViewModel
 import app.fitos.personal.feature.session.SessionDetailScreen
@@ -99,9 +107,11 @@ import app.fitos.personal.feature.training.ProgramsScreen
 import app.fitos.personal.feature.training.ProgramsViewModel
 import app.fitos.personal.feature.training.TrainingScreen
 import app.fitos.personal.feature.training.TrainingViewModel
+import app.fitos.personal.notify.Destination
 import java.time.LocalDate
 import java.time.LocalTime
 import kotlin.reflect.KClass
+import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable
 
 @Serializable data object HomeRoute
@@ -141,6 +151,9 @@ import kotlinx.serialization.Serializable
 @Serializable data class RecipeEditorRoute(val recipeId: String? = null)
 @Serializable data object SavedMealsRoute
 @Serializable data object MealPlanRoute
+@Serializable data class HabitEditorRoute(val habitId: String? = null)
+@Serializable data class HabitDetailRoute(val habitId: String)
+@Serializable data object RemindersRoute
 
 /** The five tabs of the bottom navigation bar, in reading order (right to left on screen). */
 private enum class TopLevel(val route: Any, val routeClass: KClass<*>, val icon: ImageVector, @param:StringRes val label: Int) {
@@ -156,19 +169,19 @@ private enum class TopLevel(val route: Any, val routeClass: KClass<*>, val icon:
  * and a fixed clock. [startWithSetup] opens first-run setup instead of Home.
  */
 @Composable
-fun FitOsRoot(themeMode: ThemeMode, container: AppContainer, startWithSetup: Boolean) {
+fun FitOsRoot(themeMode: ThemeMode, container: AppContainer, startWithSetup: Boolean, open: Destination? = null, onOpened: () -> Unit = {}) {
     val dark = when (themeMode) {
         ThemeMode.LIGHT -> false
         ThemeMode.DARK -> true
         ThemeMode.SYSTEM -> isSystemInDarkTheme()
     }
     FitTheme(darkTheme = dark) {
-        FitOsApp(container, startWithSetup)
+        FitOsApp(container, startWithSetup, open, onOpened)
     }
 }
 
 @Composable
-fun FitOsApp(container: AppContainer, startWithSetup: Boolean) {
+fun FitOsApp(container: AppContainer, startWithSetup: Boolean, open: Destination? = null, onOpened: () -> Unit = {}) {
     val data = container.data
     val clock = container.clock
     val navController = rememberNavController()
@@ -181,6 +194,24 @@ fun FitOsApp(container: AppContainer, startWithSetup: Boolean) {
     LifecycleEventEffect(Lifecycle.Event.ON_RESUME) { today = LocalDate.now(clock) }
 
     SystemBarIcons(lightContent = FitTheme.colors.isDark || currentTab == TopLevel.Home || destination == null)
+
+    fun openTab(tab: TopLevel) = navController.navigate(tab.route) {
+        popUpTo(navController.graph.findStartDestination().id) { saveState = true }
+        launchSingleTop = true
+        restoreState = true
+    }
+
+    // A tapped notification says where to go; never in the middle of first-run setup.
+    LaunchedEffect(open, destination) {
+        if (open == null || destination == null || destination.hasRoute(OnboardingRoute::class)) return@LaunchedEffect
+        when (open) {
+            Destination.HOME -> openTab(TopLevel.Home)
+            Destination.HABITS -> openTab(TopLevel.Habits)
+            Destination.TRAINING -> openTab(TopLevel.Training)
+            Destination.BACKUP -> navController.navigate(BackupRoute())
+        }
+        onOpened()
+    }
 
     Scaffold(
         containerColor = FitTheme.colors.background,
@@ -213,25 +244,26 @@ fun FitOsApp(container: AppContainer, startWithSetup: Boolean) {
             }
             composable<HomeRoute> {
                 HomeScreen(
-                    viewModel = viewModel { HomeViewModel(data.profiles, data.targets, data.weights, data.goals, data.programs, data.workouts, data.foodLog) },
+                    viewModel = viewModel {
+                        HomeViewModel(
+                            data.profiles, data.targets, data.weights, data.goals, data.programs, data.workouts, data.foodLog,
+                            data.habits, data.water, data.dayFacts, data.returnPlan, container.returnChecker, container.settingsRepository, clock,
+                        )
+                    },
                     today = today,
                     now = { LocalTime.now(clock) },
                     onOpenSettings = { navController.navigate(SettingsRoute) },
                     onOpenTargets = { navController.navigate(TargetsRoute) },
                     onOpenWorkout = { programId, dayId -> navController.navigate(DayEditorRoute(programId, dayId)) },
                     onOpenSession = { navController.navigate(SessionRoute) },
-                    onOpenTraining = {
-                        navController.navigate(TrainingRoute) {
-                            popUpTo(navController.graph.findStartDestination().id) { saveState = true }
-                            launchSingleTop = true
-                            restoreState = true
-                        }
-                    },
+                    onOpenTraining = { openTab(TopLevel.Training) },
+                    onOpenHabits = { openTab(TopLevel.Habits) },
+                    onOpenBackup = { navController.navigate(BackupRoute()) },
                 )
             }
             composable<TrainingRoute> {
                 TrainingScreen(
-                    viewModel = viewModel { TrainingViewModel(data.programs, data.profiles, data.workouts, clock) },
+                    viewModel = viewModel { TrainingViewModel(data.programs, data.profiles, data.workouts, data.returnPlan, clock) },
                     onOpenProgram = { navController.navigate(ProgramEditorRoute(it)) },
                     onOpenDay = { programId, dayId -> navController.navigate(DayEditorRoute(programId, dayId)) },
                     onOpenPrograms = { navController.navigate(ProgramsRoute) },
@@ -259,7 +291,7 @@ fun FitOsApp(container: AppContainer, startWithSetup: Boolean) {
             composable<DayEditorRoute> { entry ->
                 val route = entry.toRoute<DayEditorRoute>()
                 DayEditorScreen(
-                    viewModel = viewModel { DayEditorViewModel(data.programs, data.workouts, route.programId, route.dayId) },
+                    viewModel = viewModel { DayEditorViewModel(data.programs, data.workouts, data.returnPlan, clock, route.programId, route.dayId) },
                     onBack = { navController.popBackStack() },
                     onAddExercise = { kind -> navController.navigate(LibraryRoute(LibraryMode.PICK.name, dayId = route.dayId, kind = kind.code)) },
                     onReplace = { navController.navigate(LibraryRoute(LibraryMode.REPLACE.name, plannedId = it)) },
@@ -301,7 +333,7 @@ fun FitOsApp(container: AppContainer, startWithSetup: Boolean) {
             }
             composable<SessionRoute> {
                 SessionScreen(
-                    viewModel = viewModel { SessionViewModel(data.workouts, clock, container.restAlarm) },
+                    viewModel = viewModel { SessionViewModel(data.workouts, clock, container.restAlarm, data.programs, data.returnPlan) },
                     clock = clock,
                     onClose = { navController.popBackStack() },
                     onFinished = { id ->
@@ -433,12 +465,52 @@ fun FitOsApp(container: AppContainer, startWithSetup: Boolean) {
                     restoreOnly = route.restoreOnly,
                     onBack = { navController.popBackStack() },
                     onRestored = {
+                        // Restored reminders need their alarms.
+                        container.scope.launch { container.reminderScheduler.sync() }
                         navController.navigate(HomeRoute) { popUpTo(navController.graph.id) { inclusive = true } }
                     },
+                    autoBackup = viewModel { AutoBackupViewModel(container.settingsRepository, container.autoBackup, container.secrets, container.jobs) },
                 )
             }
             composable<HabitsRoute> {
-                ComingSoonScreen(R.string.nav_habits, FitEmoji.SPARKLES, R.string.soon_habits_title, R.string.soon_habits_body)
+                HabitsScreen(
+                    viewModel = viewModel { HabitsViewModel(data.habits, data.water, data.sleep, data.activity, data.dayFacts, data.profiles) },
+                    today = today,
+                    zone = clock.zone,
+                    onOpenHabit = { navController.navigate(HabitDetailRoute(it)) },
+                    onNewHabit = { navController.navigate(HabitEditorRoute()) },
+                    onOpenReminders = { navController.navigate(RemindersRoute) },
+                    onOpenTraining = { openTab(TopLevel.Training) },
+                    onOpenNutrition = { openTab(TopLevel.Nutrition) },
+                    onOpenBody = { openTab(TopLevel.Body) },
+                )
+            }
+            composable<HabitEditorRoute> { entry ->
+                val route = entry.toRoute<HabitEditorRoute>()
+                HabitEditorScreen(
+                    viewModel = viewModel { HabitEditorViewModel(data.habits, data.reminders, container.reminderScheduler, data.targets, today, route.habitId) },
+                    isNew = route.habitId == null,
+                    onBack = { navController.popBackStack() },
+                    onSaved = { navController.popBackStack() },
+                    onDeleted = { navController.popBackStack(HabitsRoute, inclusive = false) },
+                    onOpenTargets = { navController.navigate(TargetsRoute) },
+                )
+            }
+            composable<HabitDetailRoute> { entry ->
+                val route = entry.toRoute<HabitDetailRoute>()
+                HabitDetailScreen(
+                    viewModel = viewModel { HabitDetailViewModel(data.habits, data.dayFacts, route.habitId, today) },
+                    today = today,
+                    onBack = { navController.popBackStack() },
+                    onEdit = { navController.navigate(HabitEditorRoute(route.habitId)) },
+                )
+            }
+            composable<RemindersRoute> {
+                RemindersScreen(
+                    viewModel = viewModel { RemindersViewModel(data.reminders, data.habits, container.reminderScheduler, container.settingsRepository) },
+                    onBack = { navController.popBackStack() },
+                    onOpenHabit = { navController.navigate(HabitEditorRoute(it)) },
+                )
             }
             composable<SettingsRoute> {
                 SettingsScreen(
@@ -447,6 +519,7 @@ fun FitOsApp(container: AppContainer, startWithSetup: Boolean) {
                     onOpenProfile = { navController.navigate(ProfileEditRoute) },
                     onOpenTargets = { navController.navigate(TargetsRoute) },
                     onOpenBackup = { navController.navigate(BackupRoute()) },
+                    onOpenReminders = { navController.navigate(RemindersRoute) },
                 )
             }
             composable<ProfileEditRoute> {

@@ -11,15 +11,20 @@ import app.fitos.core.domain.profile.InitialSetup
 import app.fitos.core.domain.profile.PrimaryGoal
 import app.fitos.core.domain.profile.Profile
 import app.fitos.core.domain.profile.Sex
+import app.fitos.core.domain.settings.AutoBackupSettings
 import app.fitos.core.domain.settings.SettingsRepository
+import app.fitos.core.domain.training.ReturnPlan
 import app.fitos.core.domain.settings.ThemeMode
 import app.fitos.personal.feature.session.NoRestAlarm
 import app.fitos.personal.feature.session.RestAlarm
+import app.fitos.personal.notify.NoReminderScheduler
+import app.fitos.personal.notify.ReminderScheduler
 import java.time.Clock
 import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.runBlocking
 
 class FakeSettingsRepository(initial: ThemeMode = ThemeMode.LIGHT) : SettingsRepository {
@@ -31,6 +36,16 @@ class FakeSettingsRepository(initial: ThemeMode = ThemeMode.LIGHT) : SettingsRep
     override suspend fun setLastBackupAt(at: Instant) {
         lastBackupAt.value = at
     }
+    override val autoBackup = MutableStateFlow(AutoBackupSettings())
+    override suspend fun updateAutoBackup(change: (AutoBackupSettings) -> AutoBackupSettings) = autoBackup.update(change)
+    override val returnThresholdDays = MutableStateFlow(ReturnPlan.DEFAULT_THRESHOLD_DAYS)
+    override suspend fun setReturnThresholdDays(days: Int) {
+        returnThresholdDays.value = days
+    }
+    override val returnNotify = MutableStateFlow(true)
+    override suspend fun setReturnNotify(on: Boolean) {
+        returnNotify.value = on
+    }
 }
 
 /** Fixed day for every UI test: Tuesday 20 Oct 2026 = سه‌شنبه ۲۸ مهر ۱۴۰۵, Tehran time. */
@@ -39,13 +54,19 @@ object TestApp {
     val today: LocalDate = LocalDate.of(2026, 10, 20)
     val clock: Clock = Clock.fixed(today.atTime(9, 0).atZone(zone).toInstant(), zone)
 
-    fun container(theme: ThemeMode = ThemeMode.LIGHT, restAlarm: RestAlarm = NoRestAlarm, clock: Clock = this.clock): AppContainer {
+    fun container(
+        theme: ThemeMode = ThemeMode.LIGHT,
+        restAlarm: RestAlarm = NoRestAlarm,
+        clock: Clock = this.clock,
+        reminderScheduler: ReminderScheduler = NoReminderScheduler,
+    ): AppContainer {
         val settings = FakeSettingsRepository(theme)
         return AppContainer(
             settingsRepository = settings,
             data = DataGraph.inMemory(ApplicationProvider.getApplicationContext<Context>(), clock, settings),
             clock = clock,
             restAlarm = restAlarm,
+            reminderScheduler = reminderScheduler,
         )
     }
 

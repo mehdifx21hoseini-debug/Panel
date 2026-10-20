@@ -56,6 +56,7 @@ import app.fitos.core.designsystem.theme.FitTheme
 import app.fitos.core.designsystem.theme.numeralStyle
 import app.fitos.core.domain.profile.ProfileRepository
 import app.fitos.core.domain.time.JalaliCalendar
+import app.fitos.core.domain.training.EasyStart
 import app.fitos.core.domain.training.Muscle
 import app.fitos.core.domain.training.PlannedVolume
 import app.fitos.core.domain.training.Program
@@ -63,6 +64,9 @@ import app.fitos.core.domain.training.ProgramDay
 import app.fitos.core.domain.training.ProgramRepository
 import app.fitos.core.domain.training.ProgramSummary
 import app.fitos.core.domain.training.ProgramTemplates
+import app.fitos.core.domain.training.ReturnChoice
+import app.fitos.core.domain.training.ReturnPlan
+import app.fitos.core.domain.training.ReturnPlanRepository
 import app.fitos.core.domain.training.Schedule
 import app.fitos.core.domain.training.ScheduleMode
 import app.fitos.core.domain.training.SessionEstimate
@@ -70,16 +74,17 @@ import app.fitos.core.domain.training.VariantKind
 import app.fitos.core.domain.training.WorkoutRepository
 import app.fitos.core.domain.training.WorkoutSession
 import app.fitos.personal.R
+import app.fitos.personal.feature.home.easyText
 import app.fitos.personal.ui.Fmt
 import java.time.Clock
 import java.time.LocalDate
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
@@ -93,6 +98,8 @@ data class TrainingState(
     val open: WorkoutSession? = null,
     val sessionsDone: Int = 0,
     val doneToday: Boolean = false,
+    /** The easier start chosen after a break, while it lasts. */
+    val easy: EasyStart? = null,
 )
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -100,11 +107,13 @@ class TrainingViewModel(
     private val programs: ProgramRepository,
     private val profiles: ProfileRepository,
     private val workouts: WorkoutRepository,
+    returnPlan: ReturnPlanRepository,
     private val clock: Clock,
 ) : ViewModel() {
     private val lastDone = programs.active.flatMapLatest { p -> if (p == null) flowOf(null) else workouts.lastCompleted(p.id) }
+    private val history = combine(workouts.history, returnPlan.latest) { h, latest -> h to latest }
 
-    val state: StateFlow<TrainingState> = combine(programs.programs, programs.active, lastDone, workouts.active, workouts.history) { list, active, last, open, history ->
+    val state: StateFlow<TrainingState> = combine(programs.programs, programs.active, lastDone, workouts.active, history) { list, active, last, open, (history, latest) ->
         val today = LocalDate.now(clock)
         TrainingState(
             loaded = true,
@@ -115,13 +124,17 @@ class TrainingViewModel(
             open = open,
             sessionsDone = history.size,
             doneToday = history.any { it.day == today },
+            easy = if (open == null) ReturnPlan.next(latest, clock.instant(), history.map { it.startedAt }) else null,
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), TrainingState())
 
-    /** Starts the day (or opens the session already running) and then [onReady]. */
+    /** Starts the day (or opens the session already running) and then [onReady]; lighter while an easy start lasts. */
     fun start(programId: String, dayId: String, kind: VariantKind, onReady: () -> Unit) {
         viewModelScope.launch {
-            if (workouts.active.first() == null) workouts.start(programId, dayId, kind)
+            if (workouts.active.first() == null) {
+                val day = state.value.active?.days?.firstOrNull { it.id == dayId }
+                workouts.start(programId, dayId, kind, lighter = ReturnPlan.lightens(state.value.easy, kind, day?.hasMinimal == true))
+            }
             onReady()
         }
     }
@@ -195,6 +208,7 @@ fun TrainingScreen(
                     item {
                         NextCard(
                             next,
+                            easy = state.easy,
                             onOpen = { onOpenDay(active.id, next.id) },
                             onStart = { kind -> viewModel.start(active.id, next.id, kind, onOpenSession) },
                         )
@@ -243,7 +257,7 @@ private fun ProgramHeader(program: Program, onEdit: () -> Unit, onAll: () -> Uni
 }
 
 @Composable
-private fun NextCard(day: ProgramDay, onOpen: () -> Unit, onStart: (VariantKind) -> Unit) {
+private fun NextCard(day: ProgramDay, easy: EasyStart?, onOpen: () -> Unit, onStart: (VariantKind) -> Unit) {
     val colors = FitTheme.colors
     val (primary, secondary) = PlannedVolume.muscles(day.full)
     FitCard(hero = true) {
@@ -256,6 +270,17 @@ private fun NextCard(day: ProgramDay, onOpen: () -> Unit, onStart: (VariantKind)
             }
             MuscleMap(bestSide(primary, secondary), primary, secondary, width = 44.dp)
         }
+        easy?.let { FitNote(easyText(it)) }
+        val minimalFirst = easy?.choice == ReturnChoice.MINIMAL && day.hasMinimal
+        if (minimalFirst) {
+            val minimal = day.variant(VariantKind.MINIMAL)!!.exercises
+            FitPrimaryButton(
+                stringResource(VariantKind.MINIMAL.label) + " · " + stringResource(R.string.minutes_short, Fmt.int(SessionEstimate.minutes(minimal))),
+                onClick = { onStart(VariantKind.MINIMAL) },
+                icon = FitIcons.Play,
+                modifier = Modifier.fillMaxWidth(),
+            )
+        }
         if (day.full.isNotEmpty()) {
             Text(
                 stringResource(VariantKind.FULL.label) + " · " +
@@ -263,11 +288,17 @@ private fun NextCard(day: ProgramDay, onOpen: () -> Unit, onStart: (VariantKind)
                 style = MaterialTheme.typography.bodySmall,
                 color = colors.onSurfaceVariant,
             )
-            FitPrimaryButton(stringResource(R.string.training_start), onClick = { onStart(VariantKind.FULL) }, icon = FitIcons.Play, modifier = Modifier.fillMaxWidth())
+            val lighter = ReturnPlan.lightens(easy, VariantKind.FULL, day.hasMinimal)
+            val label = stringResource(if (lighter) R.string.training_start_lighter else R.string.training_start)
+            if (minimalFirst) {
+                FitSecondaryButton(label, onClick = { onStart(VariantKind.FULL) }, icon = FitIcons.Play, modifier = Modifier.fillMaxWidth())
+            } else {
+                FitPrimaryButton(label, onClick = { onStart(VariantKind.FULL) }, icon = FitIcons.Play, modifier = Modifier.fillMaxWidth())
+            }
         } else {
             Text(stringResource(R.string.training_no_exercises), style = MaterialTheme.typography.bodyMedium, color = colors.onSurfaceVariant)
         }
-        val shorter = listOf(VariantKind.HOME, VariantKind.MINIMAL).filter { day.variant(it)?.exercises?.isNotEmpty() == true }
+        val shorter = listOf(VariantKind.HOME, VariantKind.MINIMAL).filter { day.variant(it)?.exercises?.isNotEmpty() == true && !(it == VariantKind.MINIMAL && minimalFirst) }
         if (shorter.isNotEmpty()) {
             Text(stringResource(R.string.training_start_hint), style = MaterialTheme.typography.bodySmall, color = colors.subtle)
             Row(horizontalArrangement = Arrangement.spacedBy(FitSpacing.s8)) {

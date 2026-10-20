@@ -2,15 +2,21 @@ package app.fitos.personal.feature.session
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import app.fitos.core.domain.training.EasyStart
 import app.fitos.core.domain.training.ExercisePerformance
 import app.fitos.core.domain.training.LogType
+import app.fitos.core.domain.training.ProgramRepository
 import app.fitos.core.domain.training.Progression
+import app.fitos.core.domain.training.ReturnPlan
+import app.fitos.core.domain.training.ReturnPlanRepository
 import app.fitos.core.domain.training.SessionExercise
 import app.fitos.core.domain.training.SessionFlow
 import app.fitos.core.domain.training.SetInput
 import app.fitos.core.domain.training.Suggestion
+import app.fitos.core.domain.training.VariantKind
 import app.fitos.core.domain.training.WorkoutRepository
 import app.fitos.core.domain.training.WorkoutSession
+import app.fitos.personal.feature.training.hasMinimal
 import java.time.Clock
 import java.time.Instant
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -32,6 +38,8 @@ data class SessionUi(
     val suggestions: Map<String, Suggestion> = emptyMap(),
     /** When the current rest ends; null when not resting. */
     val restEndsAt: Instant? = null,
+    /** Set when this is one of the lighter sessions after a break: suggestions are about 10 % lighter. */
+    val easy: EasyStart? = null,
 ) {
     val current: SessionExercise? get() = session?.exercises?.getOrNull(selected)
 }
@@ -43,6 +51,8 @@ class SessionViewModel(
     private val workouts: WorkoutRepository,
     private val clock: Clock,
     private val alarm: RestAlarm,
+    programs: ProgramRepository,
+    returnPlan: ReturnPlanRepository,
 ) : ViewModel() {
     private val selected = MutableStateFlow<Int?>(null)
     /** Keyed by "sessionExerciseId:exerciseId", so a swapped exercise is looked up again. */
@@ -52,7 +62,15 @@ class SessionViewModel(
 
     private val active = workouts.active.onEach { session -> session?.let(::loadPerformances) }
 
-    val ui: StateFlow<SessionUi> = combine(active, selected, performances, restOverride) { session, sel, perf, override ->
+    /** Whether the open session is one of the lighter ones chosen after a break ([ReturnPlan]). */
+    private val easy = combine(workouts.active, workouts.history, returnPlan.latest) { session, history, latest ->
+        if (session == null) return@combine null
+        val easy = ReturnPlan.easy(latest, session.startedAt, history.map { it.startedAt }) ?: return@combine null
+        val day = session.programId?.let { programs.program(it).first() }?.days?.firstOrNull { it.id == session.programDayId }
+        easy.takeIf { ReturnPlan.lightens(it, session.variantKind ?: VariantKind.FULL, day?.hasMinimal == true) }
+    }
+
+    val ui: StateFlow<SessionUi> = combine(active, selected, performances, restOverride, easy) { session, sel, perf, override, easy ->
         if (session == null) return@combine SessionUi(loaded = true)
         val index = (sel ?: SessionFlow.resumeAt(session) ?: 0).coerceIn(0, (session.exercises.size - 1).coerceAtLeast(0))
         // Only looked-up entries: a missing key means "still loading", a null value "first time".
@@ -65,9 +83,11 @@ class SessionViewModel(
             selected = index,
             last = last,
             suggestions = session.exercises.associate { e ->
-                e.id to Progression.suggest(e.exercise, e.targets, e.progression, last[e.id], session.day)
+                val s = Progression.suggest(e.exercise, e.targets, e.progression, last[e.id], session.day)
+                e.id to if (easy != null) ReturnPlan.lighten(s, Progression.step(e.exercise, e.progression)) else s
             },
             restEndsAt = rest,
+            easy = easy,
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), SessionUi())
 

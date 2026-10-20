@@ -207,8 +207,11 @@ interface WorkoutRepository {
     /** The newest finished session started at or before [before] that has sets of the exercise. */
     suspend fun lastPerformance(exerciseId: String, before: Instant): ExercisePerformance?
 
-    /** Starts the chosen version of a program day. Fails while another session is unfinished. */
-    suspend fun start(programId: String, dayId: String, kind: VariantKind): String
+    /**
+     * Starts the chosen version of a program day. Fails while another session is unfinished.
+     * [lighter] takes one set off exercises with three or more ([ReturnPlan.lighterSets]).
+     */
+    suspend fun start(programId: String, dayId: String, kind: VariantKind, lighter: Boolean = false): String
     suspend fun addExercise(sessionId: String, exerciseId: String): String
     /** Swaps an exercise that has no sets yet; the targets stay. */
     suspend fun replaceExercise(sessionExerciseId: String, exerciseId: String)
