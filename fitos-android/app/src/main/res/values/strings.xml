@@ -588,7 +588,7 @@
     <string name="food_state">حالت</string>
     <string name="food_state_raw">خام</string>
     <string name="food_state_cooked">پخته</string>
-    <string name="food_state_na">نامرتبط</string>
+    <string name="food_state_na">نامشخص</string>
     <string name="accuracy_high">دقت بالا</string>
     <string name="accuracy_medium">دقت متوسط</string>
     <string name="accuracy_low">دقت کم (تخمینی)</string>
