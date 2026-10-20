@@ -1,0 +1,1035 @@
+<title>FitOS Electric Blue</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<script src="theme.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Changa:wght@400;500;600&family=Vazirmatn:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+/* style-guide chrome only — tokens & components live in styles.css */
+body{background:var(--background);color:var(--on-surface);font-family:var(--font-body);
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px))}
+.page{display:flex;gap:28px;max-width:1240px;margin:0 auto}
+nav.side{position:sticky;top:env(safe-area-inset-top,0px);align-self:flex-start;max-height:100vh;width:212px;flex:0 0 212px;overflow:auto;padding:22px 0 40px}
+nav.side .brand{display:flex;align-items:center;gap:10px;font:600 18px var(--font-body);margin-bottom:14px}
+nav.side .brand img{width:30px;height:30px}
+nav.side a{display:block;padding:6px 10px;border-radius:10px;font-size:14px;color:var(--on-surface-variant);text-decoration:none}
+nav.side a:hover{background:var(--surface-container-high);color:var(--on-surface)}
+nav.side a.concept-link{display:flex;align-items:center;gap:8px;margin:0 0 8px;padding:12px;font-weight:500;color:var(--on-primary);background:var(--primary);border-radius:var(--shape-md)}
+nav.side .grp{font:500 12px var(--font-body);color:var(--subtle);margin:18px 10px 6px}
+main{flex:1;min-width:0;padding:22px 0 140px}
+.topctl{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:28px}
+.topctl select,.ctl-btn{font:500 13px var(--font-body);min-height:40px;border:1px solid var(--outline-variant);border-radius:12px;padding:0 12px;background:var(--surface);color:var(--on-surface)}
+.ctl-btn.on{background:var(--primary);color:var(--on-primary);border-color:var(--primary)}
+.hero{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:20px;align-items:center;margin-bottom:44px}
+.hero h1{font:600 34px/1.2 var(--font-body);text-wrap:balance}
+.hero p{color:var(--on-surface-variant);font-size:15px;line-height:1.75;margin-top:10px;max-width:62ch}
+.hero__art{position:relative;width:220px;height:170px}
+.hero__art .emoji-tile{position:absolute}
+section.sec-wrap{margin-bottom:56px;scroll-margin-top:16px}
+h2.sec{font:600 24px/1.3 var(--font-body);margin-bottom:6px;display:flex;align-items:center;flex-wrap:wrap;gap:8px}
+.grp-title{font:500 13px var(--font-body);color:var(--subtle);margin:56px 0 16px;padding-bottom:8px;border-bottom:1px solid var(--outline-variant)}
+.sec-desc{color:var(--on-surface-variant);font-size:14px;line-height:1.75;margin-bottom:16px;max-width:68ch}
+.sec-desc code,.mono{font:12px var(--font-mono);direction:ltr;unicode-bidi:isolate;background:var(--surface-container-high);padding:1px 5px;border-radius:5px}
+.stage{background:var(--surface);border:1px solid var(--hairline);border-radius:var(--shape-lg);padding:22px;display:flex;flex-wrap:wrap;gap:22px;align-items:flex-start}
+.stage--center{align-items:center}
+.stage--sunk{background:var(--background)}
+.cell{display:flex;flex-direction:column;align-items:center;gap:8px;min-width:0}
+.cell--start{align-items:flex-start}
+.spec{font:12px var(--font-mono);color:var(--subtle);direction:ltr}
+.colors{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.colors h4{grid-column:1/-1;font:500 13px var(--font-body);color:var(--subtle);margin-top:10px}
+.sw{border:1px solid var(--hairline);border-radius:var(--shape-md);overflow:hidden;background:var(--surface)}
+.sw .c{height:52px;display:flex;align-items:center;justify-content:center;font:500 13px var(--font-body)}
+.sw .m{padding:8px 10px}.sw .n{font:500 12px var(--font-mono);direction:ltr;text-align:left}.sw .v{font:12px var(--font-mono);color:var(--subtle);direction:ltr;text-align:left}
+.typerow{display:flex;align-items:baseline;gap:18px;padding:12px 0;border-bottom:1px solid var(--outline-variant);flex-wrap:wrap}
+.typerow .tk{width:150px;flex:0 0 150px;font:12px var(--font-mono);color:var(--subtle);direction:ltr;text-align:left}
+.typerow > div:last-child{min-width:0;flex:1}
+.sprow{display:flex;align-items:center;gap:12px;margin-bottom:6px}
+.sprow .bar{background:var(--primary);height:12px;border-radius:3px}.sprow .lbl{width:170px;font:12px var(--font-mono);color:var(--on-surface-variant);direction:ltr;text-align:left}
+.shape-box{width:84px;height:64px;background:var(--secondary-container);border:1px solid var(--outline-variant)}
+.elev-box{width:110px;height:80px;background:var(--surface);border-radius:var(--shape-lg);display:flex;align-items:flex-end;padding:8px;font:12px var(--font-mono)}
+.iconGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(88px,1fr));gap:8px;width:100%}
+.iconGrid .it{background:var(--surface-container-low);border-radius:var(--shape-md);padding:12px 4px 8px;display:flex;flex-direction:column;align-items:center;gap:6px;color:var(--on-surface)}
+.iconGrid .it .nm{font:11px var(--font-mono);color:var(--subtle);direction:ltr}
+.emojiGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:8px;width:100%}
+.emojiGrid .it{display:flex;flex-direction:column;align-items:center;gap:6px;padding:10px 4px;border-radius:var(--shape-md);background:var(--surface-container-low)}
+.emojiGrid .nm{font:12px var(--font-body);color:var(--on-surface-variant);text-align:center}
+.demo-phone{width:320px;max-width:100%;border:1px solid var(--outline-variant);border-radius:var(--shape-lg);overflow:hidden;background:var(--background);position:relative}
+.wide{width:100%}
+.w320{width:320px;max-width:100%}
+/* Dev mode + inspector */
+body.dev [data-insp]{cursor:pointer}
+body.dev [data-insp]:hover{outline:2px dashed var(--ring);outline-offset:3px}
+.insp-sel{outline:2px solid var(--ring)!important;outline-offset:3px}
+#inspector{position:fixed;top:0;inset-inline-end:0;width:360px;height:100%;background:var(--surface);border-inline-start:1px solid var(--hairline);box-shadow:var(--elev-4);
+  transform:translateX(-105%);transition:transform var(--dur-medium) var(--ease-emphasized-decel);z-index:49;overflow:auto;
+  padding:calc(56px + env(safe-area-inset-top,0px)) 20px calc(40px + env(safe-area-inset-bottom,0px))}
+[dir="ltr"] #inspector{transform:translateX(105%)}
+body.inspecting #inspector{transform:translateX(0)}
+#inspector .iclose{position:absolute;top:calc(12px + env(safe-area-inset-top,0px));inset-inline-start:12px}
+#inspector .nm{font:600 20px var(--font-body)}
+#inspector .file{font:12px var(--font-mono);color:var(--subtle);margin-top:2px;direction:ltr;text-align:right}
+#inspector .desc{font-size:14px;color:var(--on-surface-variant);line-height:1.7;margin-top:10px}
+#inspector h4{font:500 12px var(--font-body);color:var(--subtle);margin:20px 0 8px}
+.prop{padding:8px 0;border-bottom:1px solid var(--outline-variant);direction:ltr;text-align:left}.prop .pn{font:600 13px var(--font-mono)}.prop .pt{font:12px var(--font-mono);color:var(--plate-blue-ink)}.prop .pdef{font:12px var(--font-mono);color:var(--subtle)}.prop .pd{font-size:12px;color:var(--on-surface-variant);margin-top:3px;direction:rtl;text-align:right}
+.tok{display:flex;align-items:center;gap:10px;padding:7px 8px;border-radius:10px;cursor:pointer;width:100%;text-align:start}.tok:hover{background:var(--surface-container-high)}
+.tok .tsw{width:22px;height:22px;border-radius:6px;border:1px solid var(--outline-variant);flex:0 0 22px}.tok .tn{font:600 12px var(--font-mono);direction:ltr}.tok .tr{font-size:12px;color:var(--on-surface-variant)}.tok .tv{margin-inline-start:auto;font:12px var(--font-mono);color:var(--subtle);direction:ltr}
+.metric{display:flex;justify-content:space-between;gap:10px;font:12px var(--font-mono);padding:5px 0;border-bottom:1px dashed var(--outline-variant)}.metric .mk{color:var(--on-surface-variant)}
+.copied{position:fixed;bottom:calc(24px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%);background:var(--inverse-surface);color:var(--inverse-on-surface);font-size:13px;padding:10px 16px;border-radius:12px;opacity:0;transition:opacity .2s;z-index:60;pointer-events:none;max-width:90vw}
+.copied.show{opacity:1}
+.sec-prompt{font:500 12px var(--font-body);border:1px solid var(--outline);background:var(--surface);color:var(--on-surface);border-radius:10px;min-height:32px;padding:0 10px}
+#fallback{position:fixed;inset:0;background:var(--scrim);display:flex;align-items:center;justify-content:center;z-index:70;padding:24px}
+#fallback .box{background:var(--surface);border-radius:var(--shape-xl);padding:20px;width:min(560px,100%);display:flex;flex-direction:column;gap:12px}
+#fallback textarea{width:100%;height:260px;font:12px var(--font-mono);direction:ltr;border:1px solid var(--outline-variant);border-radius:12px;padding:10px;background:var(--surface-container-low);color:var(--on-surface)}
+@media (max-width:880px){
+  .page{flex-direction:column;gap:0}
+  nav.side{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;max-height:none;width:auto;flex:none;display:flex;gap:6px;overflow-x:auto;white-space:nowrap;
+    padding:10px 0;background:var(--background);border-bottom:1px solid var(--outline-variant)}
+  nav.side .grp,nav.side .brand{display:none}
+  nav.side a{flex:0 0 auto;background:var(--surface);border:1px solid var(--hairline)}
+  nav.side a.concept-link{margin:0}
+  .hero{grid-template-columns:1fr}
+  .hero__art{justify-self:center}
+  #inspector{width:100%;height:78%;top:auto;bottom:0;border-radius:var(--shape-xl) var(--shape-xl) 0 0;transform:translateY(105%)!important;padding-top:56px}
+  body.inspecting #inspector{transform:translateY(0)!important}
+  .typerow .tk{width:100%;flex-basis:100%}
+}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--background)}
+</style>
+
+<!-- FitOS ICON SPRITE — Material-outlined style, original geometry drawn in the manner of open
+     sets (Lucide/Feather MIT · Material Symbols Apache-2.0). Token-driven: stroke=currentColor,
+     width=var(--icon-stroke). Use: <svg class="ico"><use href="#i-home"/></svg>.
+     Directional glyphs (back/chevrons) get class "ico--dir" so they mirror in RTL.
+     Also holds the illustration symbols: muscle maps (i-mm-front / i-mm-back, regions driven by
+     --mm-* custom properties) and body-journey figures (i-body-start / -now / -goal). -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <pattern id="mm-hatch" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <rect width="1.3" height="4" fill="#FFFFFF" fill-opacity=".45"/>
+    </pattern>
+    <g id="mm-base">
+      <circle cx="60" cy="18" r="12"/>
+      <rect x="54" y="28" width="12" height="10" rx="4"/>
+      <path d="M36 40Q60 34 84 40L88 62Q86 96 78 118H42Q34 96 32 62Z"/>
+      <rect x="18" y="44" width="15" height="40" rx="7.5"/><rect x="87" y="44" width="15" height="40" rx="7.5"/>
+      <rect x="14" y="85" width="12" height="38" rx="6"/><rect x="94" y="85" width="12" height="38" rx="6"/>
+      <circle cx="19" cy="128" r="6"/><circle cx="101" cy="128" r="6"/>
+      <path d="M42 116H78L82 138H38Z"/>
+      <rect x="38" y="134" width="20" height="54" rx="9"/><rect x="62" y="134" width="20" height="54" rx="9"/>
+      <rect x="40" y="188" width="16" height="42" rx="7"/><rect x="64" y="188" width="16" height="42" rx="7"/>
+      <ellipse cx="47" cy="233" rx="9" ry="4"/><ellipse cx="73" cy="233" rx="9" ry="4"/>
+    </g>
+    <g id="mmf-delts"><ellipse cx="33" cy="49" rx="9" ry="8"/><ellipse cx="87" cy="49" rx="9" ry="8"/></g>
+    <g id="mmf-chest"><path d="M59 46Q46 44 39 50Q38 62 44 68Q52 71 59 68Z"/><path d="M61 46Q74 44 81 50Q82 62 76 68Q68 71 61 68Z"/></g>
+    <g id="mmf-biceps"><ellipse cx="25.5" cy="67" rx="5.5" ry="13"/><ellipse cx="94.5" cy="67" rx="5.5" ry="13"/></g>
+    <g id="mmf-forearms"><ellipse cx="20" cy="103" rx="4.5" ry="13"/><ellipse cx="100" cy="103" rx="4.5" ry="13"/></g>
+    <g id="mmf-abs"><rect x="51" y="74" width="8" height="10" rx="3"/><rect x="61" y="74" width="8" height="10" rx="3"/><rect x="51" y="86" width="8" height="10" rx="3"/><rect x="61" y="86" width="8" height="10" rx="3"/><rect x="51" y="98" width="8" height="12" rx="3"/><rect x="61" y="98" width="8" height="12" rx="3"/></g>
+    <g id="mmf-obliques"><path d="M43 74L49 76V108L44 110Q40 92 43 74Z"/><path d="M77 74L71 76V108L76 110Q80 92 77 74Z"/></g>
+    <g id="mmf-quads"><ellipse cx="48" cy="161" rx="8" ry="23"/><ellipse cx="72" cy="161" rx="8" ry="23"/></g>
+    <g id="mmf-calves"><ellipse cx="48" cy="207" rx="5.5" ry="14"/><ellipse cx="72" cy="207" rx="5.5" ry="14"/></g>
+    <g id="mmb-traps"><path d="M60 36L76 45L60 68L44 45Z"/></g>
+    <g id="mmb-lats"><path d="M44 58Q37 72 42 98L56 89V67Z"/><path d="M76 58Q83 72 78 98L64 89V67Z"/></g>
+    <g id="mmb-lowerback"><rect x="52" y="92" width="16" height="22" rx="5"/></g>
+    <g id="mmb-glutes"><ellipse cx="50" cy="128" rx="10" ry="9"/><ellipse cx="70" cy="128" rx="10" ry="9"/></g>
+    <g id="mmb-hamstrings"><ellipse cx="48" cy="164" rx="8" ry="21"/><ellipse cx="72" cy="164" rx="8" ry="21"/></g>
+    <g id="mmb-calves"><ellipse cx="48" cy="205" rx="6.5" ry="15"/><ellipse cx="72" cy="205" rx="6.5" ry="15"/></g>
+  </defs>
+
+  <!-- illustration: muscle map, front -->
+  <symbol id="i-mm-front" viewBox="0 0 120 240">
+    <use href="#mm-base" style="fill:var(--mm-body)"/>
+    <use href="#mmf-delts" style="fill:var(--mm-delts,var(--mm-muscle))"/><use href="#mmf-delts" fill="url(#mm-hatch)" style="opacity:var(--mm-delts-x,0)"/>
+    <use href="#mmf-chest" style="fill:var(--mm-chest,var(--mm-muscle))"/><use href="#mmf-chest" fill="url(#mm-hatch)" style="opacity:var(--mm-chest-x,0)"/>
+    <use href="#mmf-biceps" style="fill:var(--mm-biceps,var(--mm-muscle))"/><use href="#mmf-biceps" fill="url(#mm-hatch)" style="opacity:var(--mm-biceps-x,0)"/>
+    <use href="#mmf-forearms" style="fill:var(--mm-forearms,var(--mm-muscle))"/><use href="#mmf-forearms" fill="url(#mm-hatch)" style="opacity:var(--mm-forearms-x,0)"/>
+    <use href="#mmf-abs" style="fill:var(--mm-abs,var(--mm-muscle))"/><use href="#mmf-abs" fill="url(#mm-hatch)" style="opacity:var(--mm-abs-x,0)"/>
+    <use href="#mmf-obliques" style="fill:var(--mm-obliques,var(--mm-muscle))"/><use href="#mmf-obliques" fill="url(#mm-hatch)" style="opacity:var(--mm-obliques-x,0)"/>
+    <use href="#mmf-quads" style="fill:var(--mm-quads,var(--mm-muscle))"/><use href="#mmf-quads" fill="url(#mm-hatch)" style="opacity:var(--mm-quads-x,0)"/>
+    <use href="#mmf-calves" style="fill:var(--mm-calves,var(--mm-muscle))"/><use href="#mmf-calves" fill="url(#mm-hatch)" style="opacity:var(--mm-calves-x,0)"/>
+  </symbol>
+  <!-- illustration: muscle map, back -->
+  <symbol id="i-mm-back" viewBox="0 0 120 240">
+    <use href="#mm-base" style="fill:var(--mm-body)"/>
+    <use href="#mmb-traps" style="fill:var(--mm-traps,var(--mm-muscle))"/><use href="#mmb-traps" fill="url(#mm-hatch)" style="opacity:var(--mm-traps-x,0)"/>
+    <use href="#mmf-delts" style="fill:var(--mm-delts,var(--mm-muscle))"/><use href="#mmf-delts" fill="url(#mm-hatch)" style="opacity:var(--mm-delts-x,0)"/>
+    <use href="#mmb-lats" style="fill:var(--mm-lats,var(--mm-muscle))"/><use href="#mmb-lats" fill="url(#mm-hatch)" style="opacity:var(--mm-lats-x,0)"/>
+    <use href="#mmf-biceps" style="fill:var(--mm-triceps,var(--mm-muscle))"/><use href="#mmf-biceps" fill="url(#mm-hatch)" style="opacity:var(--mm-triceps-x,0)"/>
+    <use href="#mmf-forearms" style="fill:var(--mm-forearms,var(--mm-muscle))"/><use href="#mmf-forearms" fill="url(#mm-hatch)" style="opacity:var(--mm-forearms-x,0)"/>
+    <use href="#mmb-lowerback" style="fill:var(--mm-lowerback,var(--mm-muscle))"/><use href="#mmb-lowerback" fill="url(#mm-hatch)" style="opacity:var(--mm-lowerback-x,0)"/>
+    <use href="#mmb-glutes" style="fill:var(--mm-glutes,var(--mm-muscle))"/><use href="#mmb-glutes" fill="url(#mm-hatch)" style="opacity:var(--mm-glutes-x,0)"/>
+    <use href="#mmb-hamstrings" style="fill:var(--mm-hamstrings,var(--mm-muscle))"/><use href="#mmb-hamstrings" fill="url(#mm-hatch)" style="opacity:var(--mm-hamstrings-x,0)"/>
+    <use href="#mmb-calves" style="fill:var(--mm-calves,var(--mm-muscle))"/><use href="#mmb-calves" fill="url(#mm-hatch)" style="opacity:var(--mm-calves-x,0)"/>
+  </symbol>
+  <!-- illustration: body journey figures (fill = currentColor via CSS) -->
+  <symbol id="i-body-start" viewBox="0 0 44 96"><circle cx="22" cy="9" r="7"/><rect x="8" y="18" width="28" height="36" rx="11"/><rect x="1.5" y="21" width="5.5" height="29" rx="2.75"/><rect x="37" y="21" width="5.5" height="29" rx="2.75"/><rect x="11" y="50" width="10" height="42" rx="5"/><rect x="23" y="50" width="10" height="42" rx="5"/></symbol>
+  <symbol id="i-body-now" viewBox="0 0 44 96"><circle cx="22" cy="9" r="7"/><rect x="10" y="18" width="24" height="36" rx="9"/><rect x="3.5" y="21" width="5" height="29" rx="2.5"/><rect x="35.5" y="21" width="5" height="29" rx="2.5"/><rect x="12.5" y="50" width="9" height="42" rx="4.5"/><rect x="22.5" y="50" width="9" height="42" rx="4.5"/></symbol>
+  <symbol id="i-body-goal" viewBox="0 0 44 96"><circle cx="22" cy="9" r="7"/><rect x="12" y="18" width="20" height="36" rx="7"/><rect x="5.5" y="21" width="5" height="29" rx="2.5"/><rect x="33.5" y="21" width="5" height="29" rx="2.5"/><rect x="13.5" y="50" width="8.5" height="42" rx="4.25"/><rect x="22" y="50" width="8.5" height="42" rx="4.25"/></symbol>
+
+  <!-- navigation -->
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></symbol>
+  <symbol id="i-dumbbell" viewBox="0 0 24 24"><path d="M6 7v10M18 7v10M3 9.5v5M21 9.5v5M6 12h12"/></symbol>
+  <symbol id="i-utensils" viewBox="0 0 24 24"><path d="M7 3v8M4.5 3v5a2.5 2.5 0 0 0 5 0V3M7 11v10M17 3c-2.2 1-3.5 3.3-3.5 6.5V13H17M17 3v18"/></symbol>
+  <symbol id="i-body" viewBox="0 0 24 24"><circle cx="12" cy="4.5" r="2"/><path d="M5 8.5h14M12 8.5V14M12 14l-3 7M12 14l3 7"/></symbol>
+  <symbol id="i-habits" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 2.7 2.7L16 9.8"/></symbol>
+  <symbol id="i-settings" viewBox="0 0 24 24"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></symbol>
+  <symbol id="i-back" viewBox="0 0 24 24"><path d="M20 12H5M11 5l-7 7 7 7"/></symbol>
+  <symbol id="i-chevron-right" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></symbol>
+  <symbol id="i-chevron-left" viewBox="0 0 24 24"><path d="m15 6-6 6 6 6"/></symbol>
+  <symbol id="i-chevron-down" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="i-more-v" viewBox="0 0 24 24"><circle cx="12" cy="5" r="1.6" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.6" fill="currentColor" stroke="none"/><circle cx="12" cy="19" r="1.6" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></symbol>
+  <!-- actions -->
+  <symbol id="i-close" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
+  <symbol id="i-edit" viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="m13.5 6.5 4 4"/></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8.5" y="8.5" width="12" height="12" rx="2"/><path d="M15.5 8.5v-3a2 2 0 0 0-2-2h-8a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h3"/></symbol>
+  <symbol id="i-swap" viewBox="0 0 24 24"><path d="M7 4 3.5 7.5 7 11M3.5 7.5H17M17 13l3.5 3.5L17 20M20.5 16.5H7"/></symbol>
+  <symbol id="i-share" viewBox="0 0 24 24"><circle cx="18" cy="5.5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="18.5" r="2.5"/><path d="m8.2 13.2 7.6 4.1M15.8 6.7l-7.6 4.1"/></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></symbol>
+  <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 20V9M7 14l5-5 5 5M5 4h14"/></symbol>
+  <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 11a8 8 0 0 0-14.3-4.5L4 8.5M4 4v4.5h4.5M4 13a8 8 0 0 0 14.3 4.5l1.7-2M20 20v-4.5h-4.5"/></symbol>
+  <symbol id="i-filter" viewBox="0 0 24 24"><path d="M4 5h16l-6 7.5V19l-4 1.5v-8z"/></symbol>
+  <symbol id="i-grip" viewBox="0 0 24 24"><circle cx="9" cy="6" r="1.4" fill="currentColor" stroke="none"/><circle cx="15" cy="6" r="1.4" fill="currentColor" stroke="none"/><circle cx="9" cy="12" r="1.4" fill="currentColor" stroke="none"/><circle cx="15" cy="12" r="1.4" fill="currentColor" stroke="none"/><circle cx="9" cy="18" r="1.4" fill="currentColor" stroke="none"/><circle cx="15" cy="18" r="1.4" fill="currentColor" stroke="none"/></symbol>
+  <!-- media & time -->
+  <symbol id="i-play" viewBox="0 0 24 24"><path d="M7 5v14l11-7z" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-pause" viewBox="0 0 24 24"><path d="M8 5v14M16 5v14"/></symbol>
+  <symbol id="i-timer" viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2M10 2.5h4M18.5 6l1.5-1.5"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M8 3v4M16 3v4M3.5 10h17"/></symbol>
+  <symbol id="i-history" viewBox="0 0 24 24"><path d="M3.5 12a8.5 8.5 0 1 0 2.5-6L3.5 8.5M3.5 4v4.5H8M12 8v4l3 2"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 10a6 6 0 0 1 12 0c0 6 2.5 7.5 2.5 7.5h-17S6 16 6 10M10 20.5a2.2 2.2 0 0 0 4 0"/></symbol>
+  <!-- domain -->
+  <symbol id="i-droplet" viewBox="0 0 24 24"><path d="M12 3s6.5 6.8 6.5 11.5a6.5 6.5 0 0 1-13 0C5.5 9.8 12 3 12 3z"/></symbol>
+  <symbol id="i-flame" viewBox="0 0 24 24"><path d="M12 21c-4 0-6.5-2.6-6.5-6.2 0-3.4 2.6-5.6 3.6-8.8 1.8 1.4 2.6 3.2 2.6 4.6 1-1 1.6-2.4 1.6-4.1 2.8 2 5.2 5.2 5.2 8.5 0 3.6-2.5 6-6.5 6z"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"/></symbol>
+  <symbol id="i-scale" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="4"/><path d="M8.5 10a4.5 4.5 0 0 1 7 0M12 10l1.5-2"/></symbol>
+  <symbol id="i-ruler" viewBox="0 0 24 24"><rect x="2.5" y="8" width="19" height="8" rx="1.5"/><path d="M6.5 8v3M10 8v4.5M13.5 8v3M17 8v4.5"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24"><path d="M3 20h18M6 20v-8M11 20V5M16 20v-5"/></symbol>
+  <symbol id="i-trend-down" viewBox="0 0 24 24"><path d="m3 7 7 7 4-4 7 7M21 12v5h-5"/></symbol>
+  <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1" fill="currentColor"/></symbol>
+  <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2.5 4.5 13.5H12l-1 8 8.5-11H12z"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 5.5a2 2 0 0 1 2-2h13v15H6a2 2 0 0 0-2 2zM4 20.5v-15M8 7.5h7"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><path d="m12 3 2.8 5.8 6.2.9-4.5 4.4 1.1 6.2L12 17.3l-5.6 3 1.1-6.2L3 9.7l6.2-.9z"/></symbol>
+  <symbol id="i-camera" viewBox="0 0 24 24"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></symbol>
+  <symbol id="i-image" viewBox="0 0 24 24"><rect x="3.5" y="4.5" width="17" height="15" rx="2"/><circle cx="9" cy="10" r="1.5"/><path d="m20.5 16-5-5-9 8.5"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4.5 20.5a7.5 7.5 0 0 1 15 0"/></symbol>
+  <!-- system -->
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="4.5" y="10.5" width="15" height="10" rx="2"/><path d="M8 10.5v-3a4 4 0 0 1 8 0v3"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3 4.5 6v5.5c0 4.6 3.2 8 7.5 9.5 4.3-1.5 7.5-4.9 7.5-9.5V6z"/></symbol>
+  <symbol id="i-cloud-off" viewBox="0 0 24 24"><path d="M3 3l18 18M8.5 7.2A5.5 5.5 0 0 1 17 10.5h.5a3.5 3.5 0 0 1 2.4 6M16 19H7.5a4.5 4.5 0 0 1-1.9-8.6"/></symbol>
+  <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z"/><circle cx="12" cy="12" r="3"/></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 3.5 21.5 20h-19z"/><path d="M12 10v4.5M12 17.2h.01"/></symbol>
+  <symbol id="i-list" viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11M4.5 6h.01M4.5 12h.01M4.5 18h.01"/></symbol>
+</svg>
+
+
+<div dir="rtl" lang="fa">
+<aside id="inspector" aria-label="بازرس قطعه"><button class="iconbtn iconbtn--standard iclose sl" type="button" onclick="closeInspector()" aria-label="بستن بازرس"><span class="face"><svg class="ico"><use href="#i-close"/></svg></span></button><div id="inspectorBody"></div></aside>
+<div class="copied" id="copied" role="status" aria-live="polite">کپی شد</div>
+
+<div class="page">
+<nav class="side" aria-label="فهرست سیستم طراحی">
+  <div class="brand"><img src="emoji/lifting.png" alt="">FitOS · آبی پرانرژی</div>
+  <a class="concept-link" href="concept.html"><svg class="ico ico--sm"><use href="#i-eye"/></svg>دو صفحه نمونه</a>
+  <div class="grp">پایه‌ها</div>
+  <a href="#colors">رنگ‌ها</a><a href="#type">تایپوگرافی</a><a href="#spacing">فاصله‌ها</a><a href="#shape">گوشه‌ها</a><a href="#elevation">ارتفاع</a><a href="#states">لایه حالت</a><a href="#motion">حرکت</a><a href="#icons">آیکون‌ها</a><a href="#illustration">ایموجی و آدمک‌ها</a>
+  <div class="grp">اقدام‌ها</div>
+  <a href="#button">دکمه</a><a href="#iconbutton">دکمه آیکونی</a><a href="#fab">FAB</a><a href="#segmented">دکمه بخش‌بندی</a>
+  <div class="grp">ارتباط</div>
+  <a href="#badge">نشان</a><a href="#progress">پیشرفت</a><a href="#snackbar">اسنک‌بار</a><a href="#tooltip">راهنمای کوتاه</a>
+  <div class="grp">ظرف‌ها</div>
+  <a href="#card">کارت</a><a href="#carousel">کاروسل</a><a href="#divider">جداکننده</a><a href="#list">فهرست</a><a href="#sheet">برگه پایینی</a><a href="#dialog">دیالوگ</a>
+  <div class="grp">ناوبری</div>
+  <a href="#appbar">نوار بالا</a><a href="#navbar">نوار پایین</a><a href="#navrail">ریل ناوبری</a><a href="#drawer">کشوی ناوبری</a><a href="#tabs">زبانه‌ها</a><a href="#search">جست‌وجو</a><a href="#menu">منو</a>
+  <div class="grp">انتخاب</div>
+  <a href="#checkbox">چک‌باکس</a><a href="#chips">چیپ‌ها</a><a href="#radio">رادیو</a><a href="#switch">کلید</a><a href="#slider">اسلایدر</a><a href="#datepicker">انتخاب تاریخ</a><a href="#timepicker">انتخاب ساعت</a>
+  <div class="grp">ورود متن</div>
+  <a href="#textfield">فیلد متن</a>
+  <div class="grp">ویژه FitOS</div>
+  <a href="#emojitile">کاشی ایموجی</a><a href="#musclemap">نقشه عضلات</a><a href="#platemeter">هالتر امروز</a><a href="#daytile">کاشی روز</a><a href="#stattile">کاشی آمار</a><a href="#linechart">نمودار وزن</a><a href="#barchart">نمودار کالری</a><a href="#journey">مسیر بدن</a><a href="#stepper">شمارنده</a><a href="#resttimer">تایمر استراحت</a><a href="#setpill">قرص ست</a><a href="#habitrow">ردیف عادت</a><a href="#watercups">لیوان‌های آب</a>
+</nav>
+
+<main>
+  <div class="topctl">
+    <button class="ctl-btn" type="button" onclick="copyFullSystem()">نصب کل سیستم (پرامپت)</button>
+    <label class="spec" for="themeSel" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">پوسته</label>
+    <select id="themeSel" aria-label="پوسته"><option value="light">روشن</option><option value="dark">تیره</option></select>
+    <select id="langSel" aria-label="زبان خروجی پرامپت"></select>
+    <button id="devToggle" class="ctl-btn" type="button" onclick="toggleDev()" aria-pressed="false">حالت توسعه‌دهنده</button>
+  </div>
+
+  <header class="hero">
+    <div>
+      <h1>سیستم طراحی FitOS: آبی پرانرژی</h1>
+      <p>قاب آبی برقی و پرانرژی، کارت‌های سفید روی زمینه آبی‌خاکستری روشن، نارنجی گرم برای کارهای انجام‌شده و رکوردها، و یک رنگ شاد برای هر بخش. مرجع ساختار: Material 3 اندروید، راست‌چین و فارسی. همه رنگ‌ها و اندازه‌ها توکن‌اند، پس پوسته تیره یا هر تغییر ظاهری فقط از یک‌جا انجام می‌شود. «حالت توسعه‌دهنده» را روشن کنید و روی هر قطعه بزنید تا مشخصاتش را ببینید؛ «کپی پرامپت» آن را برای ساخت در Jetpack Compose آماده می‌کند.</p>
+    </div>
+    <div class="hero__art" aria-hidden="true">
+      <span class="emoji-tile emoji-tile--xl emoji-tile--float" style="--rot:-9deg;top:8px;inset-inline-end:0"><img src="emoji/lifting.png" alt=""></span>
+      <span class="emoji-tile emoji-tile--lg emoji-tile--float" style="--rot:8deg;top:0;inset-inline-start:24px"><img src="emoji/apple.png" alt=""></span>
+      <span class="emoji-tile emoji-tile--lg emoji-tile--float" style="--rot:-4deg;bottom:0;inset-inline-start:70px"><img src="emoji/ruler.png" alt=""></span>
+    </div>
+  </header>
+
+  <!-- ===================== FOUNDATIONS ===================== -->
+  <div class="grp-title">پایه‌ها (توکن‌ها)</div>
+  <section class="sec-wrap" id="colors"><h2 class="sec">رنگ‌ها</h2>
+    <p class="sec-desc">یک خانواده تعاملی (آبی برقی) همه دکمه‌ها و انتخاب‌ها را می‌برد؛ نارنجی پاداش است: روزهای انجام‌شده و رکوردها. رنگ هر بخش فقط برای داده است و هر رنگ با جفت متنی خودش (<code>--on-*</code>) آمده که کنتراستش با فرمول WCAG حساب شده است. مقادیر زنده از پوسته فعلی خوانده می‌شوند.</p>
+    <div class="colors" id="colorGrid"></div></section>
+
+  <section class="sec-wrap" id="type"><h2 class="sec">تایپوگرافی</h2>
+    <p class="sec-desc">فونت خواندن Vazirmatn برای همه متن‌ها، دکمه‌ها و ناوبری. Changa فقط برای اعداد درشت و آمار (سبک Display). فقط وزن‌های ۴۰۰، ۵۰۰ و ۶۰۰؛ حداقل اندازه ۱۲؛ متن فارسی هیچ‌وقت فاصله حرفی نمی‌گیرد.</p>
+    <div id="typeList"></div></section>
+
+  <section class="sec-wrap" id="spacing"><h2 class="sec">فاصله‌ها</h2>
+    <p class="sec-desc">شبکه ۴dp و نقش‌های معنایی: فاصله اجزای مرتبط ۸، بین گروه‌ها ۱۶، بین بخش‌های اصلی ۳۲، حاشیه صفحه ۱۶. حداقل ناحیه لمس ۴۸.</p>
+    <div id="spacingList"></div></section>
+
+  <section class="sec-wrap" id="shape"><h2 class="sec">گوشه‌ها</h2>
+    <p class="sec-desc">مقیاس شکل Material با گوشه‌های سخاوتمند: کارت‌ها ۲۴، کارت قهرمان و برگه‌ها ۳۲، دکمه‌ها ۱۸. فقط چیپ‌های کوچک و نشان‌ها کاملاً گردند.</p>
+    <div class="stage stage--center" id="shapeList"></div></section>
+
+  <section class="sec-wrap" id="elevation"><h2 class="sec">ارتفاع</h2>
+    <p class="sec-desc">اول خط مو، بعد سایه بسیار نرم با ته‌رنگ آبی (شفافیت زیر ۰٫۰۸). در پوسته تیره به‌جای سایه، سطوح تونال و یک لبه نوری ظریف بالایی.</p>
+    <div class="stage stage--center stage--sunk" id="elevList"></div></section>
+
+  <section class="sec-wrap" id="states"><h2 class="sec">لایه حالت</h2>
+    <p class="sec-desc">حالت‌های لمسی با یک لایه هم‌رنگ متن روی قطعه: hover ۸٪، فوکوس ۱۰٪ به‌همراه حلقه ۲ پیکسلی با فاصله، فشردن ۱۰٪، کشیدن ۱۶٪.</p>
+    <div class="stage stage--center">
+      <div class="cell"><button class="btn btn--tonal sl" type="button">عادی</button><div class="spec">enabled</div></div>
+      <div class="cell"><button class="btn btn--tonal sl is-hover" type="button">هاور</button><div class="spec">hover .08</div></div>
+      <div class="cell"><button class="btn btn--tonal sl is-focus" type="button">فوکوس</button><div class="spec">focus .10 + ring</div></div>
+      <div class="cell"><button class="btn btn--tonal sl is-pressed" type="button">فشرده</button><div class="spec">pressed .10</div></div>
+      <div class="cell"><button class="btn btn--tonal sl" type="button" disabled>غیرفعال</button><div class="spec">disabled</div></div>
+    </div></section>
+
+  <section class="sec-wrap" id="motion"><h2 class="sec">حرکت</h2>
+    <p class="sec-desc">حرکت فقط در پاسخ به کار کاربر: پر شدن وزنه پس از ثبت، باز شدن برگه، تیک خوردن عادت با کمی فنر. با «کاهش حرکت» سیستم، همه آنی می‌شوند.</p>
+    <div class="stage" id="motionList"></div></section>
+
+  <section class="sec-wrap" id="icons"><h2 class="sec">آیکون‌ها</h2>
+    <p class="sec-desc">آیکون‌های رابط خطی و اختصاصی‌اند (به سبک Material Symbols و Lucide)، با ضخامت توکنی؛ ایموجی هیچ‌وقت جای دکمه یا آیکون ناوبری نمی‌نشیند. آیکون‌های جهت‌دار در راست‌چین قرینه می‌شوند.</p>
+    <div class="iconGrid" id="iconGrid"></div></section>
+
+  <section class="sec-wrap" id="illustration"><h2 class="sec">ایموجی و آدمک‌ها</h2>
+    <p class="sec-desc">ایموجی‌های سه‌بعدی Fluent (مایکروسافت، مجوز MIT) نشانه هویت هر بخش و هر عادت‌اند، روی کاشی رنگی همان بخش. آدمک‌ها اختصاصی‌اند: نقشه عضلات جلو و پشت، و سه آدمک مسیر بدن با رنگ خنثی.</p>
+    <div class="emojiGrid" id="emojiGrid"></div>
+    <div class="stage stage--center" style="margin-top:12px">
+      <div class="cell"><svg class="muscle-map" role="img" aria-label="نقشه عضلات از جلو"><use href="#i-mm-front"/></svg><div class="spec">i-mm-front</div></div>
+      <div class="cell"><svg class="muscle-map" role="img" aria-label="نقشه عضلات از پشت"><use href="#i-mm-back"/></svg><div class="spec">i-mm-back</div></div>
+      <div class="cell"><svg width="44" height="96" style="fill:var(--surface-container-highest)" aria-hidden="true"><use href="#i-body-start"/></svg><div class="spec">i-body-start</div></div>
+      <div class="cell"><svg width="44" height="96" style="fill:var(--primary)" aria-hidden="true"><use href="#i-body-now"/></svg><div class="spec">i-body-now</div></div>
+      <div class="cell"><svg width="44" height="96" style="fill:none;stroke:var(--outline);stroke-width:1.5;stroke-dasharray:3 3" aria-hidden="true"><use href="#i-body-goal"/></svg><div class="spec">i-body-goal</div></div>
+    </div></section>
+
+  <!-- ===================== ACTIONS ===================== -->
+  <div class="grp-title">اقدام‌ها</div>
+  <section class="sec-wrap" id="button"><h2 class="sec">دکمه</h2>
+    <p class="sec-desc">پنج گونه Material: برجسته، پر، تونال، خطی، متنی. در هر صفحه فقط یک دکمه پر (آبی) اقدام اصلی است. اندازه بزرگ ۵۶ برای اقدام‌های حین تمرین.</p>
+    <div class="stage stage--center">
+      <div class="cell"><button class="btn btn--filled sl" data-insp="button" type="button"><svg class="ico"><use href="#i-play"/></svg>شروع تمرین</button><div class="spec">filled</div></div>
+      <div class="cell"><button class="btn btn--elevated sl" data-insp="button" type="button">کپی از دیروز</button><div class="spec">elevated</div></div>
+      <div class="cell"><button class="btn btn--tonal sl" data-insp="button" type="button"><svg class="ico"><use href="#i-plus"/></svg>افزودن غذا</button><div class="spec">filled-tonal</div></div>
+      <div class="cell"><button class="btn btn--outlined sl" data-insp="button" type="button">نسخه خانگی ۱۵ دقیقه</button><div class="spec">outlined</div></div>
+      <div class="cell"><button class="btn btn--text sl" data-insp="button" type="button">بعداً</button><div class="spec">text</div></div>
+    </div>
+    <div class="stage stage--center" style="margin-top:10px">
+      <div class="cell"><button class="btn btn--filled sl is-hover" data-insp="button" type="button">ذخیره وزن</button><div class="spec">hover</div></div>
+      <div class="cell"><button class="btn btn--filled sl is-focus" data-insp="button" type="button">ذخیره وزن</button><div class="spec">focus</div></div>
+      <div class="cell"><button class="btn btn--filled sl is-pressed" data-insp="button" type="button">ذخیره وزن</button><div class="spec">pressed</div></div>
+      <div class="cell"><button class="btn btn--filled" data-insp="button" type="button" disabled>ذخیره وزن</button><div class="spec">disabled</div></div>
+      <div class="cell wide"><button class="btn btn--filled btn--lg btn--block sl" data-insp="button" type="button" style="max-width:340px"><svg class="ico"><use href="#i-check"/></svg>ثبت ست ۲</button><div class="spec">filled · lg · block</div></div>
+    </div></section>
+
+  <section class="sec-wrap" id="iconbutton"><h2 class="sec">دکمه آیکونی</h2>
+    <p class="sec-desc">چهار گونه، ناحیه لمس ۴۸ با چهره ۴۰. حالت دوحالته (انتخاب‌شده/نشده) برای چیزهایی مثل «علاقه‌مندی».</p>
+    <div class="stage stage--center">
+      <div class="cell"><button class="iconbtn iconbtn--standard sl" data-insp="iconbutton" type="button" aria-label="تنظیمات"><span class="face"><svg class="ico"><use href="#i-settings"/></svg></span></button><div class="spec">standard</div></div>
+      <div class="cell"><button class="iconbtn iconbtn--filled sl" data-insp="iconbutton" type="button" aria-label="افزودن"><span class="face"><svg class="ico"><use href="#i-plus"/></svg></span></button><div class="spec">filled</div></div>
+      <div class="cell"><button class="iconbtn iconbtn--tonal sl" data-insp="iconbutton" type="button" aria-label="توقف موقت"><span class="face"><svg class="ico"><use href="#i-pause"/></svg></span></button><div class="spec">tonal</div></div>
+      <div class="cell"><button class="iconbtn iconbtn--outlined sl" data-insp="iconbutton" type="button" aria-label="جایگزینی حرکت"><span class="face"><svg class="ico"><use href="#i-swap"/></svg></span></button><div class="spec">outlined</div></div>
+      <div class="cell"><button class="iconbtn iconbtn--filled is-toggle sl" data-insp="iconbutton" type="button" aria-pressed="false" aria-label="علاقه‌مندی"><span class="face"><svg class="ico"><use href="#i-star"/></svg></span></button><div class="spec">toggle · off</div></div>
+      <div class="cell"><button class="iconbtn iconbtn--filled is-toggle is-selected sl" data-insp="iconbutton" type="button" aria-pressed="true" aria-label="علاقه‌مندی"><span class="face"><svg class="ico ico--filled"><use href="#i-star"/></svg></span></button><div class="spec">toggle · on</div></div>
+      <div class="cell"><button class="iconbtn iconbtn--outlined sl" data-insp="iconbutton" type="button" disabled aria-label="حذف"><span class="face"><svg class="ico"><use href="#i-trash"/></svg></span></button><div class="spec">disabled</div></div>
+    </div></section>
+
+  <section class="sec-wrap" id="fab"><h2 class="sec">FAB</h2>
+    <p class="sec-desc">دکمه شناور برای مهم‌ترین اقدام صفحه، مثل «ثبت سریع». چهار اندازه.</p>
+    <div class="stage stage--center">
+      <div class="cell"><button class="fab fab--small sl" data-insp="fab" type="button" aria-label="ثبت سریع"><svg class="ico"><use href="#i-plus"/></svg></button><div class="spec">small</div></div>
+      <div class="cell"><button class="fab sl" data-insp="fab" type="button" aria-label="ثبت سریع"><svg class="ico"><use href="#i-plus"/></svg></button><div class="spec">regular</div></div>
+      <div class="cell"><button class="fab fab--large sl" data-insp="fab" type="button" aria-label="ثبت سریع"><svg class="ico"><use href="#i-plus"/></svg></button><div class="spec">large</div></div>
+      <div class="cell"><button class="fab fab--extended sl" data-insp="fab" type="button"><svg class="ico"><use href="#i-plus"/></svg>ثبت سریع</button><div class="spec">extended</div></div>
+      <div class="cell"><button class="fab fab--extended fab--tonal sl" data-insp="fab" type="button"><svg class="ico"><use href="#i-camera"/></svg>عکس پیشرفت</button><div class="spec">extended · tonal</div></div>
+    </div></section>
+
+  <section class="sec-wrap" id="segmented"><h2 class="sec">دکمه بخش‌بندی</h2>
+    <p class="sec-desc">تک‌انتخابی برای نسخه جلسه، چندانتخابی برای فیلتر. بخش انتخاب‌شده تیک می‌گیرد.</p>
+    <div class="stage stage--center">
+      <div class="cell"><div class="seg" role="radiogroup" aria-label="نسخه جلسه" data-insp="segmented">
+        <button class="seg__btn is-selected sl" role="radio" aria-checked="true" type="button"><svg class="ico seg__check"><use href="#i-check"/></svg>باشگاه</button>
+        <button class="seg__btn sl" role="radio" aria-checked="false" type="button"><svg class="ico seg__check"><use href="#i-check"/></svg>خانگی</button>
+        <button class="seg__btn sl" role="radio" aria-checked="false" type="button"><svg class="ico seg__check"><use href="#i-check"/></svg>حداقلی</button>
+      </div><div class="spec">single-select</div></div>
+      <div class="cell"><div class="seg" role="group" aria-label="وعده‌ها" data-insp="segmented">
+        <button class="seg__btn is-selected sl" aria-pressed="true" type="button"><svg class="ico seg__check"><use href="#i-check"/></svg>صبحانه</button>
+        <button class="seg__btn is-selected sl" aria-pressed="true" type="button"><svg class="ico seg__check"><use href="#i-check"/></svg>ناهار</button>
+        <button class="seg__btn sl" aria-pressed="false" type="button"><svg class="ico seg__check"><use href="#i-check"/></svg>شام</button>
+      </div><div class="spec">multi-select</div></div>
+    </div></section>
+
+  <!-- ===================== COMMUNICATION ===================== -->
+  <div class="grp-title">ارتباط</div>
+  <section class="sec-wrap" id="badge"><h2 class="sec">نشان</h2>
+    <p class="sec-desc">نقطه برای «چیز تازه»، عدد برای شمارش. فقط روی آیکون‌ها؛ هرگز برای سرزنش.</p>
+    <div class="stage stage--center">
+      <div class="cell"><span class="badge-anchor" data-insp="badge"><span class="iconbtn iconbtn--standard"><span class="face"><svg class="ico"><use href="#i-bell"/></svg></span></span><span class="badge badge--dot" aria-label="یادآوری تازه"></span></span><div class="spec">small · dot</div></div>
+      <div class="cell"><span class="badge-anchor" data-insp="badge"><span class="iconbtn iconbtn--standard"><span class="face"><svg class="ico"><use href="#i-chart"/></svg></span></span><span class="badge" aria-label="۲ پیشنهاد">۲</span></span><div class="spec">large · number</div></div>
+    </div></section>
+
+  <section class="sec-wrap" id="progress"><h2 class="sec">نشانگر پیشرفت</h2>
+    <p class="sec-desc">خطی و دایره‌ای، معین و نامعین. پیشرفت اهداف روزانه با رنگ همان بخش.</p>
+    <div class="stage">
+      <div class="cell cell--start w320" data-insp="progress"><div class="t-label-m t-variant">پروتئین ۹۶ از ۱۸۰ گرم</div><div class="progress-linear wide" role="progressbar" aria-valuenow="53" aria-valuemin="0" aria-valuemax="100" style="--p:53%"><div class="progress-linear__bar" style="background:var(--cat-protein)"></div></div><div class="spec">linear · determinate</div></div>
+      <div class="cell cell--start w320" data-insp="progress"><div class="t-label-m t-variant">در حال ساخت پشتیبان…</div><div class="progress-linear progress-linear--indet wide" role="progressbar" aria-label="در حال ساخت پشتیبان"><div class="progress-linear__bar"></div></div><div class="spec">linear · indeterminate</div></div>
+      <div class="cell" data-insp="progress"><svg class="progress-circular" viewBox="0 0 48 48" role="progressbar" aria-valuenow="50" aria-label="آب ۵۰ درصد"><circle class="trk" cx="24" cy="24" r="20"/><circle class="ind" cx="24" cy="24" r="20" stroke-dasharray="125.7" stroke-dashoffset="62.8" style="stroke:var(--cat-water)"/></svg><div class="spec">circular · determinate</div></div>
+      <div class="cell" data-insp="progress"><svg class="progress-circular progress-circular--indet" viewBox="0 0 48 48" role="progressbar" aria-label="در حال بارگذاری"><circle class="trk" cx="24" cy="24" r="20"/><circle class="ind" cx="24" cy="24" r="20" stroke-dasharray="125.7" stroke-dashoffset="90"/></svg><div class="spec">circular · indeterminate</div></div>
+    </div></section>
+
+  <section class="sec-wrap" id="snackbar"><h2 class="sec">اسنک‌بار</h2>
+    <p class="sec-desc">تأیید کوتاه پس از ثبت، با امکان برگرداندن. پیام روشن و بدون عذرخواهی.</p>
+    <div class="stage stage--sunk">
+      <div class="cell cell--start"><div class="snackbar" data-insp="snackbar" role="status"><span class="snackbar__msg">ست ۲ پرس سرشانه ثبت شد</span><button class="snackbar__action sl" type="button">برگرداندن</button></div><div class="spec">with action</div></div>
+      <div class="cell cell--start"><div class="snackbar" data-insp="snackbar" role="status"><span class="snackbar__msg">پشتیبان ذخیره شد</span></div><div class="spec">without action</div></div>
+    </div></section>
+
+  <section class="sec-wrap" id="tooltip"><h2 class="sec">راهنمای کوتاه</h2>
+    <p class="sec-desc">ساده برای برچسب آیکون؛ غنی برای توضیح یک مفهوم مثل «در ذخیره».</p>
+    <div class="stage stage--center">
+      <div class="cell"><span class="tooltip" data-insp="tooltip" role="tooltip">جایگزینی حرکت</span><div class="spec">plain</div></div>
+      <div class="cell"><div class="tooltip--rich" data-insp="tooltip" role="tooltip"><b>تکرار در ذخیره (RIR)</b><span>چند تکرار دیگر می‌توانستی با فرم درست بزنی. اختیاری است و به پیشنهاد وزنه جلسه بعد کمک می‌کند.</span><button class="btn btn--text sl" type="button">بیشتر بدانم</button></div><div class="spec">rich</div></div>
+    </div></section>
+
+  <!-- ===================== CONTAINMENT ===================== -->
+  <div class="grp-title">ظرف‌ها</div>
+  <section class="sec-wrap" id="card"><h2 class="sec">کارت</h2>
+    <p class="sec-desc">برجسته برای محتوای اصلی، پر برای گروه‌بندی آرام، خطی برای فهرست‌های قابل انتخاب. کارت سرمه‌ای برای تأکید ویژه.</p>
+    <div class="stage stage--sunk">
+      <div class="card card--elevated" data-insp="card" style="width:220px"><div class="row"><span class="emoji-tile emoji-tile--sm tint-calories"><img src="emoji/fire.png" alt=""></span><span class="t-body-m t-variant">کالری</span></div><div class="t-display-s" style="margin-top:8px">۱٬۳۴۰</div><div class="t-body-s t-subtle">از ۲٬۵۰۰ کیلوکالری</div></div>
+      <div class="card card--filled" data-insp="card" style="width:220px"><div class="t-title-m">برنامه غذایی امروز</div><div class="t-body-m t-variant" style="margin-top:6px">۴ وعده، ۲٬۴۸۰ کیلوکالری</div></div>
+      <div class="card card--outlined" data-insp="card" style="width:220px"><div class="t-title-m">بالاتنه، تأکید پشت</div><div class="t-body-m t-variant" style="margin-top:6px">۶ حرکت، حدود ۶۰ دقیقه</div></div>
+      <div class="card card--ink card--hero" data-insp="card" style="width:260px"><div class="row"><span class="emoji-tile tint-neutral" style="--tint:color-mix(in srgb,var(--inverse-on-surface) 12%,transparent)"><img src="emoji/lifting.png" alt=""></span><div><div class="t-label-m" style="opacity:.8">کار بعدی، حوالی ظهر</div><div class="t-title-l">سرشانه و سینه</div></div></div></div>
+    </div></section>
+
+  <section class="sec-wrap" id="carousel"><h2 class="sec">کاروسل</h2>
+    <p class="sec-desc">برای مرور افقی؛ مثلاً عکس‌های پیشرفت یا وعده‌های ذخیره‌شده. آیتم آخر کوچک می‌شود تا ادامه‌دار بودن را نشان دهد. جای عکس، برچسب‌خورده است.</p>
+    <div class="stage"><div class="carousel wide" data-insp="carousel" style="max-width:520px">
+      <div class="carousel__item" style="--w:200px;--h:160px;display:flex;align-items:flex-end;padding:12px"><span class="t-label-m t-variant">جای عکس · جلو · ۱ مهر</span></div>
+      <div class="carousel__item" style="--w:200px;--h:160px;display:flex;align-items:flex-end;padding:12px"><span class="t-label-m t-variant">جای عکس · جلو · ۱۵ مهر</span></div>
+      <div class="carousel__item" style="--w:120px;--h:160px"></div>
+      <div class="carousel__item carousel__item--small" style="--h:160px"></div>
+    </div></div></section>
+
+  <section class="sec-wrap" id="divider"><h2 class="sec">جداکننده</h2>
+    <p class="sec-desc">تمام‌عرض بین بخش‌ها؛ تورفته داخل فهرست.</p>
+    <div class="stage" style="flex-direction:column;gap:14px"><div class="wide" data-insp="divider"><div class="t-body-m">تمام‌عرض</div><hr class="divider" style="margin-top:10px"></div><div class="wide" data-insp="divider"><div class="t-body-m">تورفته</div><hr class="divider divider--inset" style="margin-top:10px"></div></div></section>
+
+  <section class="sec-wrap" id="list"><h2 class="sec">فهرست</h2>
+    <p class="sec-desc">ردیف‌های یک، دو و سه خطی با جزء آغازین (کاشی ایموجی، آیکون، آواتار) و پایانی (متن، کلید، شورون). هر ردیف حداقل ۵۶.</p>
+    <div class="stage stage--sunk"><div class="list w320" data-insp="list" role="list" style="width:360px">
+      <button class="li sl" role="listitem" type="button"><span class="li__lead"><svg class="ico"><use href="#i-scale"/></svg></span><span class="li__body"><span class="li__head">واحد وزن</span></span><span class="li__trail">کیلوگرم<svg class="ico ico--sm ico--dir"><use href="#i-chevron-left"/></svg></span></button>
+      <button class="li li--2 sl" role="listitem" type="button"><span class="li__lead"><span class="emoji-tile tint-protein"><img src="emoji/poultry.png" alt=""></span></span><span class="li__body"><span class="li__head">سینه مرغ گریل</span><span class="li__sup">۱۸۰ گرم، پخته</span></span><span class="li__trail">۲۹۷ کالری</span></button>
+      <div class="li li--3" role="listitem"><span class="li__lead"><span class="emoji-tile tint-training"><img src="emoji/biceps.png" alt=""></span></span><span class="li__body"><span class="li__over">رکورد شخصی</span><span class="li__head">نشر جانب دمبل</span><span class="li__sup">۱۰ کیلوگرم × ۲۰ تکرار، دو تکرار بیشتر از رکورد قبلی در ۲۱ مهر</span></span><span class="li__trail">امروز</span></div>
+      <div class="li" role="listitem"><span class="li__lead"><svg class="ico"><use href="#i-lock"/></svg></span><span class="li__body"><span class="li__head">قفل اپ</span></span><span class="li__trail"><span class="switch is-on" role="switch" aria-checked="true" aria-label="قفل اپ"><span class="switch__thumb"><svg class="ico"><use href="#i-check"/></svg></span></span></span></div>
+    </div></div></section>
+
+  <section class="sec-wrap" id="sheet"><h2 class="sec">برگه پایینی</h2>
+    <p class="sec-desc">استاندارد کنار محتوا می‌ماند؛ مُدال با پرده تیره، برای ثبت سریع وزن یا مقدار غذا.</p>
+    <div class="stage">
+      <div class="cell"><div class="demo-phone" style="height:300px"><div style="padding:16px" class="t-body-m t-variant">محتوای صفحه</div><div class="sheet" data-insp="sheet" style="position:absolute;inset-inline:0;bottom:0"><span class="sheet__handle" aria-hidden="true"></span><div class="t-title-m">خواب دیشب</div><div class="t-body-m t-variant">۲۳:۴۰ تا ۰۶:۴۵، هفت ساعت و پنج دقیقه</div></div></div><div class="spec">standard</div></div>
+      <div class="cell"><div class="demo-phone" style="height:300px"><div style="padding:16px" class="t-body-m t-variant">محتوای صفحه</div><div class="scrim"></div><div class="sheet sheet--modal" data-insp="sheet" role="dialog" aria-label="ثبت وزن" style="position:absolute;inset-inline:0;bottom:0"><span class="sheet__handle" aria-hidden="true"></span><div class="row"><span class="emoji-tile emoji-tile--sm tint-neutral"><img src="emoji/scale.png" alt=""></span><span class="t-title-l">ثبت وزن</span></div><div class="t-display-m" style="text-align:center">۱۱۳٫۴</div><button class="btn btn--filled btn--block sl" type="button">ذخیره وزن</button></div></div><div class="spec">modal</div></div>
+    </div></section>
+
+  <section class="sec-wrap" id="dialog"><h2 class="sec">دیالوگ</h2>
+    <p class="sec-desc">پایه برای تأیید کارهای برگشت‌ناپذیر؛ تمام‌صفحه برای فرم‌های چندفیلدی.</p>
+    <div class="stage stage--sunk">
+      <div class="dialog" data-insp="dialog" role="dialog" aria-label="حذف ست"><svg class="ico ico--lg dialog__icon"><use href="#i-trash"/></svg><div class="dialog__title">این ست حذف شود؟</div><div class="dialog__body">ست ۲ پرس سرشانه (۲۲٫۵ × ۱۱) حذف می‌شود و رکوردهای این حرکت دوباره محاسبه می‌شوند.</div><div class="dialog__actions"><button class="btn btn--text sl" type="button">انصراف</button><button class="btn btn--text sl" type="button" style="color:var(--error)">حذف ست</button></div></div>
+      <div class="demo-phone" style="height:360px"><div class="dialog dialog--fullscreen" data-insp="dialog" role="dialog" aria-label="ثبت اندازه‌ها"><div class="appbar"><button class="iconbtn iconbtn--standard sl" type="button" aria-label="بستن"><span class="face"><svg class="ico"><use href="#i-close"/></svg></span></button><div class="appbar__title">ثبت اندازه‌ها</div><button class="btn btn--text sl" type="button">ذخیره</button></div><div class="dialog__content">
+        <div class="tf tf--outlined is-filled"><div class="tf__box"><div class="tf__field"><span class="tf__label">دور شکم (روی ناف)</span><span class="tf__value">۱۱۸</span></div><span class="tf__suffix">سانتی‌متر</span></div></div>
+        <div class="tf tf--outlined"><div class="tf__box"><div class="tf__field"><span class="tf__label">دور سینه</span><span class="tf__value"></span></div><span class="tf__suffix">سانتی‌متر</span></div></div>
+      </div></div></div>
+    </div></section>
+
+  <!-- ===================== NAVIGATION ===================== -->
+  <div class="grp-title">ناوبری</div>
+  <section class="sec-wrap" id="appbar"><h2 class="sec">نوار بالا</h2>
+    <p class="sec-desc">وسط‌چین برای صفحه خانه، کوچک برای صفحات معمولی، متوسط و بزرگ برای صفحات اصلی با عنوان درشت که با اسکرول کوچک می‌شوند.</p>
+    <div class="stage stage--sunk" style="flex-direction:column">
+      <div class="demo-phone wide" style="max-width:420px" data-insp="appbar"><div class="appbar appbar--center"><button class="iconbtn iconbtn--standard sl" type="button" aria-label="منو"><span class="face"><svg class="ico"><use href="#i-menu"/></svg></span></button><div class="appbar__title">امروز</div><button class="iconbtn iconbtn--standard sl" type="button" aria-label="تنظیمات"><span class="face"><svg class="ico"><use href="#i-settings"/></svg></span></button></div></div>
+      <div class="demo-phone wide" style="max-width:420px" data-insp="appbar"><div class="appbar"><button class="iconbtn iconbtn--standard sl" type="button" aria-label="بازگشت"><span class="face"><svg class="ico ico--dir"><use href="#i-back"/></svg></span></button><div class="appbar__title">افزودن غذا</div><button class="iconbtn iconbtn--standard sl" type="button" aria-label="جست‌وجو"><span class="face"><svg class="ico"><use href="#i-search"/></svg></span></button></div></div>
+      <div class="demo-phone wide" style="max-width:420px" data-insp="appbar"><div class="appbar appbar--medium"><button class="iconbtn iconbtn--standard sl" type="button" aria-label="بازگشت"><span class="face"><svg class="ico ico--dir"><use href="#i-back"/></svg></span></button><span class="appbar__spacer"></span><button class="iconbtn iconbtn--standard sl" type="button" aria-label="ویرایش"><span class="face"><svg class="ico"><use href="#i-edit"/></svg></span></button><div class="appbar__title">برنامه ۵ روزه</div></div></div>
+      <div class="demo-phone wide" style="max-width:420px" data-insp="appbar"><div class="appbar appbar--large"><button class="iconbtn iconbtn--standard sl" type="button" aria-label="بازگشت"><span class="face"><svg class="ico ico--dir"><use href="#i-back"/></svg></span></button><span class="appbar__spacer"></span><button class="iconbtn iconbtn--standard sl" type="button" aria-label="اشتراک"><span class="face"><svg class="ico"><use href="#i-share"/></svg></span></button><div class="appbar__title">گزارش هفتگی</div></div></div>
+    </div></section>
+
+  <section class="sec-wrap" id="navbar"><h2 class="sec">نوار ناوبری پایین</h2>
+    <p class="sec-desc">پنج مقصد اصلی. مقصد فعال یک قرص آبی پشت آیکون می‌گیرد؛ برچسب‌ها همیشه دیده می‌شوند.</p>
+    <div class="stage stage--sunk"><div class="demo-phone wide" style="max-width:420px"><nav class="navbar" data-insp="navbar" aria-label="بخش‌های اصلی" style="--n:5">
+      <a class="navbar__item is-active" href="#navbar" aria-current="page"><span class="navbar__ind"><svg class="ico"><use href="#i-home"/></svg></span>خانه</a>
+      <a class="navbar__item" href="#navbar"><span class="navbar__ind sl"><svg class="ico"><use href="#i-dumbbell"/></svg></span>تمرین</a>
+      <a class="navbar__item" href="#navbar"><span class="navbar__ind sl"><svg class="ico"><use href="#i-utensils"/></svg></span>تغذیه</a>
+      <a class="navbar__item" href="#navbar"><span class="navbar__ind sl"><svg class="ico"><use href="#i-body"/></svg></span>بدن</a>
+      <a class="navbar__item" href="#navbar"><span class="navbar__ind sl"><svg class="ico"><use href="#i-habits"/></svg></span>عادت‌ها</a>
+    </nav></div></div></section>
+
+  <section class="sec-wrap" id="navrail"><h2 class="sec">ریل ناوبری</h2>
+    <p class="sec-desc">برای حالت افقی یا تبلت؛ همان مقصدها به‌صورت عمودی.</p>
+    <div class="stage stage--sunk"><nav class="navrail" data-insp="navrail" aria-label="بخش‌های اصلی" style="border-radius:var(--shape-lg)">
+      <button class="fab fab--tonal sl" type="button" aria-label="ثبت سریع"><svg class="ico"><use href="#i-plus"/></svg></button>
+      <a class="navrail__item is-active" href="#navrail" aria-current="page"><span class="navbar__ind"><svg class="ico"><use href="#i-home"/></svg></span>خانه</a>
+      <a class="navrail__item" href="#navrail"><span class="navbar__ind sl"><svg class="ico"><use href="#i-dumbbell"/></svg></span>تمرین</a>
+      <a class="navrail__item" href="#navrail"><span class="navbar__ind sl"><svg class="ico"><use href="#i-utensils"/></svg></span>تغذیه</a>
+      <a class="navrail__item" href="#navrail"><span class="navbar__ind sl"><svg class="ico"><use href="#i-body"/></svg></span>بدن</a>
+    </nav></div></section>
+
+  <section class="sec-wrap" id="drawer"><h2 class="sec">کشوی ناوبری</h2>
+    <p class="sec-desc">برای مقصدهای کم‌استفاده‌تر: گزارش‌ها، پشتیبان، تنظیمات. گونه مُدال با پرده روی صفحه.</p>
+    <div class="stage stage--sunk">
+      <nav class="drawer" data-insp="drawer" aria-label="همه بخش‌ها">
+        <div class="drawer__head">FitOS</div>
+        <a class="drawer__item is-active" href="#drawer" aria-current="page"><svg class="ico"><use href="#i-home"/></svg>خانه</a>
+        <a class="drawer__item sl" href="#drawer"><svg class="ico"><use href="#i-chart"/></svg>گزارش‌ها<span class="badge-text">۲</span></a>
+        <a class="drawer__item sl" href="#drawer"><svg class="ico"><use href="#i-history"/></svg>تاریخچه جلسات</a>
+        <hr class="divider" style="margin:8px 16px">
+        <div class="drawer__head">سیستم</div>
+        <a class="drawer__item sl" href="#drawer"><svg class="ico"><use href="#i-download"/></svg>پشتیبان و بازیابی</a>
+        <a class="drawer__item sl" href="#drawer"><svg class="ico"><use href="#i-settings"/></svg>تنظیمات</a>
+      </nav>
+      <div class="demo-phone" style="height:330px;width:300px"><div class="scrim"></div><nav class="drawer drawer--modal" data-insp="drawer" aria-label="همه بخش‌ها" style="position:absolute;top:0;bottom:0;inset-inline-start:0;width:250px">
+        <div class="drawer__head">FitOS</div>
+        <a class="drawer__item is-active" href="#drawer">خانه</a><a class="drawer__item sl" href="#drawer">گزارش‌ها</a><a class="drawer__item sl" href="#drawer">تنظیمات</a>
+      </nav></div>
+    </div></section>
+
+  <section class="sec-wrap" id="tabs"><h2 class="sec">زبانه‌ها</h2>
+    <p class="sec-desc">اصلی برای بخش‌های هم‌سطح یک صفحه (وزن، اندازه‌ها، عکس‌ها)؛ ثانوی برای بازه زمانی. نسخه قابل اسکرول برای تعداد زیاد.</p>
+    <div class="stage stage--sunk" style="flex-direction:column">
+      <div class="tabs tabs--primary wide" role="tablist" data-insp="tabs" style="max-width:420px"><button class="tab is-active sl" role="tab" aria-selected="true" type="button"><svg class="ico"><use href="#i-scale"/></svg>وزن</button><button class="tab sl" role="tab" aria-selected="false" type="button"><svg class="ico"><use href="#i-ruler"/></svg>اندازه‌ها</button><button class="tab sl" role="tab" aria-selected="false" type="button"><svg class="ico"><use href="#i-camera"/></svg>عکس‌ها</button></div>
+      <div class="tabs tabs--secondary wide" role="tablist" data-insp="tabs" style="max-width:420px"><button class="tab is-active sl" role="tab" aria-selected="true" type="button">۴ هفته</button><button class="tab sl" role="tab" aria-selected="false" type="button">۱۲ هفته</button><button class="tab sl" role="tab" aria-selected="false" type="button">همه</button></div>
+      <div class="tabs tabs--secondary tabs--scroll wide" role="tablist" data-insp="tabs" style="max-width:420px"><button class="tab is-active sl" role="tab" aria-selected="true" type="button">همه حرکات</button><button class="tab sl" role="tab" aria-selected="false" type="button">سینه</button><button class="tab sl" role="tab" aria-selected="false" type="button">پشت</button><button class="tab sl" role="tab" aria-selected="false" type="button">سرشانه</button><button class="tab sl" role="tab" aria-selected="false" type="button">پا</button><button class="tab sl" role="tab" aria-selected="false" type="button">بازو</button><button class="tab sl" role="tab" aria-selected="false" type="button">مرکز بدن</button></div>
+    </div></section>
+
+  <section class="sec-wrap" id="search"><h2 class="sec">جست‌وجو</h2>
+    <p class="sec-desc">نوار جست‌وجو برای غذا و حرکت؛ با لمس، نمای کامل با پیشنهادهای اخیر باز می‌شود.</p>
+    <div class="stage stage--sunk">
+      <div class="cell cell--start" style="width:340px"><div class="searchbar wide" data-insp="search"><span class="iconbtn iconbtn--standard"><span class="face"><svg class="ico"><use href="#i-search"/></svg></span></span><label for="sb1" class="spec" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">جست‌وجوی غذا</label><input id="sb1" class="searchbar__input" placeholder="جست‌وجوی غذا یا حرکت"></div><div class="spec">bar</div></div>
+      <div class="cell cell--start" style="width:340px"><div class="searchview wide" data-insp="search"><div class="searchbar"><button class="iconbtn iconbtn--standard sl" type="button" aria-label="بازگشت"><span class="face"><svg class="ico ico--dir"><use href="#i-back"/></svg></span></button><label for="sb2" class="spec" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">جست‌وجو</label><input id="sb2" class="searchbar__input" value="مرغ"><button class="iconbtn iconbtn--standard sl" type="button" aria-label="پاک کردن"><span class="face"><svg class="ico"><use href="#i-close"/></svg></span></button></div>
+        <div class="li sl"><span class="li__lead"><svg class="ico"><use href="#i-history"/></svg></span><span class="li__body"><span class="li__head">سینه مرغ گریل</span></span></div>
+        <div class="li sl"><span class="li__lead"><svg class="ico"><use href="#i-history"/></svg></span><span class="li__body"><span class="li__head">ران مرغ بدون پوست</span></span></div>
+        <div class="li sl"><span class="li__lead"><svg class="ico"><use href="#i-search"/></svg></span><span class="li__body"><span class="li__head">مرغ (سوپ)</span></span></div>
+      </div><div class="spec">view</div></div>
+    </div></section>
+
+  <section class="sec-wrap" id="menu"><h2 class="sec">منو</h2>
+    <p class="sec-desc">برای کارهای جانبی یک آیتم. کار برگشت‌ناپذیر آخر و جدا با رنگ خطا.</p>
+    <div class="stage stage--sunk"><div class="menu" data-insp="menu" role="menu" aria-label="کارهای حرکت">
+      <button class="menu__item sl" role="menuitem" type="button"><svg class="ico"><use href="#i-edit"/></svg>ویرایش هدف</button>
+      <button class="menu__item sl" role="menuitem" type="button"><svg class="ico"><use href="#i-swap"/></svg>جایگزینی حرکت</button>
+      <button class="menu__item sl" role="menuitem" type="button"><svg class="ico"><use href="#i-copy"/></svg>کپی به روز دیگر</button>
+      <hr>
+      <button class="menu__item is-danger sl" role="menuitem" type="button"><svg class="ico"><use href="#i-trash"/></svg>حذف از برنامه</button>
+    </div></div></section>
+
+  <!-- ===================== SELECTION ===================== -->
+  <div class="grp-title">انتخاب</div>
+  <section class="sec-wrap" id="checkbox"><h2 class="sec">چک‌باکس</h2>
+    <p class="sec-desc">برای انتخاب چند مورد (مثلاً موارد پشتیبان). حالت نیمه برای «بعضی انتخاب شده».</p>
+    <div class="stage stage--center">
+      <div class="cell"><span class="cb" role="checkbox" aria-checked="false" data-insp="checkbox"><span class="cb__box"><svg class="ico ico-check"><use href="#i-check"/></svg></span></span><div class="spec">unchecked</div></div>
+      <div class="cell"><span class="cb is-checked" role="checkbox" aria-checked="true" data-insp="checkbox"><span class="cb__box"><svg class="ico ico-check"><use href="#i-check"/></svg></span></span><div class="spec">checked</div></div>
+      <div class="cell"><span class="cb is-indet" role="checkbox" aria-checked="mixed" data-insp="checkbox"><span class="cb__box"><svg class="ico ico-minus"><use href="#i-minus"/></svg></span></span><div class="spec">indeterminate</div></div>
+      <div class="cell"><span class="cb is-checked is-error" role="checkbox" aria-checked="true" aria-invalid="true" data-insp="checkbox"><span class="cb__box"><svg class="ico ico-check"><use href="#i-check"/></svg></span></span><div class="spec">error</div></div>
+      <div class="cell"><span class="cb is-checked is-disabled" role="checkbox" aria-checked="true" aria-disabled="true" data-insp="checkbox"><span class="cb__box"><svg class="ico ico-check"><use href="#i-check"/></svg></span></span><div class="spec">disabled</div></div>
+    </div></section>
+
+  <section class="sec-wrap" id="chips"><h2 class="sec">چیپ‌ها</h2>
+    <p class="sec-desc">کمکی برای اقدام مرتبط، فیلتر برای عضله یا وعده، ورودی برای تجهیزات انتخاب‌شده، پیشنهادی برای میان‌بُرهای هوشمند.</p>
+    <div class="stage stage--center">
+      <div class="cell"><button class="chip chip--assist sl" data-insp="chips" type="button"><svg class="ico"><use href="#i-edit"/></svg>افزودن یادداشت</button><div class="spec">assist</div></div>
+      <div class="cell"><div class="row"><button class="chip chip--filter is-selected sl" data-insp="chips" type="button" aria-pressed="true"><svg class="ico chip__check"><use href="#i-check"/></svg>سینه</button><button class="chip chip--filter sl" data-insp="chips" type="button" aria-pressed="false"><svg class="ico chip__check"><use href="#i-check"/></svg>پشت</button><button class="chip chip--filter sl" data-insp="chips" type="button" aria-pressed="false"><svg class="ico chip__check"><use href="#i-check"/></svg>سرشانه</button></div><div class="spec">filter</div></div>
+      <div class="cell"><span class="chip chip--input" data-insp="chips"><span class="chip__avatar"><img src="emoji/lifting.png" alt=""></span>دمبل ۲ تا ۲۴ کیلو<button class="iconbtn" type="button" aria-label="حذف دمبل" style="width:24px;height:24px"><svg class="ico ico--sm"><use href="#i-close"/></svg></button></span><div class="spec">input</div></div>
+      <div class="cell"><button class="chip chip--suggestion sl" data-insp="chips" type="button">کپی ناهار دیروز</button><div class="spec">suggestion</div></div>
+      <div class="cell"><button class="chip chip--suggestion is-disabled" data-insp="chips" type="button" disabled>کپی شام دیروز</button><div class="spec">disabled</div></div>
+    </div></section>
+
+  <section class="sec-wrap" id="radio"><h2 class="sec">دکمه رادیویی</h2>
+    <p class="sec-desc">یک انتخاب از چند گزینه، مثل واحد وزن.</p>
+    <div class="stage"><div role="radiogroup" aria-label="واحد وزن" class="stack" data-insp="radio">
+      <label class="row"><span class="radio is-checked" role="radio" aria-checked="true"><span class="radio__ring"></span></span><span class="t-body-l">کیلوگرم</span></label>
+      <label class="row"><span class="radio" role="radio" aria-checked="false"><span class="radio__ring"></span></span><span class="t-body-l">پوند</span></label>
+      <label class="row"><span class="radio is-disabled" role="radio" aria-checked="false" aria-disabled="true"><span class="radio__ring"></span></span><span class="t-body-l t-subtle">استون (به‌زودی)</span></label>
+    </div></div></section>
+
+  <section class="sec-wrap" id="switch"><h2 class="sec">کلید</h2>
+    <p class="sec-desc">برای تنظیمات روشن و خاموش. در راست‌چین، حالت روشن به سمت چپ می‌رود.</p>
+    <div class="stage stage--center">
+      <div class="cell"><span class="switch" role="switch" aria-checked="false" aria-label="قفل اپ" data-insp="switch"><span class="switch__thumb"><svg class="ico"><use href="#i-check"/></svg></span></span><div class="spec">off</div></div>
+      <div class="cell"><span class="switch is-on" role="switch" aria-checked="true" aria-label="قفل اپ" data-insp="switch"><span class="switch__thumb"><svg class="ico"><use href="#i-check"/></svg></span></span><div class="spec">on (icon)</div></div>
+      <div class="cell"><span class="switch is-on is-disabled" role="switch" aria-checked="true" aria-disabled="true" aria-label="قفل اپ" data-insp="switch"><span class="switch__thumb"><svg class="ico"><use href="#i-check"/></svg></span></span><div class="spec">disabled</div></div>
+    </div></section>
+
+  <section class="sec-wrap" id="slider"><h2 class="sec">اسلایدر</h2>
+    <p class="sec-desc">پیوسته برای زمان استراحت، گسسته برای «در ذخیره» (۰ تا ۴)، بازه‌ای برای محدوده هدف کالری.</p>
+    <div class="stage" style="flex-direction:column;gap:30px;padding-top:56px">
+      <div class="wide" style="max-width:360px" data-insp="slider"><div class="slider" style="--b:50%" role="slider" aria-valuenow="90" aria-label="زمان استراحت"><span class="slider__track"></span><span class="slider__active"></span><span class="slider__handle"></span><span class="slider__label">۹۰ث</span></div><div class="spec">continuous</div></div>
+      <div class="wide" style="max-width:360px" data-insp="slider"><div class="slider" style="--b:50%" role="slider" aria-valuenow="2" aria-label="در ذخیره"><span class="slider__track"></span><span class="slider__active"></span><span class="slider__ticks"><i></i><i></i><i></i><i></i><i></i></span><span class="slider__handle"></span><span class="slider__label">۲</span></div><div class="spec">discrete</div></div>
+      <div class="wide" style="max-width:360px" data-insp="slider"><div class="slider" style="--a:30%;--b:70%" role="group" aria-label="محدوده کالری"><span class="slider__track"></span><span class="slider__active"></span><span class="slider__handle slider__handle--a"></span><span class="slider__handle"></span></div><div class="spec">range</div></div>
+    </div></section>
+
+  <section class="sec-wrap" id="datepicker"><h2 class="sec">انتخاب تاریخ (شمسی)</h2>
+    <p class="sec-desc">تقویم شمسی با شروع هفته از شنبه. امروز با حلقه، روز انتخاب‌شده پر، و نقطه نارنجی برای روزهایی که تمرین ثبت شده.</p>
+    <div class="stage stage--sunk"><div class="datepicker" data-insp="datepicker" role="dialog" aria-label="انتخاب تاریخ">
+      <div class="datepicker__head">انتخاب تاریخ</div><div class="datepicker__sel">سه‌شنبه ۲۸ مهر</div>
+      <div class="datepicker__nav"><span>مهر ۱۴۰۵</span><span class="row"><button class="iconbtn iconbtn--standard sl" type="button" aria-label="ماه قبل"><span class="face"><svg class="ico ico--dir"><use href="#i-chevron-right"/></svg></span></button><button class="iconbtn iconbtn--standard sl" type="button" aria-label="ماه بعد"><span class="face"><svg class="ico ico--dir"><use href="#i-chevron-left"/></svg></span></button></span></div>
+      <div class="datepicker__grid" id="dpGrid"></div>
+      <div class="datepicker__actions"><button class="btn btn--text sl" type="button">انصراف</button><button class="btn btn--text sl" type="button">تأیید</button></div>
+    </div></div></section>
+
+  <section class="sec-wrap" id="timepicker"><h2 class="sec">انتخاب ساعت</h2>
+    <p class="sec-desc">برای ساعت یادآوری‌ها؛ ۲۴ ساعته با ارقام فارسی.</p>
+    <div class="stage stage--sunk"><div class="timepicker" data-insp="timepicker" role="dialog" aria-label="انتخاب ساعت">
+      <div class="timepicker__head">ساعت یادآوری تمرین</div>
+      <div class="timepicker__display"><span class="timepicker__field is-active">۱۲</span><span class="timepicker__colon">:</span><span class="timepicker__field">۰۰</span></div>
+      <div class="timepicker__dial" id="tpDial"><span class="timepicker__hand" style="transform:rotate(180deg)"></span><span class="timepicker__center"></span></div>
+      <div class="datepicker__actions" style="align-self:stretch"><button class="btn btn--text sl" type="button">انصراف</button><button class="btn btn--text sl" type="button">تأیید</button></div>
+    </div></div></section>
+
+  <!-- ===================== TEXT INPUTS ===================== -->
+  <div class="grp-title">ورود متن</div>
+  <section class="sec-wrap" id="textfield"><h2 class="sec">فیلد متن</h2>
+    <p class="sec-desc">پر و خطی، با برچسب شناور، متن کمکی، پیام خطا، آیکون آغازین و پسوند واحد. خطا اول بعد از ترک فیلد نشان داده می‌شود و می‌گوید چه باید کرد.</p>
+    <div class="stage">
+      <div class="tf tf--filled" data-insp="textfield"><div class="tf__box"><span class="tf__icon"><svg class="ico"><use href="#i-scale"/></svg></span><div class="tf__field"><span class="tf__label">وزن</span><span class="tf__value"></span></div></div><div class="tf__supp">filled · empty</div></div>
+      <div class="tf tf--filled is-focused" data-insp="textfield"><div class="tf__box"><span class="tf__icon"><svg class="ico"><use href="#i-scale"/></svg></span><div class="tf__field"><span class="tf__label">وزن</span><span class="tf__value">۱۱۳<span class="tf__caret"></span></span></div><span class="tf__suffix">کیلوگرم</span></div><div class="tf__supp">ناشتا و بعد از سرویس، دقیق‌ترین زمان است</div></div>
+      <div class="tf tf--filled is-filled" data-insp="textfield"><div class="tf__box"><span class="tf__icon"><svg class="ico"><use href="#i-scale"/></svg></span><div class="tf__field"><span class="tf__label">وزن</span><span class="tf__value">۱۱۳٫۴</span></div><span class="tf__suffix">کیلوگرم</span></div><div class="tf__supp">filled · filled</div></div>
+      <div class="tf tf--outlined is-filled is-error" data-insp="textfield"><div class="tf__box"><div class="tf__field"><span class="tf__label">کالری در ۱۰۰ گرم</span><span class="tf__value">۹۸۰۰</span></div><span class="tf__icon tf__icon--trail"><svg class="ico"><use href="#i-alert"/></svg></span></div><div class="tf__supp" role="alert">عدد بزرگ‌تر از ۹۰۰ ممکن نیست؛ برچسب بسته را دوباره نگاه کن.</div></div>
+      <div class="tf tf--outlined" data-insp="textfield"><div class="tf__box"><div class="tf__field"><span class="tf__label">نام غذا</span><span class="tf__value"></span></div></div><div class="tf__supp">outlined · empty</div></div>
+      <div class="tf tf--outlined is-filled is-disabled" data-insp="textfield"><div class="tf__box"><div class="tf__field"><span class="tf__label">منبع</span><span class="tf__value">USDA FoodData Central</span></div></div><div class="tf__supp">disabled</div></div>
+    </div></section>
+
+  <!-- ===================== FITOS EXTENSIONS ===================== -->
+  <div class="grp-title">ویژه FitOS (افزونه‌ها)</div>
+  <section class="sec-wrap" id="emojitile"><h2 class="sec">کاشی ایموجی</h2>
+    <p class="sec-desc">هویت هر بخش و هر عادت: ایموجی سه‌بعدی روی کاشی رنگی همان بخش. گونه شناور (چرخیده با سایه نرم) فقط برای صفحه‌های خوش‌آمد و حالت‌های خالی.</p>
+    <div class="stage stage--center">
+      <div class="cell"><span class="emoji-tile emoji-tile--sm tint-training" data-insp="emojitile"><img src="emoji/lifting.png" alt="تمرین"></span><div class="spec">sm 32</div></div>
+      <div class="cell"><span class="emoji-tile tint-calories" data-insp="emojitile"><img src="emoji/fire.png" alt="کالری"></span><div class="spec">md 44</div></div>
+      <div class="cell"><span class="emoji-tile emoji-tile--lg tint-water" data-insp="emojitile"><img src="emoji/droplet.png" alt="آب"></span><div class="spec">lg 64</div></div>
+      <div class="cell"><span class="emoji-tile emoji-tile--xl tint-sleep" data-insp="emojitile"><img src="emoji/sleeping.png" alt="خواب"></span><div class="spec">xl 96</div></div>
+      <div class="cell"><span class="emoji-tile emoji-tile--lg emoji-tile--float" style="--rot:-8deg" data-insp="emojitile"><img src="emoji/apple.png" alt="تغذیه"></span><div class="spec">float</div></div>
+    </div></section>
+
+  <section class="sec-wrap" id="musclemap"><h2 class="sec">نقشه عضلات</h2>
+    <p class="sec-desc">آدمک جلو و پشت. عضله هدف با نارنجی تمرین و هاشور مشخص می‌شود؛ عضله کمکی کم‌رنگ‌تر. اندازه کوچک روی کاشی روز، بزرگ در جزئیات جلسه و حرکت.</p>
+    <div class="stage stage--center">
+      <div class="cell"><div class="row"><svg class="muscle-map mm--chest mm--delts" style="--mm-w:110px" role="img" aria-label="سینه و سرشانه" data-insp="musclemap"><use href="#i-mm-front"/></svg><svg class="muscle-map mm--delts" style="--mm-w:110px" role="img" aria-label="سرشانه خلفی" data-insp="musclemap"><use href="#i-mm-back"/></svg></div><div class="spec">سرشانه و سینه · front + back</div></div>
+      <div class="cell"><svg class="muscle-map mm--lats mm--traps" style="--mm-w:110px" role="img" aria-label="پشت" data-insp="musclemap"><use href="#i-mm-back"/></svg><div class="spec">پشت و بازو · back</div></div>
+      <div class="cell"><svg class="muscle-map mm--quads mm--calves" style="--mm-w:110px" role="img" aria-label="پا" data-insp="musclemap"><use href="#i-mm-front"/></svg><div class="spec">پایین‌تنه · front</div></div>
+      <div class="cell"><svg class="muscle-map mm--abs mm--obliques" style="--mm-w:56px" role="img" aria-label="شکم" data-insp="musclemap"><use href="#i-mm-front"/></svg><div class="spec">small 56</div></div>
+    </div></section>
+
+  <section class="sec-wrap" id="platemeter"><h2 class="sec">هالتر امروز</h2>
+    <p class="sec-desc">امضای بصری اپ: هر هدف امروز یک وزنه است و به اندازه پیشرفتش پر می‌شود (تمرین، کالری، پروتئین، آب، خواب، عادت‌ها). ثبت‌نشده خالی می‌ماند و هرگز پر فرض نمی‌شود.</p>
+    <div class="stage stage--center"><div class="card card--elevated card--hero" style="width:360px;max-width:100%" data-insp="platemeter">
+      <div class="row" style="justify-content:space-between;align-items:flex-end"><div><div class="t-title-m">بار امروز</div><div class="t-body-s t-subtle">هر هدف کامل، یک وزنه کامل</div></div><div class="t-display-m">۵۱٪</div></div>
+      <div class="plate-meter" role="img" aria-label="هالتر امروز: پیشرفت کل ۵۱ درصد">
+        <span class="plate-meter__cap"></span>
+        <div class="plate-meter__side"><span class="plate" style="--h:84px;--fill:50%;--c:var(--cat-habits)"></span><span class="plate" style="--h:92px;--fill:94%;--c:var(--cat-sleep)"></span><span class="plate" style="--h:100px;--fill:50%;--c:var(--cat-water)"></span><span class="plate" style="--h:100px;--fill:53%;--c:var(--cat-protein)"></span><span class="plate" style="--h:108px;--fill:60%;--c:var(--cat-calories)"></span><span class="plate" style="--h:108px;--fill:0%;--c:var(--cat-training)"></span></div>
+        <span class="plate-meter__collar"></span><span class="plate-meter__shaft"></span><span class="plate-meter__collar"></span>
+        <div class="plate-meter__side"><span class="plate" style="--h:108px;--fill:0%;--c:var(--cat-training)"></span><span class="plate" style="--h:108px;--fill:60%;--c:var(--cat-calories)"></span><span class="plate" style="--h:100px;--fill:53%;--c:var(--cat-protein)"></span><span class="plate" style="--h:100px;--fill:50%;--c:var(--cat-water)"></span><span class="plate" style="--h:92px;--fill:94%;--c:var(--cat-sleep)"></span><span class="plate" style="--h:84px;--fill:50%;--c:var(--cat-habits)"></span></div>
+        <span class="plate-meter__cap"></span>
+      </div>
+    </div></div></section>
+
+  <section class="sec-wrap" id="daytile"><h2 class="sec">کاشی روز برنامه</h2>
+    <p class="sec-desc">شبکه روزهای برنامه: انجام‌شده نارنجی با تیک سفید، امروز با قاب آبی، روزهای آینده با آدمک عضله هدف و تعداد حرکت، استراحت با خط‌چین.</p>
+    <div class="stage stage--center"><div class="row" style="flex-wrap:wrap;gap:8px" data-insp="daytile">
+      <div class="daytile is-done"><span class="daytile__n">۱</span><span class="daytile__check"><svg class="ico"><use href="#i-check"/></svg></span><span class="daytile__lbl">بالاتنه</span><span class="daytile__meta">۶ حرکت</span></div>
+      <div class="daytile is-done"><span class="daytile__n">۲</span><span class="daytile__check"><svg class="ico"><use href="#i-check"/></svg></span><span class="daytile__lbl">پایین‌تنه</span><span class="daytile__meta">۶ حرکت</span></div>
+      <div class="daytile is-rest"><span class="daytile__n">۳</span><span class="emoji-tile emoji-tile--sm tint-neutral"><img src="emoji/sleeping.png" alt=""></span><span class="daytile__lbl">استراحت</span></div>
+      <div class="daytile is-today"><span class="daytile__n">۴</span><svg class="muscle-map mm--chest mm--delts" aria-hidden="true"><use href="#i-mm-front"/></svg><span class="daytile__lbl">سرشانه</span><span class="daytile__meta">امروز</span></div>
+      <div class="daytile"><span class="daytile__n">۵</span><svg class="muscle-map mm--lats mm--traps" aria-hidden="true"><use href="#i-mm-back"/></svg><span class="daytile__lbl">پشت</span><span class="daytile__meta">۶ حرکت</span></div>
+    </div></div></section>
+
+  <section class="sec-wrap" id="stattile"><h2 class="sec">کاشی آمار</h2>
+    <p class="sec-desc">یک عدد مهم با برچسب، هدف و نوار پیشرفت به رنگ همان بخش. عدد با Changa و ارقام جدولی.</p>
+    <div class="stage stage--sunk"><div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;width:360px;max-width:100%">
+      <div class="stat" data-insp="stattile"><div class="stat__head"><span class="emoji-tile emoji-tile--sm tint-calories"><img src="emoji/fire.png" alt=""></span>کالری</div><div class="stat__value"><b>۱٬۳۴۰</b><span>از ۲٬۵۰۰</span></div><div class="stat__bar"><i style="--p:54%;--c:var(--cat-calories)"></i></div><div class="stat__foot">۱٬۱۶۰ مانده</div></div>
+      <div class="stat" data-insp="stattile"><div class="stat__head"><span class="emoji-tile emoji-tile--sm tint-protein"><img src="emoji/poultry.png" alt=""></span>پروتئین</div><div class="stat__value"><b>۹۶</b><span>از ۱۸۰ گرم</span></div><div class="stat__bar"><i style="--p:53%;--c:var(--cat-protein)"></i></div><div class="stat__foot">۸۴ گرم مانده</div></div>
+    </div></div></section>
+
+  <section class="sec-wrap" id="linechart"><h2 class="sec">نمودار وزن</h2>
+    <p class="sec-desc">خط روند با سطح کم‌رنگ و برچسب عدد روی آخرین نقطه. زمان در جهت خواندن فارسی جریان دارد: قدیمی‌ترین در راست، جدیدترین در چپ. داده کم، پیام «داده کافی نیست» می‌گیرد.</p>
+    <div class="stage"><div class="card card--elevated" style="width:380px;max-width:100%" data-insp="linechart">
+      <div class="row" style="justify-content:space-between"><div class="row"><span class="emoji-tile emoji-tile--sm tint-neutral"><img src="emoji/scale.png" alt=""></span><span class="t-title-m">وزن</span></div><span class="t-body-s t-subtle">۴ هفته</span></div>
+      <svg class="chart" viewBox="0 0 330 170" role="img" aria-label="نمودار وزن ۲۸ روز: از ۱۱۵٫۳ به ۱۱۳٫۴ کیلوگرم" style="--c:var(--primary);margin-top:8px">
+        <line class="grid" x1="8" x2="288" y1="38.8" y2="38.8"/><line class="grid" x1="8" x2="288" y1="84.4" y2="84.4"/><line class="grid" x1="8" x2="288" y1="130" y2="130"/>
+        <text class="axis-label" x="326" y="43" text-anchor="end">۱۱۵</text><text class="axis-label" x="326" y="88.5" text-anchor="end">۱۱۴</text><text class="axis-label" x="326" y="134" text-anchor="end">۱۱۳</text>
+        <path class="area" d="M284,25.1 L250,43.4 L216,57 L182,57 L148,75.3 L114,89 L80,93.5 L46,107.2 L12,111.8 L12,130 L284,130 Z"/>
+        <polyline class="line" points="284,25.1 250,43.4 216,57 182,57 148,75.3 114,89 80,93.5 46,107.2 12,111.8"/>
+        <line x1="12" x2="12" y1="88" y2="105" stroke="var(--inverse-surface)" stroke-width="1.5" stroke-dasharray="2 3"/>
+        <circle class="dot" cx="12" cy="111.8" r="5"/>
+        <rect class="tip-bg" x="2" y="58" width="92" height="28" rx="14"/>
+        <text class="tip-text" x="48" y="77" text-anchor="middle">۱۱۳٫۴ کیلوگرم</text>
+        <text class="axis-label" x="284" y="156" text-anchor="middle">۱ مهر</text><text class="axis-label" x="148" y="156" text-anchor="middle">۱۴ مهر</text><text class="axis-label" x="16" y="156" text-anchor="middle">۲۸ مهر</text>
+      </svg>
+    </div></div></section>
+
+  <section class="sec-wrap" id="barchart"><h2 class="sec">نمودار کالری</h2>
+    <p class="sec-desc">ستون‌ها خاکستری، ستون امروز به رنگ بخش کالری با عدد برجسته، و خط‌چین هدف. روزهای آینده فقط برچسب دارند، نه ستون ساختگی.</p>
+    <div class="stage"><div class="card card--elevated" style="width:380px;max-width:100%" data-insp="barchart">
+      <div class="row" style="justify-content:space-between"><div class="row"><span class="emoji-tile emoji-tile--sm tint-calories"><img src="emoji/fire.png" alt=""></span><span class="t-title-m">کالری این هفته</span></div><span class="t-body-s t-subtle">هدف ۲٬۵۰۰</span></div>
+      <svg class="chart" viewBox="0 0 300 172" role="img" aria-label="کالری شنبه تا سه‌شنبه: ۲۳۸۰، ۲۵۱۰، ۲۲۹۰ و امروز تاکنون ۱۳۴۰" style="--c:var(--cat-calories);--c-ink:var(--plate-red-ink);margin-top:8px">
+        <line class="target" x1="4" x2="296" y1="48.3" y2="48.3"/>
+        <rect class="bar" x="262" y="52.7" width="26" height="87.3" rx="8"/><rect class="bar" x="222" y="48" width="26" height="92" rx="8"/><rect class="bar" x="182" y="56" width="26" height="84" rx="8"/><rect class="bar is-current" x="142" y="90.9" width="26" height="49.1" rx="8"/>
+        <text class="bar-label" x="275" y="45">۲۳۸۰</text><text class="bar-label" x="235" y="40">۲۵۱۰</text><text class="bar-label" x="195" y="48">۲۲۹۰</text><text class="bar-label is-current" x="155" y="83">۱۳۴۰</text>
+        <text class="axis-label" x="275" y="162" text-anchor="middle">ش</text><text class="axis-label" x="235" y="162" text-anchor="middle">ی</text><text class="axis-label" x="195" y="162" text-anchor="middle">د</text><text class="axis-label" x="155" y="162" text-anchor="middle" style="fill:var(--on-surface);font-weight:600">س</text><text class="axis-label" x="115" y="162" text-anchor="middle">چ</text><text class="axis-label" x="75" y="162" text-anchor="middle">پ</text><text class="axis-label" x="35" y="162" text-anchor="middle">ج</text>
+      </svg>
+    </div></div></section>
+
+  <section class="sec-wrap" id="journey"><h2 class="sec">مسیر بدن</h2>
+    <p class="sec-desc">شروع، اکنون و هدف با آدمک‌های خنثی؛ بدون برچسب «چاق» یا رنگ قرمز. پیشرفت به‌صورت درصد مسیر طی‌شده.</p>
+    <div class="stage stage--center"><div class="card card--elevated" style="width:360px;max-width:100%" data-insp="journey">
+      <div class="t-title-m">مسیر تا هدف</div>
+      <div class="journey" style="margin-top:12px;--p:11%">
+        <div class="journey__step"><svg aria-hidden="true"><use href="#i-body-start"/></svg><span class="journey__lbl">شروع، ۱ مهر</span><span class="journey__val">۱۱۵٫۰</span></div>
+        <div class="journey__step is-now"><svg aria-hidden="true"><use href="#i-body-now"/></svg><span class="journey__lbl">اکنون</span><span class="journey__val">۱۱۳٫۴</span></div>
+        <div class="journey__step is-goal"><svg aria-hidden="true"><use href="#i-body-goal"/></svg><span class="journey__lbl">هدف</span><span class="journey__val">زیر ۱۰۰</span></div>
+        <div class="journey__track" role="progressbar" aria-valuenow="11" aria-label="۱۱ درصد مسیر"><i></i></div>
+      </div>
+      <div class="t-body-s t-subtle">۱٫۶ کیلوگرم از ۱۵ کیلوگرم، حدود ۱۱٪ مسیر</div>
+    </div></div></section>
+
+  <section class="sec-wrap" id="stepper"><h2 class="sec">شمارنده وزنه و تکرار</h2>
+    <p class="sec-desc">برای ثبت ست با یک دست حین تمرین: دکمه‌های بزرگ، عدد درشت، گام وزنه از تنظیمات حرکت.</p>
+    <div class="stage stage--sunk"><div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;width:360px;max-width:100%">
+      <div class="stepper" data-insp="stepper"><div class="stepper__lbl">وزنه، کیلوگرم</div><div class="stepper__row"><button class="stepper__btn sl" type="button" aria-label="افزایش وزنه"><svg class="ico"><use href="#i-plus"/></svg></button><span class="stepper__val" aria-live="polite">۲۲٫۵</span><button class="stepper__btn sl" type="button" aria-label="کاهش وزنه"><svg class="ico"><use href="#i-minus"/></svg></button></div></div>
+      <div class="stepper" data-insp="stepper"><div class="stepper__lbl">تکرار</div><div class="stepper__row"><button class="stepper__btn sl" type="button" aria-label="افزایش تکرار"><svg class="ico"><use href="#i-plus"/></svg></button><span class="stepper__val" aria-live="polite">۱۰</span><button class="stepper__btn sl" type="button" aria-label="کاهش تکرار"><svg class="ico"><use href="#i-minus"/></svg></button></div></div>
+    </div></div></section>
+
+  <section class="sec-wrap" id="resttimer"><h2 class="sec">تایمر استراحت</h2>
+    <p class="sec-desc">حلقه شمارش معکوس به رنگ آبی آرام، با افزودن ۳۰ ثانیه و رد کردن.</p>
+    <div class="stage stage--sunk"><div class="rest" style="width:360px;max-width:100%" data-insp="resttimer" role="timer" aria-label="استراحت یک دقیقه و چهارده ثانیه">
+      <svg class="rest__ring" viewBox="0 0 64 64" aria-hidden="true"><circle class="trk" cx="32" cy="32" r="27"/><circle class="ind" cx="32" cy="32" r="27" stroke-dasharray="169.6" stroke-dashoffset="65"/></svg>
+      <div style="flex:1"><div class="t-body-s t-subtle">استراحت</div><div class="rest__time">۱:۱۴</div></div>
+      <button class="btn btn--tonal sl" type="button" style="padding:0 12px">+۳۰ ثانیه</button>
+      <button class="btn btn--text sl" type="button" style="padding:0 8px">رد کردن</button>
+    </div></div></section>
+
+  <section class="sec-wrap" id="setpill"><h2 class="sec">قرص ست</h2>
+    <p class="sec-desc">ست‌های یک حرکت در یک ردیف: ثبت‌شده سبز (لمس برای اصلاح)، فعلی آبی، باقی‌مانده با هدف تکرار.</p>
+    <div class="stage stage--center"><div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;width:360px;max-width:100%" data-insp="setpill">
+      <button class="setpill is-done sl" type="button" aria-label="ست ۱ ثبت شده"><span class="setpill__n">ست ۱ ✓</span><span class="setpill__v">۱۰×۱۸</span></button>
+      <button class="setpill is-current" type="button" aria-label="ست ۲ در حال ثبت"><span class="setpill__n">ست ۲</span><span class="setpill__v">الان</span></button>
+      <span class="setpill"><span class="setpill__n">ست ۳</span><span class="setpill__v">۱۲–۲۰</span></span>
+      <span class="setpill"><span class="setpill__n">ست ۴</span><span class="setpill__v">۱۲–۲۰</span></span>
+    </div></div></section>
+
+  <section class="sec-wrap" id="habitrow"><h2 class="sec">ردیف عادت</h2>
+    <p class="sec-desc">ایموجی عادت، نام، وضعیت، و دایره تیک سبز. سه حالت: انجام‌شده، انجام‌نشده (خط‌چین)، ثبت‌نشده. عادت خودکار قابل لمس نیست.</p>
+    <div class="stage stage--sunk"><div class="list" style="width:360px;max-width:100%" data-insp="habitrow">
+      <button class="li li--2 sl" type="button" aria-pressed="true"><span class="li__lead"><span class="emoji-tile tint-habits"><img src="emoji/walking.png" alt=""></span></span><span class="li__body"><span class="li__head">پیاده‌روی ۳۰ دقیقه</span><span class="li__sup">انجام شد</span></span><span class="habit-check is-done"><svg class="ico"><use href="#i-check"/></svg></span></button>
+      <button class="li li--2 sl" type="button" aria-pressed="false"><span class="li__lead"><span class="emoji-tile tint-habits"><img src="emoji/lotus.png" alt=""></span></span><span class="li__body"><span class="li__head">کشش ۵ دقیقه</span><span class="li__sup">انجام نشد، اشکالی ندارد</span></span><span class="habit-check is-missed"><svg class="ico"><use href="#i-check"/></svg></span></button>
+      <button class="li li--2 sl" type="button" aria-pressed="false"><span class="li__lead"><span class="emoji-tile tint-habits"><img src="emoji/cupstraw.png" alt=""></span></span><span class="li__body"><span class="li__head">بدون نوشیدنی شیرین</span><span class="li__sup">هنوز ثبت نشده</span></span><span class="habit-check"><svg class="ico"><use href="#i-check"/></svg></span></button>
+      <div class="li li--2"><span class="li__lead"><span class="emoji-tile tint-neutral"><img src="emoji/scale.png" alt=""></span></span><span class="li__body"><span class="li__head">ثبت وزن صبح</span><span class="li__sup">خودکار از بخش بدن</span></span><span class="habit-check is-done"><svg class="ico"><use href="#i-check"/></svg></span></div>
+    </div></div></section>
+
+  <section class="sec-wrap" id="watercups"><h2 class="sec">لیوان‌های آب</h2>
+    <p class="sec-desc">دوازده لیوان ۲۵۰ میلی‌لیتری تا هدف ۳ لیتر؛ با دکمه‌های ثبت سریع.</p>
+    <div class="stage stage--sunk"><div class="card card--elevated" style="width:360px;max-width:100%" data-insp="watercups">
+      <div class="row"><span class="emoji-tile tint-water"><img src="emoji/droplet.png" alt=""></span><span class="t-display-s" style="flex:1">۱٫۵ <span class="t-body-s t-subtle">از ۳ لیتر</span></span><button class="btn btn--tonal sl" type="button" style="padding:0 12px">+۲۵۰</button></div>
+      <div class="cups" style="margin-top:12px" role="img" aria-label="۶ لیوان از ۱۲"><i class="is-full"></i><i class="is-full"></i><i class="is-full"></i><i class="is-full"></i><i class="is-full"></i><i class="is-full"></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    </div></div></section>
+</main>
+</div>
+</div>
+
+<script>
+/* ===== Foundations data — names only; values are read LIVE from the current theme ===== */
+const COLOR_GROUPS=[
+ ['خانواده تعاملی (آبی) و پاداش (نارنجی)',['primary','on-primary','primary-container','on-primary-container','secondary','secondary-container','tertiary','tertiary-container','error','error-container','hero-band']],
+ ['سطوح و متن',['background','surface','surface-container-low','surface-container','surface-container-high','surface-container-highest','on-surface','on-surface-variant','subtle','outline','outline-variant','inverse-surface','inverse-on-surface','inverse-primary']],
+ ['رنگ بخش‌ها (فقط داده)',['plate-red','plate-orange','plate-yellow','plate-green','plate-blue','plate-indigo','plate-red-container','plate-orange-container','plate-yellow-container','plate-green-container','plate-blue-container','plate-indigo-container']],
+];
+const ON={'primary':'on-primary','secondary':'on-secondary','tertiary':'on-tertiary','error':'on-error','primary-container':'on-primary-container','secondary-container':'on-secondary-container','tertiary-container':'on-tertiary-container','error-container':'on-error-container','inverse-surface':'inverse-on-surface','hero-band':'on-hero-band','plate-red':'on-plate-red','plate-orange':'on-plate-orange','plate-yellow':'on-plate-yellow','plate-green':'on-plate-green','plate-blue':'on-plate-blue','plate-indigo':'on-plate-indigo','plate-red-container':'on-plate-red-container','plate-orange-container':'on-plate-orange-container','plate-yellow-container':'on-plate-yellow-container','plate-green-container':'on-plate-green-container','plate-blue-container':'on-plate-blue-container','plate-indigo-container':'on-plate-indigo-container'};
+function cssVar(n){return getComputedStyle(document.documentElement).getPropertyValue('--'+n).trim();}
+function renderColors(){
+  colorGrid.innerHTML=COLOR_GROUPS.map(([g,names])=>`<h4>${g}</h4>`+names.map(n=>{const on=ON[n];
+    return `<div class="sw"><div class="c" style="background:var(--${n});color:var(--${on||'on-surface'})">${on?'متن نمونه':''}</div><div class="m"><div class="n">--${n}</div><div class="v">${cssVar(n)}</div></div></div>`;}).join('')).join('');
+}
+const TYPE=[['t-display-l','Changa 600 / 56','۱۱۳٫۴'],['t-display-m','Changa 600 / 44','۵۱٪'],['t-display-s','Changa 600 / 34','۱٬۳۴۰'],
+ ['t-headline-l','Vazirmatn 600 / 30','گزارش هفتگی'],['t-headline-m','Vazirmatn 600 / 26','برنامه ۵ روزه'],['t-headline-s','Vazirmatn 600 / 22','تمرین سرشانه و سینه'],
+ ['t-title-l','Vazirmatn 600 / 20','کار بعدی، حوالی ظهر'],['t-title-m','Vazirmatn 500 / 16','عادت‌های امروز'],['t-title-s','Vazirmatn 500 / 14','پیشنهاد امروز'],
+ ['t-body-l','Vazirmatn 400 / 16','پروتئین در ۴ روز از ۶ روزِ ثبت‌شده کمتر از ۱۵۰ گرم بود.'],['t-body-m','Vazirmatn 400 / 14','ست سوم جلسه قبل به ۱۰ تکرار نرسید، پس وزنه ثابت می‌ماند.'],['t-body-s','Vazirmatn 400 / 12','امروز ۷:۴۰، ناشتا'],
+ ['t-label-l','Vazirmatn 500 / 14','ذخیره وزن'],['t-label-m','Vazirmatn 500 / 12','ست ۲ از ۳'],['t-label-s','Vazirmatn 500 / 12','USDA']];
+typeList.innerHTML=TYPE.map(([n,m,s])=>`<div class="typerow"><div class="tk">.${n}<br>${m}</div><div class="${n}">${s}</div></div>`).join('');
+const SPACING=[['sp-4',4],['sp-8 · gap-related',8],['sp-12',12],['sp-16 · gap-section · gutter',16],['sp-24',24],['sp-32 · gap-major',32],['sp-48 · target-min',48],['sp-64',64]];
+spacingList.innerHTML=SPACING.map(([n,v])=>`<div class="sprow"><div class="lbl">--${n} · ${v}</div><div class="bar" style="width:${v*3}px"></div></div>`).join('');
+const SHAPES=[['shape-xs',6],['shape-sm',10],['shape-md',16],['shape-lg',20],['shape-xl',28],['shape-full','999']];
+shapeList.innerHTML=SHAPES.map(([n,v])=>`<div class="cell"><div class="shape-box" style="border-radius:var(--${n})"></div><div class="spec">--${n} · ${v}</div></div>`).join('');
+elevList.innerHTML=[0,1,2,3,4,5].map(i=>`<div class="cell"><div class="elev-box" style="box-shadow:var(--elev-${i});border:1px solid var(--hairline)">--elev-${i}</div></div>`).join('');
+motionList.innerHTML=[['dur-short','150ms','تیک عادت، دکمه'],['dur-medium','300ms','برگه پایینی، پر شدن وزنه'],['dur-long','500ms','تغییر صفحه'],['ease-standard','cubic-bezier(.2,0,0,1)','پیش‌فرض'],['ease-emphasized-decel','cubic-bezier(.05,.7,.1,1)','ورود برگه‌ها'],['ease-spring','cubic-bezier(.34,1.4,.5,1)','تیک با کمی فنر']]
+ .map(([n,v,d])=>`<div class="cell cell--start" style="width:200px"><div class="spec">--${n}</div><div class="t-label-l">${d}</div><div class="spec">${v}</div></div>`).join('');
+const ICONS=['home','dumbbell','utensils','body','habits','settings','menu','back','chevron-right','chevron-left','chevron-down','more-v','search','close','check','plus','minus','edit','trash','copy','swap','share','download','upload','refresh','filter','grip','play','pause','timer','clock','calendar','history','bell','droplet','flame','moon','sun','scale','ruler','chart','trend-down','target','bolt','book','star','camera','image','user','lock','shield','cloud-off','eye','info','alert','list'];
+const DIR=new Set(['back','chevron-right','chevron-left']);
+iconGrid.innerHTML=ICONS.map(n=>`<div class="it"><svg class="ico ico--lg${DIR.has(n)?' ico--dir':''}"><use href="#i-${n}"/></svg><div class="nm">i-${n}</div></div>`).join('');
+const EMOJI=[['lifting','تمرین','training'],['fire','کالری','calories'],['poultry','پروتئین','protein'],['droplet','آب','water'],['sleeping','خواب','sleep'],['check','عادت‌ها','habits'],['scale','وزن','neutral'],['ruler','اندازه‌ها','neutral'],['walking','پیاده‌روی','habits'],['lotus','کشش','habits'],['cupstraw','نوشیدنی شیرین','habits'],['plate','وعده','calories'],['salad','سالاد','habits'],['apple','تغذیه','training'],['rice','برنج','neutral'],['egg','تخم‌مرغ','neutral'],['milk','لبنیات','water'],['bread','نان','calories'],['biceps','رکورد شخصی','training'],['trophy','پیشرفت هفته','protein'],['stopwatch','زمان','neutral'],['bullseye','پیشنهاد امروز','training'],['bulb','دلیل پیشنهاد','protein'],['chartup','روند','habits'],['barchart','گزارش','neutral'],['calendar','برنامه','neutral'],['bell','یادآوری','protein'],['camera','عکس پیشرفت','neutral'],['lock','حریم خصوصی','neutral'],['floppy','پشتیبان','neutral'],['house','تمرین خانگی','neutral'],['bolt','نسخه حداقلی','protein'],['wave','خوش‌آمد','protein'],['sparkles','تازه','sleep'],['moon','پوسته تیره','sleep'],['sun','پوسته روشن','protein'],['cool','کیفیت: خوب','protein'],['neutral','کیفیت: متوسط','neutral'],['persevering','کیفیت: سخت','training'],['shoe','فعالیت','water'],['rocket','شروع دوباره','water'],['muscle_flag','پایان جلسه','neutral']];
+emojiGrid.innerHTML=EMOJI.map(([f,l,t])=>`<div class="it"><span class="emoji-tile tint-${t}"><img src="emoji/${f}.png" alt=""></span><div class="nm">${l}</div></div>`).join('');
+
+/* Jalali date picker grid: Mehr 1405 starts on Wednesday (index 4 with Saturday first) */
+(function(){const fa=n=>String(n).replace(/\d/g,d=>'۰۱۲۳۴۵۶۷۸۹'[d]);
+ const wd=['ش','ی','د','س','چ','پ','ج'];let h=wd.map(w=>`<div class="datepicker__wd">${w}</div>`).join('');
+ [28,29,30,31].forEach(d=>h+=`<div class="datepicker__day is-out">${fa(d)}</div>`);
+ const dots=new Set([1,2,4,5,6,8,9,11,12,13,15,16,18,19,20,22,23,25,26]);
+ for(let d=1;d<=30;d++){const c=['datepicker__day'];if(d===28)c.push('is-selected','is-today');if(dots.has(d))c.push('has-dot');h+=`<button type="button" class="${c.join(' ')}" aria-label="${fa(d)} مهر"${d===28?' aria-current="date"':''}>${fa(d)}</button>`;}
+ h+=`<div class="datepicker__day is-out">${fa(1)}</div>`;dpGrid.innerHTML=h;
+ const dial=document.getElementById('tpDial');for(let i=1;i<=12;i++){const a=(i*30-90)*Math.PI/180;const x=128+104*Math.cos(a),y=128+104*Math.sin(a);
+  const s=document.createElement('span');s.textContent=fa(i===12?12:i);s.style.left=x+'px';s.style.top=y+'px';if(i===12)s.className='is-sel';dial.appendChild(s);}
+})();
+
+/* ===== SPECS — one entry per component (drives Inspector + Copy-as-prompt) =====
+   token entry: {r:role, n:token, v:'light / dark', c:'var(--token)' for a live swatch} */
+const T=(r,n)=>({r,n,get v(){return cssVar(n);},c:`var(--${n})`});
+const SPECS={
+ button:{name:'Button',file:'ui/components/FitButton.kt',desc:'Common buttons: elevated / filled / filled-tonal / outlined / text, sizes md (48) and lg (56, in-workout actions). One filled (electric blue) button per screen = the main action. Inverse + inverse-outlined variants sit on the navy hero card.',
+  props:[{n:'text',t:'String'},{n:'onClick',t:'() -> Unit'},{n:'variant',t:'Elevated|Filled|Tonal|Outlined|Text|Inverse|InverseOutlined',def:'Filled'},{n:'size',t:'Md|Lg',def:'Md'},{n:'leadingIcon',t:'ImageVector?'},{n:'enabled',t:'Boolean',def:'true'},{n:'fillWidth',t:'Boolean',def:'false'}],
+  tokens:[T('filled container','primary','#111418 / #F2F4F7'),T('filled label','on-primary','#FFFFFF / #0E1013'),T('tonal container','secondary-container','#E8EAEE / #2A2F37'),T('outline','outline','#878E9A / #6B7380'),{r:'label type',n:'t-label-l',v:'Vazirmatn 500 / 15'},{r:'disabled',n:'on-surface @38% on 10% fill',v:'M3 rule'}],
+  metrics:[['radius','--shape-md 16 (lg: 20)'],['minHeight','48 (lg: 56)'],['padding','h 20 (text: 12)'],['icon','18, gap 8'],['states','hover .08 · focus .10 + ring · pressed .10']]},
+ iconbutton:{name:'Icon button',file:'ui/components/FitIconButton.kt',desc:'Standard / filled / tonal / outlined icon buttons with a 48dp target and a 40dp face. Toggle mode switches selected/unselected (e.g. favourite food).',
+  props:[{n:'icon',t:'ImageVector'},{n:'contentDescription',t:'String',d:'Persian label, required'},{n:'variant',t:'Standard|Filled|Tonal|Outlined',def:'Standard'},{n:'checked',t:'Boolean?',d:'non-null = toggle'},{n:'enabled',t:'Boolean',def:'true'}],
+  tokens:[T('filled face','primary','#111418 / #F2F4F7'),T('tonal face','secondary-container','#E8EAEE / #2A2F37'),T('standard icon','on-surface-variant','#4A515C / #B4BBC6'),T('selected outlined','inverse-surface','#2A2F37 / #E4E6EA')],
+  metrics:[['target','48'],['face','40, --shape-full'],['icon','24']]},
+ fab:{name:'FAB',file:'ui/components/FitFab.kt',desc:'Floating action button for the one key action of a screen (quick log). Regular 56, small 40, large 96, extended with label. Tonal variant for secondary placements (nav rail).',
+  props:[{n:'icon',t:'ImageVector'},{n:'text',t:'String?',d:'non-null = extended'},{n:'size',t:'Small|Regular|Large',def:'Regular'},{n:'tonal',t:'Boolean',def:'false'},{n:'onClick',t:'() -> Unit'}],
+  tokens:[T('container','primary','#111418 / #F2F4F7'),T('content','on-primary','#FFFFFF / #0E1013'),T('tonal container','surface-container-high','#E8EAEE / #22262D'),{r:'elevation',n:'elev-3',v:'soft shadow / tonal'}],
+  metrics:[['size','40 / 56 / 96'],['radius','10 / 16 / 28'],['extended','h 56, padding 16–20']]},
+ segmented:{name:'Segmented button',file:'ui/components/FitSegmented.kt',desc:'Two to five related options in one outlined row. Single-select (session variant: gym / home / minimal) or multi-select (meal filter). Selected segments show a check and a tonal fill.',
+  props:[{n:'options',t:'List<String>'},{n:'selected',t:'Set<Int>'},{n:'multi',t:'Boolean',def:'false'},{n:'onChange',t:'(Set<Int>) -> Unit'}],
+  tokens:[T('selected fill','secondary-container','#E8EAEE / #2A2F37'),T('selected text','on-secondary-container','#111418 / #F2F4F7'),T('border','outline','#878E9A / #6B7380')],
+  metrics:[['height','40'],['radius','--shape-full'],['segment padding','h 16'],['check icon','18']]},
+ badge:{name:'Badge',file:'ui/components/FitBadge.kt',desc:'Small dot (something new) or large number (count) anchored to an icon’s top end corner. Never used to shame or nag.',
+  props:[{n:'count',t:'Int?',d:'null = dot'},{n:'content',t:'@Composable () -> Unit',d:'the anchor'}],
+  tokens:[T('fill','error','#B42318 / #FF8A80'),T('text','on-error','#FFFFFF / #2A0805'),{r:'number type',n:'Changa 500 / 12',v:'tabular'}],
+  metrics:[['dot','6'],['large','min 16 high, padding h 4'],['offset','top-end of anchor']]},
+ progress:{name:'Progress indicator',file:'ui/components/FitProgress.kt',desc:'Linear and circular, determinate and indeterminate. Daily-goal progress uses the module’s plate colour (protein = yellow plate, water = blue plate).',
+  props:[{n:'progress',t:'Float?',d:'null = indeterminate'},{n:'shape',t:'Linear|Circular',def:'Linear'},{n:'color',t:'Color',def:'primary'}],
+  tokens:[T('indicator','primary','#111418 / #F2F4F7'),T('track','track','#E8EAEE / #2A2F37'),T('protein','plate-yellow','#F2B705 / #FFCB45'),T('water','plate-blue','#1F5BD8 / #6E97FF')],
+  metrics:[['linear height','4 (stat bars 6)'],['circular','48, stroke 4'],['indeterminate','1.4s standard ease; reduced-motion = static']]},
+ snackbar:{name:'Snackbar',file:'ui/components/FitSnackbar.kt',desc:'Short confirmation after an action, optionally with Undo. Inverse surface. Text states what happened (\"Set 2 logged\").',
+  props:[{n:'message',t:'String'},{n:'actionLabel',t:'String?'},{n:'onAction',t:'(() -> Unit)?'}],
+  tokens:[T('container','inverse-surface','#2A2F37 / #E4E6EA'),T('text','inverse-on-surface','#F2F4F7 / #111418'),T('action','inverse-primary','#9DBBFF / #1F5BD8')],
+  metrics:[['minHeight','48'],['radius','--shape-sm 10'],['maxWidth','360']]},
+ tooltip:{name:'Tooltip',file:'ui/components/FitTooltip.kt',desc:'Plain tooltip labels an icon; rich tooltip explains a concept (e.g. RIR) with an optional action.',
+  props:[{n:'text',t:'String'},{n:'title',t:'String?',d:'rich only'},{n:'action',t:'Pair<String, () -> Unit>?'}],
+  tokens:[T('plain fill','inverse-surface','#2A2F37 / #E4E6EA'),T('rich fill','surface-container','#F1F2F4 / #1A1D23'),T('rich body','on-surface-variant','#4A515C / #B4BBC6')],
+  metrics:[['plain radius','6, padding 4×8'],['rich radius','16, padding 12×16, max 280']]},
+ card:{name:'Card',file:'ui/components/FitCard.kt',desc:'Elevated (main content, hairline + soft shadow), filled (quiet grouping), outlined (selectable lists). Navy (inverse) hero card is for rare special emphasis.',
+  props:[{n:'variant',t:'Elevated|Filled|Outlined|Ink',def:'Elevated'},{n:'hero',t:'Boolean',def:'false',d:'radius 28, padding 20'},{n:'onClick',t:'(() -> Unit)?'},{n:'content',t:'@Composable ColumnScope.() -> Unit'}],
+  tokens:[T('elevated','surface','#FFFFFF / #16191E'),{r:'edge',n:'hairline',v:'ink 8% / white 8%'},{r:'elevation',n:'elev-2',v:'shadow < .08 / tonal + edge light'},T('filled','surface-container-high','#E8EAEE / #22262D'),T('ink hero','inverse-surface','#2A2F37 / #E4E6EA')],
+  metrics:[['radius','--shape-lg 20 (hero 28)'],['padding','16 (hero 20)']]},
+ carousel:{name:'Carousel',file:'ui/components/FitCarousel.kt',desc:'Horizontal multi-browse list (progress photos, saved meals). The trailing item shrinks to signal more. Image slots are labelled placeholders until real photos exist.',
+  props:[{n:'items',t:'List<T>'},{n:'itemWidth',t:'Dp',def:'180.dp'},{n:'content',t:'@Composable (T) -> Unit'}],
+  tokens:[T('placeholder','surface-container-high','#E8EAEE / #22262D')],
+  metrics:[['radius','--shape-xl 28'],['gap','8'],['snap','start']]},
+ divider:{name:'Divider',file:'ui/components/FitDivider.kt',desc:'Full-width between sections, inset inside lists (16, or 72 after a leading element).',
+  props:[{n:'inset',t:'None|Start|AfterLeading',def:'None'}],tokens:[T('line','outline-variant','#DDE0E5 / #2E333B')],metrics:[['thickness','1'],['inset','16 / 72']]},
+ list:{name:'List item',file:'ui/components/FitListItem.kt',desc:'One-, two- and three-line rows with a leading element (icon, emoji tile, avatar) and trailing element (text, switch, checkbox, chevron). Lists sit on an L1 surface with hairline dividers.',
+  props:[{n:'headline',t:'String'},{n:'supporting',t:'String?'},{n:'overline',t:'String?'},{n:'leading',t:'@Composable (() -> Unit)?'},{n:'trailing',t:'@Composable (() -> Unit)?'},{n:'onClick',t:'(() -> Unit)?'}],
+  tokens:[T('surface','surface','#FFFFFF / #16191E'),T('headline','on-surface','#111418 / #F2F4F7'),T('supporting','on-surface-variant','#4A515C / #B4BBC6'),{r:'divider',n:'hairline',v:'8%'}],
+  metrics:[['height','56 / 72 / 88'],['padding','h 16'],['gap','16'],['list radius','20']]},
+ sheet:{name:'Bottom sheet',file:'ui/components/FitBottomSheet.kt',desc:'Standard sheet stays beside content; modal sheet over a scrim for quick logs (weight, food amount, sleep). Drag handle on top.',
+  props:[{n:'modal',t:'Boolean',def:'true'},{n:'onDismiss',t:'() -> Unit'},{n:'content',t:'@Composable ColumnScope.() -> Unit'}],
+  tokens:[T('container','surface-container-low','#F8F9FA / #13161A'),T('scrim','scrim','ink 45% / black 60%'),T('handle','outline','#878E9A / #6B7380')],
+  metrics:[['top radius','28'],['handle','32×4'],['padding','8 16 24']]},
+ dialog:{name:'Dialog',file:'ui/components/FitDialog.kt',desc:'Basic dialog confirms irreversible actions (named action, e.g. \"Delete set\"). Full-screen dialog for multi-field forms (body measurements).',
+  props:[{n:'title',t:'String'},{n:'body',t:'String'},{n:'icon',t:'ImageVector?'},{n:'confirm',t:'Pair<String, () -> Unit>'},{n:'dismiss',t:'Pair<String, () -> Unit>'},{n:'destructive',t:'Boolean',def:'false'},{n:'fullScreen',t:'Boolean',def:'false'}],
+  tokens:[T('container','surface-container-high','#E8EAEE / #22262D'),T('title','on-surface','#111418 / #F2F4F7'),T('body','on-surface-variant','#4A515C / #B4BBC6'),T('destructive action','error','#B42318 / #FF8A80')],
+  metrics:[['radius','28'],['padding','24'],['maxWidth','340'],['title','22/600 centred']]},
+ appbar:{name:'Top app bar',file:'ui/components/FitTopAppBar.kt',desc:'Center-aligned (Home), small (regular screens), medium and large (section roots; collapse to small on scroll and take surface-container).',
+  props:[{n:'title',t:'String'},{n:'variant',t:'Center|Small|Medium|Large',def:'Small'},{n:'navigationIcon',t:'@Composable (() -> Unit)?'},{n:'actions',t:'@Composable RowScope.() -> Unit'},{n:'scrolled',t:'Boolean',def:'false'}],
+  tokens:[T('container','surface','#FFFFFF / #16191E'),T('scrolled','surface-container','#F1F2F4 / #1A1D23'),T('title','on-surface','#111418 / #F2F4F7')],
+  metrics:[['height','64 (medium 112, large 152)'],['title','20/500 · 24/600 · 30/600'],['back icon','mirrors in RTL']]},
+ navbar:{name:'Navigation bar',file:'ui/components/FitNavigationBar.kt',desc:'Five primary destinations: Home, Training, Nutrition, Body, Habits. Active destination gets a blue pill indicator; labels always visible.',
+  props:[{n:'items',t:'List<NavItem>'},{n:'selected',t:'Int'},{n:'onSelect',t:'(Int) -> Unit'}],
+  tokens:[T('container','surface-container','#F1F2F4 / #1A1D23'),T('indicator','primary','#111418 / #F2F4F7'),T('active icon','on-primary','#FFFFFF / #0E1013'),T('inactive','on-surface-variant','#4A515C / #B4BBC6')],
+  metrics:[['height','80'],['indicator','64×32 pill'],['label','12/500']]},
+ navrail:{name:'Navigation rail',file:'ui/components/FitNavigationRail.kt',desc:'Vertical navigation for landscape/tablet with an optional tonal FAB on top.',
+  props:[{n:'items',t:'List<NavItem>'},{n:'selected',t:'Int'},{n:'fab',t:'@Composable (() -> Unit)?'}],
+  tokens:[T('container','surface','#FFFFFF / #16191E'),T('indicator','primary','#111418 / #F2F4F7')],metrics:[['width','80'],['indicator','56×32'],['item gap','12']]},
+ drawer:{name:'Navigation drawer',file:'ui/components/FitNavigationDrawer.kt',desc:'Standard and modal drawer for less frequent destinations (reports, history, backup, settings). Active item uses a tonal pill.',
+  props:[{n:'sections',t:'List<DrawerSection>'},{n:'selected',t:'String'},{n:'modal',t:'Boolean',def:'true'}],
+  tokens:[T('container','surface-container-low','#F8F9FA / #13161A'),T('active','secondary-container','#E8EAEE / #2A2F37'),T('scrim','scrim','45% / 60%')],
+  metrics:[['width','300'],['item height','56, pill'],['end radius','20 (start side in RTL)']]},
+ tabs:{name:'Tabs',file:'ui/components/FitTabs.kt',desc:'Primary tabs for peer views of one screen (weight / measurements / photos), secondary for ranges (4 weeks / 12 weeks / all). Scrollable when many (muscle groups).',
+  props:[{n:'tabs',t:'List<TabItem>'},{n:'selected',t:'Int'},{n:'variant',t:'Primary|Secondary',def:'Primary'},{n:'scrollable',t:'Boolean',def:'false'}],
+  tokens:[T('indicator','primary','#111418 / #F2F4F7'),T('inactive label','on-surface-variant','#4A515C / #B4BBC6'),T('divider','outline-variant','#DDE0E5 / #2E333B')],
+  metrics:[['height','48 (primary w/ icon 64)'],['indicator','3 tall, rounded top (secondary 2)']]},
+ search:{name:'Search',file:'ui/components/FitSearch.kt',desc:'Search bar (foods, exercises) expanding into a full search view with recent and suggested results.',
+  props:[{n:'query',t:'String'},{n:'onQueryChange',t:'(String) -> Unit'},{n:'expanded',t:'Boolean'},{n:'results',t:'@Composable ColumnScope.() -> Unit'}],
+  tokens:[T('bar','surface-container-high','#E8EAEE / #22262D'),T('placeholder','subtle','#5E6571 / #9AA1AD'),T('text','on-surface','#111418 / #F2F4F7')],
+  metrics:[['height','56'],['radius','full (view 28)']]},
+ menu:{name:'Menu',file:'ui/components/FitMenu.kt',desc:'Dropdown for secondary actions on an item. Destructive item last, separated, in error colour.',
+  props:[{n:'items',t:'List<MenuItem>'},{n:'expanded',t:'Boolean'},{n:'onDismiss',t:'() -> Unit'}],
+  tokens:[T('container','surface-container','#F1F2F4 / #1A1D23'),T('icon','on-surface-variant','#4A515C / #B4BBC6'),T('destructive','error','#B42318 / #FF8A80'),{r:'elevation',n:'elev-2',v:''}],
+  metrics:[['minWidth','200'],['item height','48'],['radius','10']]},
+ checkbox:{name:'Checkbox',file:'ui/components/FitCheckbox.kt',desc:'Unchecked / checked / indeterminate, plus error and disabled. 48dp target.',
+  props:[{n:'state',t:'ToggleableState'},{n:'onClick',t:'(() -> Unit)?'},{n:'isError',t:'Boolean',def:'false'},{n:'enabled',t:'Boolean',def:'true'}],
+  tokens:[T('checked box','primary','#111418 / #F2F4F7'),T('check','on-primary','#FFFFFF / #0E1013'),T('unchecked border','on-surface-variant','#4A515C / #B4BBC6'),T('error','error','#B42318 / #FF8A80')],
+  metrics:[['box','20, radius 6, border 2'],['target','48']]},
+ chips:{name:'Chips',file:'ui/components/FitChip.kt',desc:'Assist (related action), filter (muscle group / meal, check when selected), input (selected equipment with remove), suggestion (smart shortcuts like \"copy yesterday’s lunch\").',
+  props:[{n:'label',t:'String'},{n:'type',t:'Assist|Filter|Input|Suggestion'},{n:'selected',t:'Boolean',def:'false'},{n:'leading',t:'@Composable (() -> Unit)?'},{n:'onRemove',t:'(() -> Unit)?'},{n:'enabled',t:'Boolean',def:'true'}],
+  tokens:[T('border','outline-variant','#DDE0E5 / #2E333B'),T('selected fill','secondary-container','#E8EAEE / #2A2F37'),T('label','on-surface-variant','#4A515C / #B4BBC6')],
+  metrics:[['height','32'],['radius','--shape-sm 10'],['icon','18'],['gap','8']]},
+ radio:{name:'Radio button',file:'ui/components/FitRadio.kt',desc:'Single choice among a few options (weight unit).',
+  props:[{n:'selected',t:'Boolean'},{n:'onClick',t:'(() -> Unit)?'},{n:'enabled',t:'Boolean',def:'true'}],
+  tokens:[T('selected','primary','#111418 / #F2F4F7'),T('unselected','on-surface-variant','#4A515C / #B4BBC6')],metrics:[['ring','20, border 2'],['dot','10'],['target','48']]},
+ switch:{name:'Switch',file:'ui/components/FitSwitch.kt',desc:'On/off settings (app lock, screenshot block). In RTL the on position is on the left. Selected thumb shows a check.',
+  props:[{n:'checked',t:'Boolean'},{n:'onCheckedChange',t:'((Boolean) -> Unit)?'},{n:'enabled',t:'Boolean',def:'true'}],
+  tokens:[T('track on','primary','#111418 / #F2F4F7'),T('thumb on','on-primary','#FFFFFF / #0E1013'),T('track off','surface-container-highest','#E1E4E8 / #2A2F37'),T('thumb/border off','outline','#878E9A / #6B7380')],
+  metrics:[['track','52×32'],['thumb','16 off · 24 on'],['motion','--ease-spring 150ms']]},
+ slider:{name:'Slider',file:'ui/components/FitSlider.kt',desc:'Continuous (rest time), discrete (RIR 0–4 with ticks), range (calorie band). M3-expressive handle: a 4dp bar with a value label above while dragging.',
+  props:[{n:'value',t:'Float | ClosedFloatingPointRange<Float>'},{n:'valueRange',t:'ClosedFloatingPointRange<Float>'},{n:'steps',t:'Int',def:'0'},{n:'onValueChange',t:'(…) -> Unit'}],
+  tokens:[T('active','primary','#111418 / #F2F4F7'),T('inactive','secondary-container','#E8EAEE / #2A2F37'),T('label','inverse-surface','#2A2F37 / #E4E6EA')],
+  metrics:[['track','16, full radius'],['handle','4×44'],['target','44']]},
+ datepicker:{name:'Date picker (Jalali)',file:'ui/components/FitDatePicker.kt',desc:'Persian (Solar Hijri) calendar, week starts Saturday. Today ringed, selection filled, training days marked with an orange dot. Dates are stored as epochDay; Jalali is display only.',
+  props:[{n:'selected',t:'LocalDate'},{n:'onSelect',t:'(LocalDate) -> Unit'},{n:'markedDays',t:'Set<LocalDate>',def:'emptySet()'},{n:'firstDayOfWeek',t:'DayOfWeek',def:'SATURDAY'}],
+  tokens:[T('container','surface-container-high','#E8EAEE / #22262D'),T('selected','primary','#111418 / #F2F4F7'),T('today ring','primary',''),T('mark','plate-orange')],
+  metrics:[['width','328'],['day','40 circle'],['radius','28']]},
+ timepicker:{name:'Time picker',file:'ui/components/FitTimePicker.kt',desc:'24-hour time for reminders: hour/minute fields + dial, Persian numerals. The time display stays LTR (hh:mm).',
+  props:[{n:'hour',t:'Int'},{n:'minute',t:'Int'},{n:'onChange',t:'(Int, Int) -> Unit'}],
+  tokens:[T('container','surface-container-high','#E8EAEE / #22262D'),T('active field','primary-container','#E8EAEE / #2A2F37'),T('dial','surface-container-highest','#E1E4E8 / #2A2F37'),T('hand & selection','primary','#111418 / #F2F4F7')],
+  metrics:[['field','96×72, Changa 44'],['dial','256'],['radius','28']]},
+ textfield:{name:'Text field',file:'ui/components/FitTextField.kt',desc:'Filled and outlined; empty / focused / filled / error / disabled; floating label, helper or error text, leading icon, trailing icon or unit suffix. Accepts Persian, Arabic and Latin digits; validates on blur; errors say how to fix.',
+  props:[{n:'value',t:'String'},{n:'onValueChange',t:'(String) -> Unit'},{n:'label',t:'String'},{n:'variant',t:'Filled|Outlined',def:'Outlined'},{n:'supportingText',t:'String?'},{n:'isError',t:'Boolean',def:'false'},{n:'suffix',t:'String?',d:'unit, e.g. کیلوگرم'},{n:'leadingIcon',t:'ImageVector?'},{n:'keyboard',t:'KeyboardType',def:'Text (Decimal for numbers)'}],
+  tokens:[T('filled container','surface-container-highest','#E1E4E8 / #2A2F37'),T('outline','outline','#878E9A / #6B7380'),T('focus','primary','#111418 / #F2F4F7'),T('error','error','#B42318 / #FF8A80'),T('label','on-surface-variant','#4A515C / #B4BBC6')],
+  metrics:[['height','56'],['radius','filled 6 top · outlined 10'],['focus border','2'],['supporting','12']]},
+ emojitile:{name:'Emoji tile',file:'ui/fitos/EmojiTile.kt',desc:'Identity of a module or habit: a Fluent 3D emoji (MIT) on a squircle tinted with the module’s plate container. Floating variant (rotated, soft shadow) only for welcome and empty states. Content only — never a button icon.',
+  props:[{n:'emoji',t:'FitEmoji',d:'bundled PNG asset'},{n:'size',t:'Sm32|Md44|Lg64|Xl96',def:'Md44'},{n:'tint',t:'Category?'},{n:'floating',t:'Boolean',def:'false'},{n:'rotation',t:'Float',def:'-8f'}],
+  tokens:[T('training tint','plate-red-container','#FDECEA / #3A1F1D'),T('water tint','plate-blue-container','#E8EFFC / #1C2741'),T('neutral tint','surface-container-high','#E8EAEE / #22262D'),{r:'float elevation',n:'elev-4',v:''}],
+  metrics:[['radius','32% of size (squircle)'],['image','66%'],['sizes','32 / 44 / 64 / 96']]},
+ musclemap:{name:'Muscle map',file:'ui/fitos/MuscleMap.kt',desc:'Original front/back body pictogram with 14 regions (delts, chest, biceps, forearms, abs, obliques, quads, calves, traps, lats, triceps, lower back, glutes, hamstrings). Target muscles fill with the training colour (orange) + white hatch; secondary muscles at 45%.',
+  props:[{n:'side',t:'Front|Back'},{n:'primary',t:'Set<Muscle>'},{n:'secondary',t:'Set<Muscle>',def:'emptySet()'},{n:'width',t:'Dp',def:'96.dp'}],
+  tokens:[T('body','mm-body','#E1E4E8 / #2A2F37'),T('muscle','mm-muscle','#CDD2D9 / #3A404A'),T('highlight','plate-orange'),{r:'hatch',n:'white 45%, 45°, 4px',v:''}],
+  metrics:[['viewBox','120×240 (1:2)'],['sizes','26 (day tile) · 56 · 96–120']]},
+ platemeter:{name:'Plate meter',file:'ui/fitos/PlateMeter.kt',desc:'Signature: today’s six goals as plates on a barbell, mirrored on both sleeves. Each plate fills bottom-up with its goal ratio (capped at 100%). Unlogged stays empty — never assumed done. Animates fill on change (300ms).',
+  props:[{n:'goals',t:'List<GoalProgress>',d:'category + ratio 0..1, in collar→outer order'},{n:'contentDescription',t:'String'}],
+  tokens:[T('empty plate','track','#E8EAEE / #2A2F37'),T('bar steel','steel','#C5CAD2 / #4A515C'),T('collar','steel-dark','#9AA1AD / #646C78'),T('training','plate-orange'),T('calories','plate-red'),T('protein','plate-yellow',''),T('water','plate-blue',''),T('sleep','plate-indigo',''),T('habits','plate-green','')],
+  metrics:[['plate','15 wide, 108/108/100/100/92/84 tall, radius 5'],['gap','3'],['shaft','≤84×7'],['height','120']]},
+ daytile:{name:'Day tile',file:'ui/fitos/DayTile.kt',desc:'One day of the program grid. Done = reward orange + white check; today = blue frame; upcoming = mini muscle map + focus + exercise count; rest = dashed.',
+  props:[{n:'dayNumber',t:'Int'},{n:'state',t:'Done|Today|Upcoming|Rest'},{n:'focus',t:'String'},{n:'muscles',t:'Set<Muscle>'},{n:'exerciseCount',t:'Int?'}],
+  tokens:[T('done','plate-orange'),T('done text','on-plate-orange'),T('upcoming','surface-container','#F1F2F4 / #1A1D23'),T('today frame','primary','')],
+  metrics:[['size','64 × ≥112'],['radius','16'],['number','Changa 600 / 22']]},
+ stattile:{name:'Stat tile',file:'ui/fitos/StatTile.kt',desc:'One key number with label, target and a progress bar in the module’s plate colour. Number in Changa, tabular figures.',
+  props:[{n:'emoji',t:'FitEmoji'},{n:'label',t:'String'},{n:'value',t:'String'},{n:'target',t:'String'},{n:'progress',t:'Float'},{n:'category',t:'Category'},{n:'footnote',t:'String?'}],
+  tokens:[T('surface','surface','#FFFFFF / #16191E'),T('number','on-surface',''),T('bar track','track',''),T('calories bar','plate-red')],
+  metrics:[['radius','20'],['padding','16'],['number','Changa 600 / 30'],['bar','6']]},
+ linechart:{name:'Weight chart',file:'ui/fitos/WeightChart.kt',desc:'Trend line with a 10% area, horizontal gridlines, end dot and an inverse tooltip pill. Time flows in Persian reading direction (oldest right, newest left). Fewer than 3 weigh-ins in 7 days → \"not enough data\" state.',
+  props:[{n:'points',t:'List<WeightPoint>'},{n:'range',t:'Weeks4|Weeks12|All'},{n:'goal',t:'Float?'}],
+  tokens:[T('line & area','primary','#111418 / #F2F4F7'),T('grid','outline-variant','#DDE0E5 / #2E333B'),T('axis text','subtle','#5E6571 / #9AA1AD'),T('tooltip','inverse-surface','')],
+  metrics:[['stroke','2.5'],['area','10%'],['dot','r5 ring'],['tooltip','pill 28 high']]},
+ barchart:{name:'Calorie chart',file:'ui/fitos/CalorieChart.kt',desc:'Week bars in neutral; today in the calorie plate with a bold value; dashed target line. Future days show only a label — no invented bars.',
+  props:[{n:'days',t:'List<DayKcal?>'},{n:'today',t:'Int'},{n:'target',t:'Int'}],
+  tokens:[T('bars','surface-container-highest','#E1E4E8 / #2A2F37'),T('today','plate-red'),T('today value','plate-red-ink'),T('target line','on-surface-variant','')],
+  metrics:[['bar','26 wide, radius 8'],['step','40'],['target','dashed 4/4']]},
+ journey:{name:'Body journey',file:'ui/fitos/BodyJourney.kt',desc:'Start → now → goal as neutral pictograms with a % of the way covered. Deliberately avoids BMI colour scales and \"obese\" labelling.',
+  props:[{n:'start',t:'Float'},{n:'now',t:'Float'},{n:'goal',t:'Float'},{n:'startDate',t:'LocalDate'}],
+  tokens:[T('start','surface-container-highest',''),T('now','primary',''),T('goal outline','outline',''),T('track','track','')],
+  metrics:[['figure','44×96'],['track','6, full radius']]},
+ stepper:{name:'Number stepper',file:'ui/fitos/NumberStepper.kt',desc:'Weight / reps entry during a set: big +/− (48×52) and a 34sp Changa value. Weight step comes from the exercise setting (1, 2, 2.5, 5 kg).',
+  props:[{n:'label',t:'String'},{n:'value',t:'Float'},{n:'step',t:'Float'},{n:'onChange',t:'(Float) -> Unit'},{n:'min',t:'Float',def:'0f'}],
+  tokens:[T('surface','surface',''),T('buttons','surface-container-high','#E8EAEE / #22262D'),T('value','on-surface','')],
+  metrics:[['button','48×52, radius 16'],['value','Changa 600 / 34'],['plus first','+ sits at start (right) in RTL']]},
+ resttimer:{name:'Rest timer',file:'ui/fitos/RestTimer.kt',desc:'Countdown ring in the calm water-blue plate with +30 s and skip. Keeps running from a stored end time when the app is backgrounded.',
+  props:[{n:'endsAt',t:'Instant'},{n:'total',t:'Duration'},{n:'onAdd30',t:'() -> Unit'},{n:'onSkip',t:'() -> Unit'}],
+  tokens:[T('ring','plate-blue','#1F5BD8 / #6E97FF'),T('track','track',''),T('time','on-surface','')],
+  metrics:[['ring','56, stroke 6'],['time','Changa 600 / 30']]},
+ setpill:{name:'Set pill',file:'ui/fitos/SetPill.kt',desc:'Sets of one exercise in a row: logged = green container (tap to correct), current = blue, remaining = outline with the rep target.',
+  props:[{n:'index',t:'Int'},{n:'state',t:'Done|Current|Todo'},{n:'value',t:'String',d:'e.g. 10×18 or 12–20'},{n:'onClick',t:'(() -> Unit)?'}],
+  tokens:[T('done','plate-green-container','#E2F5EA / #15342A'),T('done text','on-plate-green-container','#0B5C34 / #A7F0D2'),T('current','primary',''),T('todo border','outline-variant','')],
+  metrics:[['minHeight','56'],['radius','16'],['value','Changa 600 / 16']]},
+ habitrow:{name:'Habit row',file:'ui/fitos/HabitRow.kt',desc:'Habit emoji, name, status and a green check circle. Three states: done, not done (dashed), not logged. Automatic habits (from weight, water, sleep logs) are not tappable.',
+  props:[{n:'emoji',t:'FitEmoji'},{n:'name',t:'String'},{n:'state',t:'Done|NotDone|NotLogged'},{n:'automatic',t:'Boolean',def:'false'},{n:'onToggle',t:'(() -> Unit)?'}],
+  tokens:[T('check','plate-green','#12804A / #34D399'),T('tint','plate-green-container',''),T('ring','outline','')],
+  metrics:[['row','72'],['check','28, border 2']]},
+ watercups:{name:'Water cups',file:'ui/fitos/WaterCups.kt',desc:'Twelve 250 ml cups up to the 3 L target, filled in the water plate, with quick-add buttons and undo.',
+  props:[{n:'ml',t:'Int'},{n:'targetMl',t:'Int',def:'3000'},{n:'cupMl',t:'Int',def:'250'},{n:'onAdd',t:'(Int) -> Unit'}],
+  tokens:[T('full','plate-blue','#1F5BD8 / #6E97FF'),T('empty','track',''),T('tint','plate-blue-container','')],
+  metrics:[['cup','22 tall, radius 6'],['gap','4'],['columns','target / cup']]},
+};
+
+/* ===== Copy-as-prompt — Jetpack Compose first (the project's framework) ===== */
+const LANGS=['Jetpack Compose (Kotlin)','HTML + CSS','React (TypeScript + CSS)','Flutter (Dart)','SwiftUI','React Native'];
+let promptLang=LANGS[0];
+langSel.innerHTML=LANGS.map(l=>`<option${l===promptLang?' selected':''}>${l}</option>`).join('');
+langSel.onchange=()=>promptLang=langSel.value;
+const varGroups={
+ 'Colour roles (light values; dark overrides live in styles.css [data-theme="dark"])':['--primary','--on-primary','--primary-container','--on-primary-container','--secondary','--on-secondary','--secondary-container','--on-secondary-container','--tertiary','--on-tertiary','--tertiary-container','--on-tertiary-container','--error','--on-error','--error-container','--on-error-container','--background','--surface','--surface-container-lowest','--surface-container-low','--surface-container','--surface-container-high','--surface-container-highest','--on-surface','--on-surface-variant','--subtle','--outline','--outline-variant','--hairline','--inverse-surface','--inverse-on-surface','--inverse-primary','--scrim'],
+ 'Module colours (data only)':['--plate-red','--on-plate-red','--plate-red-container','--on-plate-red-container','--plate-red-ink','--plate-orange','--on-plate-orange','--plate-orange-container','--on-plate-orange-container','--plate-orange-ink','--plate-yellow','--on-plate-yellow','--plate-yellow-container','--on-plate-yellow-container','--plate-yellow-ink','--plate-green','--on-plate-green','--plate-green-container','--on-plate-green-container','--plate-green-ink','--plate-blue','--on-plate-blue','--plate-blue-container','--on-plate-blue-container','--plate-blue-ink','--plate-indigo','--on-plate-indigo','--plate-indigo-container','--on-plate-indigo-container','--plate-indigo-ink','--track','--steel','--steel-dark','--mm-body','--mm-muscle','--hero-band','--on-hero-band','--on-hero-band-variant'],
+ 'Spacing':['--gap-related','--gap-section','--gap-major','--layout-gutter','--target-min','--sp-4','--sp-8','--sp-12','--sp-16','--sp-20','--sp-24','--sp-32','--sp-48','--sp-64'],
+ 'Shape':['--shape-xs','--shape-sm','--shape-md','--shape-lg','--shape-xl','--shape-full'],
+ 'Elevation':['--elev-1','--elev-2','--elev-3','--elev-4','--elev-5'],
+ 'State layers & focus':['--state-hover','--state-focus','--state-pressed','--state-dragged','--ring'],
+ 'Type families':['--font-body','--font-display'],
+ 'Motion':['--dur-short','--dur-medium','--dur-long','--ease-standard','--ease-emphasized-decel','--ease-spring'],
+ 'Icons':['--icon-size','--icon-inline','--icon-large','--icon-stroke']};
+function tokenLines(){const cs=getComputedStyle(document.documentElement);const out=[];
+ for(const[g,names]of Object.entries(varGroups)){const rows=names.map(n=>{const v=cs.getPropertyValue(n).trim();return v?`- ${n} = ${v}`:null;}).filter(Boolean);if(rows.length)out.push(`### ${g}`,...rows,'');}
+ return out;}
+function foundationsBody(){const L=[`## Foundations — design tokens (single source of truth)`,`Define every token below as a named constant in ONE theme file idiomatic to ${promptLang} (Compose: a FitColors data class for light + dark, a FitTypography, FitShapes, FitSpacing, provided through CompositionLocals inside FitTheme). Components reference tokens by name — never raw values.`,'',...tokenLines(),`### Type scale (15 Material 3 styles)`];
+ TYPE.forEach(([n,m])=>L.push(`- ${n}: ${m}`));
+ L.push('',`### Rules`,`- Locale fa-IR, layout direction RTL. Use start/end, never left/right. Directional icons mirror; play/pause and charts do not mirror unless specified.`,`- Fonts bundled in the app (OFL): Vazirmatn 400/500/600 for all text; Changa 500/600 only for display numerals. Persian digits in display, Persian/Arabic/Latin digits accepted on input. No letter-spacing on Persian text.`,`- Light theme is the default; dark theme is selectable in Settings (light / dark / follow system).`,`- Electric blue (primary) is the only interaction family; reward orange (tertiary) marks wins (completed days, PRs). Module colours are data only (training orange, calories red, protein yellow, water sky, sleep violet, habits green) — never for buttons or navigation. Home uses a flat primary header band with a curved bottom edge (--hero-band).`,`- Every fill keeps its --on-* pair (WCAG checked). Elevation: hairline first, then soft shadow (alpha < .08); dark uses tonal surfaces + top edge light.`,`- Emoji are Fluent 3D PNGs (MIT) used as content markers only; UI icons are the outlined vector set.`);
+ return L.join('\n');}
+function buildPrompt(key){const s=SPECS[key];const L=[`# Add or update the \`${s.name}\` component — ${promptLang}`,'',`Part of the FitOS \"Electric Blue\" design system (Material 3 structure, Persian RTL). If a component with this role ALREADY EXISTS, modify it IN PLACE to match this spec (source of truth) — don't duplicate; note any breaking change. Otherwise create it at \`${s.file}\`, reusing the shared FitTheme tokens.`,'',`## What it is`,s.desc,'',`## Props`];
+ s.props.forEach(p=>L.push(`- \`${p.n}\`: ${p.t}${p.def?` (default ${p.def})`:''}${p.d?` — ${p.d}`:''}`));
+ L.push('',`## Design tokens (light / dark) — reference by name, never inline`);s.tokens.forEach(t=>L.push(`- ${t.n}${t.v?` = ${t.v}`:''}   // ${t.r}`));
+ L.push('',`## Metrics`);s.metrics.forEach(([k,v])=>L.push(`- ${k}: ${v}`));
+ L.push('',`## Requirements`,`- Implement every variant and state listed (enabled, hover/pressed, focus with a 2dp ring, disabled, selected where relevant).`,`- RTL: use start/end; Persian strings via string resources; numerals rendered Persian.`,`- Touch targets ≥ 48dp; contentDescription in Persian for icon-only controls.`,`- Output complete, compilable ${promptLang} code plus a short @Preview / usage example in light and dark.`);
+ return L.join('\n');}
+function fullSystemPrompt(){const keys=Object.keys(SPECS);const L=[`# Install or update the FitOS design system — ${promptLang}`,'',`Set up the whole \"Electric Blue\" design system. Scaffold from scratch if missing; otherwise update IN PLACE to match (modify, don't duplicate; list breaking changes).`,'',`## Build order`,`1. Foundation token layer below (FitTheme: colours light+dark, typography, shapes, spacing, elevation, motion, icons, bundled fonts and Fluent emoji assets).`,`2. Components — may be split across parallel workers, but every one imports the shared FitTheme; never redefine values locally.`,`3. Reconcile: one components index + a check that every component uses only named tokens.`,'','---','',foundationsBody(),'','---','',`## Components (${keys.length})`];
+ keys.forEach(k=>{const s=SPECS[k];L.push('',`### ${s.name} — \`${s.file}\``,s.desc,`- props: ${s.props.map(p=>p.n+': '+p.t).join(', ')}`,`- tokens: ${s.tokens.map(t=>t.n).join(', ')}`,`- metrics: ${s.metrics.map(m=>m[0]+' '+m[1]).join(', ')}`);});
+ return L.join('\n');}
+function copyText(t,label){
+  const done=()=>toast(label);
+  try{ if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(t).then(done,()=>showFallback(t)); return; } }catch(e){}
+  showFallback(t);
+}
+function showFallback(t){const f=document.createElement('div');f.id='fallback';f.innerHTML=`<div class="box" role="dialog" aria-label="متن پرامپت"><div class="t-title-m">کپی خودکار در دسترس نیست؛ متن را انتخاب و کپی کنید</div><textarea readonly id="fbText"></textarea><button class="btn btn--filled sl" type="button" id="fbClose">بستن</button></div>`;
+  document.body.appendChild(f);const ta=document.getElementById('fbText');ta.value=t;ta.focus();ta.select();document.getElementById('fbClose').onclick=()=>f.remove();}
+function copyPrompt(key){copyText(buildPrompt(key),`کپی شد: ${SPECS[key].name} ← ${promptLang}`);}
+function copyFullSystem(){copyText(fullSystemPrompt(),`کپی شد: کل سیستم (${Object.keys(SPECS).length} قطعه) ← ${promptLang}`);}
+function toast(msg){const c=document.getElementById('copied');c.textContent=msg;c.classList.add('show');setTimeout(()=>c.classList.remove('show'),1600);}
+document.querySelectorAll('main section[id]').forEach(sec=>{const key=sec.id;if(!SPECS[key])return;const h=sec.querySelector('h2.sec');if(!h||h.querySelector('.sec-prompt'))return;
+  const b=document.createElement('button');b.className='sec-prompt sl';b.type='button';b.textContent='کپی پرامپت';b.addEventListener('click',()=>copyPrompt(key));h.appendChild(b);});
+
+/* ===== Dev Mode + Inspector ===== */
+function toggleDev(){const on=document.body.classList.toggle('dev');devToggle.classList.toggle('on',on);devToggle.setAttribute('aria-pressed',on);devToggle.textContent=on?'حالت توسعه‌دهنده: روشن':'حالت توسعه‌دهنده';if(!on)closeInspector();}
+function closeInspector(){document.body.classList.remove('inspecting');document.querySelectorAll('.insp-sel').forEach(e=>e.classList.remove('insp-sel'));}
+document.addEventListener('click',e=>{if(e.target.closest('#inspector')||e.target.closest('.topctl'))return;if(!document.body.classList.contains('dev'))return;
+  const el=e.target.closest('[data-insp]');if(el&&SPECS[el.dataset.insp]){e.preventDefault();selectComp(el,el.dataset.insp);}});
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+function selectComp(el,key){document.querySelectorAll('.insp-sel').forEach(x=>x.classList.remove('insp-sel'));el.classList.add('insp-sel');document.body.classList.add('inspecting');const s=SPECS[key];
+  const props=s.props.map(p=>`<div class="prop"><span class="pn">${esc(p.n)}</span> <span class="pt">${esc(p.t)}</span>${p.def?` <span class="pdef">= ${esc(p.def)}</span>`:''}${p.d?`<div class="pd">${esc(p.d)}</div>`:''}</div>`).join('');
+  const toks=s.tokens.map((t,i)=>`<button type="button" class="tok" data-i="${i}"><span class="tsw" style="background:${t.c||'var(--surface-container)'}"></span><span><span class="tn">${esc(t.n)}</span><br><span class="tr">${esc(t.r)}</span></span><span class="tv">${esc(t.v||'')}</span></button>`).join('');
+  const mets=s.metrics.map(([k,v])=>`<div class="metric"><span class="mk">${esc(k)}</span><span>${esc(v)}</span></div>`).join('');
+  inspectorBody.innerHTML=`<div class="nm">${esc(s.name)}</div><div class="file">${esc(s.file)}</div><div class="desc">${esc(s.desc)}</div><h4>ویژگی‌ها</h4>${props}<h4>توکن‌ها · برای کپی لمس کنید</h4>${toks}<h4>اندازه‌ها</h4>${mets}<button class="btn btn--filled btn--block sl" type="button" id="inspCopy" style="margin-top:16px">کپی پرامپت ${esc(s.name)}</button>`;
+  inspectorBody.querySelectorAll('.tok').forEach(b=>b.addEventListener('click',()=>{const t=s.tokens[+b.dataset.i];copyText(t.n+(t.v?' = '+t.v:''),'کپی شد: '+t.n);}));
+  document.getElementById('inspCopy').addEventListener('click',()=>copyPrompt(key));}
+
+renderColors();
+document.getElementById('themeSel').addEventListener('change',()=>setTimeout(renderColors,0));
+</script>

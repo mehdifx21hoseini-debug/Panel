@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">FitOS</string>
+
+    <string name="nav_home">خانه</string>
+    <string name="nav_training">تمرین</string>
+    <string name="nav_nutrition">تغذیه</string>
+    <string name="nav_body">بدن</string>
+    <string name="nav_habits">عادت‌ها</string>
+
+    <string name="home_greeting">سلام</string>
+    <string name="home_settings">تنظیمات</string>
+    <string name="home_today_load">بار امروز</string>
+    <string name="home_today_load_hint">هر هدف کامل، یک وزنه کامل</string>
+    <string name="home_meter_description">پیشرفت امروز %1$s. هنوز چیزی ثبت نشده است.</string>
+    <string name="home_not_logged">ثبت نشده</string>
+    <string name="home_start_title">نسخه پایه آماده است</string>
+    <string name="home_start_body">ثبت تمرین، غذا، وزن و عادت‌ها مرحله به مرحله به همین صفحه اضافه می‌شود. تا وقتی چیزی ثبت نکنی، هیچ عددی ساختگی نشان داده نمی‌شود.</string>
+
+    <string name="module_training">تمرین</string>
+    <string name="module_calories">کالری</string>
+    <string name="module_protein">پروتئین</string>
+    <string name="module_water">آب</string>
+    <string name="module_sleep">خواب</string>
+    <string name="module_habits">عادت‌ها</string>
+
+    <string name="soon_training_title">برنامه و جلسه تمرین</string>
+    <string name="soon_training_body">برنامه‌های تمرینی، حالت جلسه، رکوردها و پیشرفت وزنه‌ها در مرحله ۳ و ۴ ساخته می‌شود.</string>
+    <string name="soon_nutrition_title">غذا و کالری</string>
+    <string name="soon_nutrition_body">بانک غذا، دستور پخت، وعده‌های ذخیره‌شده و هدف‌های روزانه در مرحله ۵ ساخته می‌شود.</string>
+    <string name="soon_body_title">وزن و اندازه‌ها</string>
+    <string name="soon_body_body">ثبت وزن، دورها، نمودارها و عکس‌های خصوصی در مرحله ۲ ساخته می‌شود.</string>
+    <string name="soon_habits_title">عادت‌ها، آب و خواب</string>
+    <string name="soon_habits_body">عادت‌ها، یادآورها و برگشت به برنامه در مرحله ۶ ساخته می‌شود.</string>
+
+    <string name="settings_title">تنظیمات</string>
+    <string name="settings_back">بازگشت</string>
+    <string name="settings_appearance">ظاهر</string>
+    <string name="theme_light">روشن</string>
+    <string name="theme_dark">تیره</string>
+    <string name="theme_system">مطابق گوشی</string>
+    <string name="settings_privacy">حریم خصوصی</string>
+    <string name="settings_privacy_title">بدون دسترسی به اینترنت</string>
+    <string name="settings_privacy_body">این اپ اجازه اینترنت ندارد. همه اطلاعات فقط روی همین گوشی می‌ماند و در پشتیبان‌گیری خودکار گوگل هم نمی‌رود.</string>
+    <string name="settings_about">درباره</string>
+    <string name="settings_version">نسخه %1$s</string>
+    <string name="settings_licences">مجوزها</string>
+    <string name="licence_vazirmatn">فونت وزیرمتن، صابر راستی‌کردار، مجوز SIL OFL 1.1</string>
+    <string name="licence_changa">فونت Changa، ادواردو تونی، مجوز SIL OFL 1.1</string>
+    <string name="licence_fluent">ایموجی‌های Fluent، مایکروسافت، مجوز MIT</string>
+</resources>

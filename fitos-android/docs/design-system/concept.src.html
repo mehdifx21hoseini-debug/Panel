@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>FitOS Concept Screens</title>
+<script src="theme.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Changa:wght@400;500;600&family=Vazirmatn:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+/* concept-page chrome + layout glue only — screens are built from styles.css classes */
+html{-webkit-text-size-adjust:100%}
+body{font-family:var(--font-body);color:var(--on-surface);background:var(--surface-dim);
+  padding:calc(20px + env(safe-area-inset-top,0px)) max(16px, env(safe-area-inset-right,0px)) calc(60px + env(safe-area-inset-bottom,0px)) max(16px, env(safe-area-inset-left,0px));
+  display:flex;flex-direction:column;align-items:center}
+.top{width:100%;max-width:820px;display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.top select{font:500 13px var(--font-body);min-height:40px;border:1px solid var(--outline-variant);border-radius:12px;padding:0 12px;background:var(--surface);color:var(--on-surface)}
+.head{max-width:640px;text-align:center;margin-bottom:22px}
+.head h1{font:600 26px/1.3 var(--font-body);text-wrap:balance}
+.head p{color:var(--on-surface-variant);font-size:14px;margin-top:8px;line-height:1.7}
+.two{display:flex;gap:36px;flex-wrap:wrap;justify-content:center;align-items:flex-start}
+.col{display:flex;flex-direction:column;align-items:center;gap:10px;max-width:100%}
+.col .label{font:500 13px var(--font-body);color:var(--on-surface-variant)}
+/* presentation frame: square, no bezel or device shadow */
+.device{position:relative;width:360px;max-width:100%;height:780px;background:var(--background);border:1px solid var(--outline-variant);overflow:hidden;display:flex;flex-direction:column}
+.scrollbody{flex:1;overflow:auto;padding:var(--sp-12) var(--layout-gutter) 100px;display:flex;flex-direction:column;gap:var(--gap-section)}
+.scrollbody::-webkit-scrollbar{width:0}
+.scrollbody > *,.det-body > *{flex-shrink:0}
+.device .navbar{position:absolute;inset-inline:0;bottom:0}
+.greet{display:flex;align-items:center;justify-content:space-between;gap:var(--gap-related);padding-top:var(--sp-8)}
+.greet img{width:28px;height:28px;vertical-align:-6px}
+.week{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px}
+.week .d{display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 0;border-radius:var(--shape-md);color:var(--on-surface)}
+.week .d.is-future{color:var(--subtle)}
+.week .dot{width:6px;height:6px;border-radius:50%;background:transparent}
+.legend6{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--gap-related)}
+.legend6 > div{display:flex;align-items:center;gap:6px;min-width:0}
+.legend6 b{display:block;font:600 14px var(--font-display);color:var(--on-surface)}
+.legend6 small{display:block;font:400 12px var(--font-body);color:var(--subtle)}
+.duo{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--sp-12)}
+.next{display:flex;flex-direction:column;gap:var(--sp-12);position:relative;overflow:hidden}
+.next .muscle-map{position:absolute;inset-inline-end:14px;top:14px;--mm-w:38px}
+.next .row .btn{flex:1}
+.band{padding:var(--sp-12) var(--layout-gutter) 72px;margin-top:calc(-1 * var(--sp-12))}
+.band .iconbtn .face{background:color-mix(in srgb,var(--on-hero-band) 16%,transparent);color:var(--on-hero-band)}
+.band .week .d{color:var(--on-hero-band)}
+.band .week .d.is-future{color:var(--on-hero-band-variant)}
+.band .week .d.is-done .dot{background:var(--on-hero-band)}
+.band .week .d.is-today{background:var(--on-hero-band);color:var(--hero-band)}
+.band .week .d.is-today .dot{background:var(--tertiary)}
+.overlap{margin-top:-80px}
+.scrollrow .daytile{flex:0 0 64px}
+/* detail */
+.det-hero{position:relative;height:300px;background:var(--cat-training-container);display:flex;align-items:flex-end;justify-content:center;gap:0;padding-bottom:12px}
+.det-hero .muscle-map{--mm-w:120px}
+.det-hero .muscle-map + .muscle-map{margin-inline-start:-18px}
+.det-hero .appbar{position:absolute;inset-inline:0;top:0;background:transparent}
+.det-body{padding:var(--sp-16) var(--layout-gutter) 110px;display:flex;flex-direction:column;gap:var(--gap-section);overflow:auto;flex:1}
+.det-cta{position:absolute;inset-inline:0;bottom:0;padding:var(--sp-12) var(--sp-16) var(--sp-16);background:var(--surface);border-top:1px solid var(--hairline)}
+.mini{--mm-w:22px}
+.legendnote{max-width:640px;margin-top:20px;font-size:13px;color:var(--on-surface-variant);line-height:1.8;text-align:center}
+.backlink{display:inline-flex;align-items:center;gap:6px;font:500 14px var(--font-body);text-decoration:none;color:var(--on-surface);background:var(--surface);border:1px solid var(--outline-variant);border-radius:999px;min-height:40px;padding:0 14px}
+</style>
+</head>
+<body>
+<!--SPRITE-->
+
+<div class="top">
+  <a class="backlink" href="index.html"><svg class="ico ico--sm ico--dir"><use href="#i-back"/></svg>بازگشت به سیستم طراحی</a>
+  <select id="themeSel" aria-label="پوسته"><option value="light">روشن (پیش‌فرض)</option><option value="dark">تیره</option></select>
+</div>
+
+<div class="head">
+  <h1>دو صفحه نمونه: خانه و جلسه تمرین</h1>
+  <p>فقط از قطعه‌های همین سیستم ساخته شده‌اند تا ببینید کنار هم چطور می‌نشینند. ثابت‌اند، نه نمونه کارکردی؛ اعداد نمایشی‌اند. پوسته را از بالا عوض کنید.</p>
+</div>
+
+<div class="two">
+  <!-- ═══════ SCREEN 1 · FIRST VIEW — dashboard; composition: one hero (plate meter) + ink focal card + 2-col grid ═══════ -->
+  <div class="col">
+    <div class="label">صفحه اول: خانه</div>
+    <div class="device">
+      <div class="scrollbody">
+        <!-- header band: flat primary fill, curved bottom edge; the hero card overlaps it -->
+        <section class="hero-band bleed band" aria-label="امروز">
+          <div class="greet">
+            <div><div class="t-headline-s">سلام <img src="emoji/wave.png" alt=""></div><div class="t-body-m t-subtle">سه‌شنبه ۲۸ مهر ۱۴۰۵ · هفته ۲ برنامه</div></div>
+            <button class="iconbtn sl" type="button" aria-label="تنظیمات"><span class="face"><svg class="ico"><use href="#i-settings"/></svg></span></button>
+          </div>
+          <div class="week" role="list" aria-label="این هفته">
+            <div class="d is-done" role="listitem"><span class="t-body-s">ش</span><span class="t-num" style="font-size:17px;font-weight:600">۲۵</span><span class="dot"></span></div>
+            <div class="d is-done" role="listitem"><span class="t-body-s">ی</span><span class="t-num" style="font-size:17px;font-weight:600">۲۶</span><span class="dot"></span></div>
+            <div class="d is-done" role="listitem"><span class="t-body-s">د</span><span class="t-num" style="font-size:17px;font-weight:600">۲۷</span><span class="dot"></span></div>
+            <div class="d is-today" role="listitem" aria-current="date"><span class="t-body-s">س</span><span class="t-num" style="font-size:17px;font-weight:600">۲۸</span><span class="dot"></span></div>
+            <div class="d is-future" role="listitem"><span class="t-body-s">چ</span><span class="t-num" style="font-size:17px;font-weight:600">۲۹</span><span class="dot"></span></div>
+            <div class="d is-future" role="listitem"><span class="t-body-s">پ</span><span class="t-num" style="font-size:17px;font-weight:600">۳۰</span><span class="dot"></span></div>
+            <div class="d is-future" role="listitem"><span class="t-body-s">ج</span><span class="t-num" style="font-size:17px;font-weight:600">۱</span><span class="dot"></span></div>
+          </div>
+        </section>
+
+        <!-- hero: plate meter, overlapping the band -->
+        <section class="card card--elevated card--hero overlap" aria-label="بار امروز">
+          <div class="row" style="justify-content:space-between;align-items:flex-end"><div><div class="t-title-m">بار امروز</div><div class="t-body-s t-subtle">هر هدف کامل، یک وزنه کامل</div></div><div class="t-display-m" style="color:var(--primary)">۵۱٪</div></div>
+          <div class="plate-meter" role="img" aria-label="پیشرفت امروز ۵۱ درصد؛ تمرین هنوز انجام نشده">
+            <span class="plate-meter__cap"></span>
+            <div class="plate-meter__side"><span class="plate" style="--h:84px;--fill:50%;--c:var(--cat-habits)"></span><span class="plate" style="--h:92px;--fill:94%;--c:var(--cat-sleep)"></span><span class="plate" style="--h:100px;--fill:50%;--c:var(--cat-water)"></span><span class="plate" style="--h:100px;--fill:53%;--c:var(--cat-protein)"></span><span class="plate" style="--h:108px;--fill:60%;--c:var(--cat-calories)"></span><span class="plate" style="--h:108px;--fill:0%;--c:var(--cat-training)"></span></div>
+            <span class="plate-meter__collar"></span><span class="plate-meter__shaft"></span><span class="plate-meter__collar"></span>
+            <div class="plate-meter__side"><span class="plate" style="--h:108px;--fill:0%;--c:var(--cat-training)"></span><span class="plate" style="--h:108px;--fill:60%;--c:var(--cat-calories)"></span><span class="plate" style="--h:100px;--fill:53%;--c:var(--cat-protein)"></span><span class="plate" style="--h:100px;--fill:50%;--c:var(--cat-water)"></span><span class="plate" style="--h:92px;--fill:94%;--c:var(--cat-sleep)"></span><span class="plate" style="--h:84px;--fill:50%;--c:var(--cat-habits)"></span></div>
+            <span class="plate-meter__cap"></span>
+          </div>
+          <div class="legend6">
+            <div><span class="emoji-tile emoji-tile--sm tint-training"><img src="emoji/lifting.png" alt=""></span><span><small>تمرین</small><b>انجام نشده</b></span></div>
+            <div><span class="emoji-tile emoji-tile--sm tint-calories"><img src="emoji/fire.png" alt=""></span><span><small>کالری</small><b>۱٬۳۴۰</b></span></div>
+            <div><span class="emoji-tile emoji-tile--sm tint-protein"><img src="emoji/poultry.png" alt=""></span><span><small>پروتئین</small><b>۹۶ گرم</b></span></div>
+            <div><span class="emoji-tile emoji-tile--sm tint-water"><img src="emoji/droplet.png" alt=""></span><span><small>آب</small><b>۱٫۵ لیتر</b></span></div>
+            <div><span class="emoji-tile emoji-tile--sm tint-sleep"><img src="emoji/sleeping.png" alt=""></span><span><small>خواب</small><b>۷:۰۵</b></span></div>
+            <div><span class="emoji-tile emoji-tile--sm tint-habits"><img src="emoji/check.png" alt=""></span><span><small>عادت‌ها</small><b>۲ از ۴</b></span></div>
+          </div>
+        </section>
+
+        <!-- focal action -->
+        <section class="card card--elevated card--hero next" aria-label="کار بعدی">
+          <svg class="muscle-map mm--chest mm--delts" aria-hidden="true"><use href="#i-mm-front"/></svg>
+          <div class="row"><span class="emoji-tile tint-training"><img src="emoji/lifting.png" alt=""></span><div><div class="t-label-m t-subtle">کار بعدی، حوالی ظهر</div><div class="t-title-l">سرشانه و سینه</div></div></div>
+          <div class="t-body-m t-variant">۶ حرکت، حدود ۶۰ دقیقه</div>
+          <div class="row"><button class="btn btn--filled sl" type="button"><svg class="ico"><use href="#i-play"/></svg>شروع تمرین</button><button class="btn btn--outlined sl" type="button">خانگی ۱۵ دقیقه</button></div>
+        </section>
+
+        <!-- program week: day tiles (wins in reward orange) -->
+        <section aria-label="برنامه این هفته" class="stack">
+          <div class="row" style="justify-content:space-between"><span class="t-title-m">برنامه این هفته</span><span class="t-body-s t-subtle">۳ از ۵ جلسه</span></div>
+          <div class="scrollrow">
+            <div class="daytile is-done"><span class="daytile__n">۱</span><span class="daytile__check"><svg class="ico"><use href="#i-check"/></svg></span><span class="daytile__lbl">بالاتنه</span><span class="daytile__meta">۶ حرکت</span></div>
+            <div class="daytile is-done"><span class="daytile__n">۲</span><span class="daytile__check"><svg class="ico"><use href="#i-check"/></svg></span><span class="daytile__lbl">پایین‌تنه</span><span class="daytile__meta">۶ حرکت</span></div>
+            <div class="daytile is-done"><span class="daytile__n">۳</span><span class="daytile__check"><svg class="ico"><use href="#i-check"/></svg></span><span class="daytile__lbl">خانگی</span><span class="daytile__meta">۱۵ دقیقه</span></div>
+            <div class="daytile is-today"><span class="daytile__n">۴</span><svg class="muscle-map mm--chest mm--delts" aria-hidden="true"><use href="#i-mm-front"/></svg><span class="daytile__lbl">سرشانه</span><span class="daytile__meta">امروز</span></div>
+            <div class="daytile"><span class="daytile__n">۵</span><svg class="muscle-map mm--lats mm--traps" aria-hidden="true"><use href="#i-mm-back"/></svg><span class="daytile__lbl">پشت</span><span class="daytile__meta">۶ حرکت</span></div>
+          </div>
+        </section>
+
+        <div class="duo">
+          <div class="stat"><div class="stat__head"><span class="emoji-tile emoji-tile--sm tint-calories"><img src="emoji/fire.png" alt=""></span>کالری</div><div class="stat__value"><b>۱٬۳۴۰</b><span>از ۲٬۵۰۰</span></div><div class="stat__bar"><i style="--p:54%;--c:var(--cat-calories)"></i></div><div class="stat__foot">۱٬۱۶۰ مانده</div></div>
+          <div class="stat"><div class="stat__head"><span class="emoji-tile emoji-tile--sm tint-protein"><img src="emoji/poultry.png" alt=""></span>پروتئین</div><div class="stat__value"><b>۹۶</b><span>از ۱۸۰ گرم</span></div><div class="stat__bar"><i style="--p:53%;--c:var(--cat-protein)"></i></div><div class="stat__foot">۸۴ گرم مانده</div></div>
+        </div>
+
+        <section class="card card--elevated" aria-label="آب">
+          <div class="row"><span class="emoji-tile tint-water"><img src="emoji/droplet.png" alt=""></span><span class="t-display-s" style="flex:1">۱٫۵ <span class="t-body-s t-subtle">از ۳ لیتر</span></span><button class="btn btn--tonal sl" type="button" style="padding:0 12px">+۲۵۰</button></div>
+          <div class="cups" style="margin-top:12px" role="img" aria-label="۶ لیوان از ۱۲"><i class="is-full"></i><i class="is-full"></i><i class="is-full"></i><i class="is-full"></i><i class="is-full"></i><i class="is-full"></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        </section>
+      </div>
+      <nav class="navbar" aria-label="بخش‌های اصلی" style="--n:5">
+        <span class="navbar__item is-active"><span class="navbar__ind"><svg class="ico"><use href="#i-home"/></svg></span>خانه</span>
+        <span class="navbar__item"><span class="navbar__ind"><svg class="ico"><use href="#i-dumbbell"/></svg></span>تمرین</span>
+        <span class="navbar__item"><span class="navbar__ind"><svg class="ico"><use href="#i-utensils"/></svg></span>تغذیه</span>
+        <span class="navbar__item"><span class="navbar__ind"><svg class="ico"><use href="#i-body"/></svg></span>بدن</span>
+        <span class="navbar__item"><span class="navbar__ind"><svg class="ico"><use href="#i-habits"/></svg></span>عادت‌ها</span>
+      </nav>
+    </div>
+  </div>
+
+  <!-- ═══════ SCREEN 2 · DETAIL — workout day; composition: full-bleed tinted hero with overlapping muscle maps + list + sticky CTA, no bottom nav ═══════ -->
+  <div class="col">
+    <div class="label">جزئیات: جلسه سرشانه و سینه</div>
+    <div class="device">
+      <div class="det-hero">
+        <div class="appbar">
+          <button class="iconbtn iconbtn--tonal sl" type="button" aria-label="بازگشت"><span class="face"><svg class="ico ico--dir"><use href="#i-back"/></svg></span></button>
+          <span class="appbar__spacer"></span>
+          <button class="iconbtn iconbtn--tonal sl" type="button" aria-label="ویرایش برنامه"><span class="face"><svg class="ico"><use href="#i-edit"/></svg></span></button>
+        </div>
+        <svg class="muscle-map mm--chest mm--delts mm--biceps" role="img" aria-label="عضلات هدف از جلو: سینه و سرشانه"><use href="#i-mm-front"/></svg>
+        <svg class="muscle-map mm--delts mm--triceps" role="img" aria-label="عضلات هدف از پشت: سرشانه خلفی و پشت بازو"><use href="#i-mm-back"/></svg>
+      </div>
+      <div class="det-body">
+        <div class="stack">
+          <div class="t-label-m" style="color:var(--cat-training-ink)">جلسه C · برنامه ۵ روزه</div>
+          <div class="t-headline-m">سرشانه و سینه</div>
+          <div class="row" style="flex-wrap:wrap"><span class="chip"><svg class="ico"><use href="#i-dumbbell"/></svg>۶ حرکت</span><span class="chip"><svg class="ico"><use href="#i-clock"/></svg>حدود ۶۰ دقیقه</span><span class="chip"><svg class="ico"><use href="#i-history"/></svg>آخرین بار ۲۱ مهر</span></div>
+        </div>
+        <div class="seg" role="radiogroup" aria-label="نسخه جلسه" style="align-self:flex-start">
+          <span class="seg__btn is-selected" role="radio" aria-checked="true"><svg class="ico seg__check"><use href="#i-check"/></svg>باشگاه</span>
+          <span class="seg__btn" role="radio" aria-checked="false"><svg class="ico seg__check"><use href="#i-check"/></svg>خانگی</span>
+          <span class="seg__btn" role="radio" aria-checked="false"><svg class="ico seg__check"><use href="#i-check"/></svg>حداقلی</span>
+        </div>
+        <div class="list" role="list" aria-label="حرکات جلسه">
+          <div class="li li--2" role="listitem"><span class="li__lead"><svg class="muscle-map mini mm--delts" aria-hidden="true"><use href="#i-mm-front"/></svg></span><span class="li__body"><span class="li__head">پرس سرشانه دمبل نشسته</span><span class="li__sup">پیشنهاد: ۲۲٫۵ کیلوگرم</span></span><span class="li__trail t-num" style="font-size:14px">۳ × ۸–۱۲</span></div>
+          <div class="li li--2" role="listitem"><span class="li__lead"><svg class="muscle-map mini mm--chest" aria-hidden="true"><use href="#i-mm-front"/></svg></span><span class="li__body"><span class="li__head">پرس سینه بالا دمبل</span><span class="li__sup">پیشنهاد: ۲۶ کیلوگرم</span></span><span class="li__trail t-num" style="font-size:14px">۳ × ۸–۱۲</span></div>
+          <div class="li li--2" role="listitem"><span class="li__lead"><svg class="muscle-map mini mm--delts" aria-hidden="true"><use href="#i-mm-front"/></svg></span><span class="li__body"><span class="li__head">نشر جانب دمبل</span><span class="li__sup">پیشنهاد: ۱۰ کیلوگرم</span></span><span class="li__trail t-num" style="font-size:14px">۴ × ۱۲–۲۰</span></div>
+          <div class="li li--2" role="listitem"><span class="li__lead"><svg class="muscle-map mini mm--chest" aria-hidden="true"><use href="#i-mm-front"/></svg></span><span class="li__body"><span class="li__head">پرس سینه دستگاه</span><span class="li__sup">پیشنهاد: ۵۰ کیلوگرم</span></span><span class="li__trail t-num" style="font-size:14px">۲ × ۱۰–۱۲</span></div>
+          <div class="li li--2" role="listitem"><span class="li__lead"><svg class="muscle-map mini mm--triceps" aria-hidden="true"><use href="#i-mm-back"/></svg></span><span class="li__body"><span class="li__head">پشت بازو سیم‌کش</span><span class="li__sup">پیشنهاد: ۲۷٫۵ کیلوگرم</span></span><span class="li__trail t-num" style="font-size:14px">۳ × ۱۰–۱۵</span></div>
+          <div class="li li--2" role="listitem"><span class="li__lead"><svg class="muscle-map mini mm--delts mm--traps" aria-hidden="true"><use href="#i-mm-back"/></svg></span><span class="li__body"><span class="li__head">فیس پول</span><span class="li__sup" style="color:var(--plate-green-ink)">+۲٫۵ کیلوگرم: همه ست‌ها کامل شده بود</span></span><span class="li__trail t-num" style="font-size:14px">۳ × ۱۵</span></div>
+        </div>
+      </div>
+      <div class="det-cta"><button class="btn btn--filled btn--lg btn--block sl" type="button"><svg class="ico"><use href="#i-play"/></svg>شروع تمرین</button></div>
+    </div>
+  </div>
+</div>
+
+<p class="legendnote">صفحه اول: نوار آبی بالای صفحه با لبه منحنی و روزهای هفته، کارت قهرمان با هالتر امروز روی لبه نوار، کارت «کار بعدی»، کاشی‌های برنامه هفته، کاشی‌های آمار، لیوان‌های آب، فهرست عادت و نوار پایین. صفحه دوم: نوار بالای شفاف، نقشه عضلات جلو و پشت روی نوار رنگی تمام‌عرض، چیپ‌ها، دکمه بخش‌بندی، فهرست دوخطی و دکمه بزرگ ثابت پایین.</p>
+</body>
+</html>

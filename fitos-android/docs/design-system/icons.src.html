@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>FitOS Icon Set</title>
+<script src="theme.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+body{font-family:var(--font-body);color:var(--on-surface);background:var(--background);
+  padding:calc(28px + env(safe-area-inset-top,0px)) max(16px, env(safe-area-inset-right,0px)) 80px max(16px, env(safe-area-inset-left,0px));max-width:920px;margin:0 auto}
+h1{font:600 26px var(--font-body)}
+.lede{color:var(--on-surface-variant);font-size:14px;margin:8px 0 20px;line-height:1.8;max-width:68ch}
+.controls{display:flex;gap:16px;align-items:center;margin-bottom:20px;flex-wrap:wrap}
+.controls label{font:500 13px var(--font-body);color:var(--on-surface-variant);display:flex;gap:8px;align-items:center}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:10px}
+.tile{background:var(--surface);border:1px solid var(--hairline);border-radius:var(--shape-md);padding:14px 6px 10px;display:flex;flex-direction:column;align-items:center;gap:8px}
+.tile .name{font:11px var(--font-mono);color:var(--subtle);direction:ltr}
+a{color:var(--on-surface)}
+</style>
+</head>
+<body>
+<!--SPRITE-->
+<p><a href="index.html">بازگشت به سیستم طراحی</a></p>
+<h1>آیکون‌های FitOS</h1>
+<p class="lede">اسپرایت SVG درون‌خطی با توکن: <code>stroke:currentColor</code> و ضخامت <code>--icon-stroke</code>. هندسه اختصاصی به سبک Material Symbols و Lucide. آیکون‌های جهت‌دار با کلاس <code>ico--dir</code> در راست‌چین قرینه می‌شوند. ایموجی هیچ‌وقت آیکون رابط نیست.</p>
+<div class="controls">
+  <label>ضخامت <input type="range" min="1" max="3" step="0.1" value="1.8" oninput="document.documentElement.style.setProperty('--icon-stroke',this.value)"></label>
+  <label>اندازه <input type="range" min="16" max="40" step="2" value="28" oninput="document.documentElement.style.setProperty('--icon-large',this.value+'px')"></label>
+  <select id="themeSel" aria-label="پوسته"><option value="light">روشن</option><option value="dark">تیره</option></select>
+</div>
+<div class="grid" id="grid"></div>
+<script>
+const ICONS=['home','dumbbell','utensils','body','habits','settings','menu','back','chevron-right','chevron-left','chevron-down','more-v','search','close','check','plus','minus','edit','trash','copy','swap','share','download','upload','refresh','filter','grip','play','pause','timer','clock','calendar','history','bell','droplet','flame','moon','sun','scale','ruler','chart','trend-down','target','bolt','book','star','camera','image','user','lock','shield','cloud-off','eye','info','alert','list'];
+const DIR=new Set(['back','chevron-right','chevron-left']);
+grid.innerHTML=ICONS.map(n=>`<div class="tile"><svg class="ico ico--lg${DIR.has(n)?' ico--dir':''}"><use href="#i-${n}"/></svg><div class="name">i-${n}</div></div>`).join('');
+</script>
+</body>
+</html>

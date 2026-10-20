@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>FitOS Icon Set</title>
+<script src="theme.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+body{font-family:var(--font-body);color:var(--on-surface);background:var(--background);
+  padding:calc(28px + env(safe-area-inset-top,0px)) max(16px, env(safe-area-inset-right,0px)) 80px max(16px, env(safe-area-inset-left,0px));max-width:920px;margin:0 auto}
+h1{font:600 26px var(--font-body)}
+.lede{color:var(--on-surface-variant);font-size:14px;margin:8px 0 20px;line-height:1.8;max-width:68ch}
+.controls{display:flex;gap:16px;align-items:center;margin-bottom:20px;flex-wrap:wrap}
+.controls label{font:500 13px var(--font-body);color:var(--on-surface-variant);display:flex;gap:8px;align-items:center}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:10px}
+.tile{background:var(--surface);border:1px solid var(--hairline);border-radius:var(--shape-md);padding:14px 6px 10px;display:flex;flex-direction:column;align-items:center;gap:8px}
+.tile .name{font:11px var(--font-mono);color:var(--subtle);direction:ltr}
+a{color:var(--on-surface)}
+</style>
+</head>
+<body>
+<!-- FitOS ICON SPRITE — Material-outlined style, original geometry drawn in the manner of open
+     sets (Lucide/Feather MIT · Material Symbols Apache-2.0). Token-driven: stroke=currentColor,
+     width=var(--icon-stroke). Use: <svg class="ico"><use href="#i-home"/></svg>.
+     Directional glyphs (back/chevrons) get class "ico--dir" so they mirror in RTL.
+     Also holds the illustration symbols: muscle maps (i-mm-front / i-mm-back, regions driven by
+     --mm-* custom properties) and body-journey figures (i-body-start / -now / -goal). -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <pattern id="mm-hatch" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <rect width="1.3" height="4" fill="#FFFFFF" fill-opacity=".45"/>
+    </pattern>
+    <g id="mm-base">
+      <circle cx="60" cy="18" r="12"/>
+      <rect x="54" y="28" width="12" height="10" rx="4"/>
+      <path d="M36 40Q60 34 84 40L88 62Q86 96 78 118H42Q34 96 32 62Z"/>
+      <rect x="18" y="44" width="15" height="40" rx="7.5"/><rect x="87" y="44" width="15" height="40" rx="7.5"/>
+      <rect x="14" y="85" width="12" height="38" rx="6"/><rect x="94" y="85" width="12" height="38" rx="6"/>
+      <circle cx="19" cy="128" r="6"/><circle cx="101" cy="128" r="6"/>
+      <path d="M42 116H78L82 138H38Z"/>
+      <rect x="38" y="134" width="20" height="54" rx="9"/><rect x="62" y="134" width="20" height="54" rx="9"/>
+      <rect x="40" y="188" width="16" height="42" rx="7"/><rect x="64" y="188" width="16" height="42" rx="7"/>
+      <ellipse cx="47" cy="233" rx="9" ry="4"/><ellipse cx="73" cy="233" rx="9" ry="4"/>
+    </g>
+    <g id="mmf-delts"><ellipse cx="33" cy="49" rx="9" ry="8"/><ellipse cx="87" cy="49" rx="9" ry="8"/></g>
+    <g id="mmf-chest"><path d="M59 46Q46 44 39 50Q38 62 44 68Q52 71 59 68Z"/><path d="M61 46Q74 44 81 50Q82 62 76 68Q68 71 61 68Z"/></g>
+    <g id="mmf-biceps"><ellipse cx="25.5" cy="67" rx="5.5" ry="13"/><ellipse cx="94.5" cy="67" rx="5.5" ry="13"/></g>
+    <g id="mmf-forearms"><ellipse cx="20" cy="103" rx="4.5" ry="13"/><ellipse cx="100" cy="103" rx="4.5" ry="13"/></g>
+    <g id="mmf-abs"><rect x="51" y="74" width="8" height="10" rx="3"/><rect x="61" y="74" width="8" height="10" rx="3"/><rect x="51" y="86" width="8" height="10" rx="3"/><rect x="61" y="86" width="8" height="10" rx="3"/><rect x="51" y="98" width="8" height="12" rx="3"/><rect x="61" y="98" width="8" height="12" rx="3"/></g>
+    <g id="mmf-obliques"><path d="M43 74L49 76V108L44 110Q40 92 43 74Z"/><path d="M77 74L71 76V108L76 110Q80 92 77 74Z"/></g>
+    <g id="mmf-quads"><ellipse cx="48" cy="161" rx="8" ry="23"/><ellipse cx="72" cy="161" rx="8" ry="23"/></g>
+    <g id="mmf-calves"><ellipse cx="48" cy="207" rx="5.5" ry="14"/><ellipse cx="72" cy="207" rx="5.5" ry="14"/></g>
+    <g id="mmb-traps"><path d="M60 36L76 45L60 68L44 45Z"/></g>
+    <g id="mmb-lats"><path d="M44 58Q37 72 42 98L56 89V67Z"/><path d="M76 58Q83 72 78 98L64 89V67Z"/></g>
+    <g id="mmb-lowerback"><rect x="52" y="92" width="16" height="22" rx="5"/></g>
+    <g id="mmb-glutes"><ellipse cx="50" cy="128" rx="10" ry="9"/><ellipse cx="70" cy="128" rx="10" ry="9"/></g>
+    <g id="mmb-hamstrings"><ellipse cx="48" cy="164" rx="8" ry="21"/><ellipse cx="72" cy="164" rx="8" ry="21"/></g>
+    <g id="mmb-calves"><ellipse cx="48" cy="205" rx="6.5" ry="15"/><ellipse cx="72" cy="205" rx="6.5" ry="15"/></g>
+  </defs>
+
+  <!-- illustration: muscle map, front -->
+  <symbol id="i-mm-front" viewBox="0 0 120 240">
+    <use href="#mm-base" style="fill:var(--mm-body)"/>
+    <use href="#mmf-delts" style="fill:var(--mm-delts,var(--mm-muscle))"/><use href="#mmf-delts" fill="url(#mm-hatch)" style="opacity:var(--mm-delts-x,0)"/>
+    <use href="#mmf-chest" style="fill:var(--mm-chest,var(--mm-muscle))"/><use href="#mmf-chest" fill="url(#mm-hatch)" style="opacity:var(--mm-chest-x,0)"/>
+    <use href="#mmf-biceps" style="fill:var(--mm-biceps,var(--mm-muscle))"/><use href="#mmf-biceps" fill="url(#mm-hatch)" style="opacity:var(--mm-biceps-x,0)"/>
+    <use href="#mmf-forearms" style="fill:var(--mm-forearms,var(--mm-muscle))"/><use href="#mmf-forearms" fill="url(#mm-hatch)" style="opacity:var(--mm-forearms-x,0)"/>
+    <use href="#mmf-abs" style="fill:var(--mm-abs,var(--mm-muscle))"/><use href="#mmf-abs" fill="url(#mm-hatch)" style="opacity:var(--mm-abs-x,0)"/>
+    <use href="#mmf-obliques" style="fill:var(--mm-obliques,var(--mm-muscle))"/><use href="#mmf-obliques" fill="url(#mm-hatch)" style="opacity:var(--mm-obliques-x,0)"/>
+    <use href="#mmf-quads" style="fill:var(--mm-quads,var(--mm-muscle))"/><use href="#mmf-quads" fill="url(#mm-hatch)" style="opacity:var(--mm-quads-x,0)"/>
+    <use href="#mmf-calves" style="fill:var(--mm-calves,var(--mm-muscle))"/><use href="#mmf-calves" fill="url(#mm-hatch)" style="opacity:var(--mm-calves-x,0)"/>
+  </symbol>
+  <!-- illustration: muscle map, back -->
+  <symbol id="i-mm-back" viewBox="0 0 120 240">
+    <use href="#mm-base" style="fill:var(--mm-body)"/>
+    <use href="#mmb-traps" style="fill:var(--mm-traps,var(--mm-muscle))"/><use href="#mmb-traps" fill="url(#mm-hatch)" style="opacity:var(--mm-traps-x,0)"/>
+    <use href="#mmf-delts" style="fill:var(--mm-delts,var(--mm-muscle))"/><use href="#mmf-delts" fill="url(#mm-hatch)" style="opacity:var(--mm-delts-x,0)"/>
+    <use href="#mmb-lats" style="fill:var(--mm-lats,var(--mm-muscle))"/><use href="#mmb-lats" fill="url(#mm-hatch)" style="opacity:var(--mm-lats-x,0)"/>
+    <use href="#mmf-biceps" style="fill:var(--mm-triceps,var(--mm-muscle))"/><use href="#mmf-biceps" fill="url(#mm-hatch)" style="opacity:var(--mm-triceps-x,0)"/>
+    <use href="#mmf-forearms" style="fill:var(--mm-forearms,var(--mm-muscle))"/><use href="#mmf-forearms" fill="url(#mm-hatch)" style="opacity:var(--mm-forearms-x,0)"/>
+    <use href="#mmb-lowerback" style="fill:var(--mm-lowerback,var(--mm-muscle))"/><use href="#mmb-lowerback" fill="url(#mm-hatch)" style="opacity:var(--mm-lowerback-x,0)"/>
+    <use href="#mmb-glutes" style="fill:var(--mm-glutes,var(--mm-muscle))"/><use href="#mmb-glutes" fill="url(#mm-hatch)" style="opacity:var(--mm-glutes-x,0)"/>
+    <use href="#mmb-hamstrings" style="fill:var(--mm-hamstrings,var(--mm-muscle))"/><use href="#mmb-hamstrings" fill="url(#mm-hatch)" style="opacity:var(--mm-hamstrings-x,0)"/>
+    <use href="#mmb-calves" style="fill:var(--mm-calves,var(--mm-muscle))"/><use href="#mmb-calves" fill="url(#mm-hatch)" style="opacity:var(--mm-calves-x,0)"/>
+  </symbol>
+  <!-- illustration: body journey figures (fill = currentColor via CSS) -->
+  <symbol id="i-body-start" viewBox="0 0 44 96"><circle cx="22" cy="9" r="7"/><rect x="8" y="18" width="28" height="36" rx="11"/><rect x="1.5" y="21" width="5.5" height="29" rx="2.75"/><rect x="37" y="21" width="5.5" height="29" rx="2.75"/><rect x="11" y="50" width="10" height="42" rx="5"/><rect x="23" y="50" width="10" height="42" rx="5"/></symbol>
+  <symbol id="i-body-now" viewBox="0 0 44 96"><circle cx="22" cy="9" r="7"/><rect x="10" y="18" width="24" height="36" rx="9"/><rect x="3.5" y="21" width="5" height="29" rx="2.5"/><rect x="35.5" y="21" width="5" height="29" rx="2.5"/><rect x="12.5" y="50" width="9" height="42" rx="4.5"/><rect x="22.5" y="50" width="9" height="42" rx="4.5"/></symbol>
+  <symbol id="i-body-goal" viewBox="0 0 44 96"><circle cx="22" cy="9" r="7"/><rect x="12" y="18" width="20" height="36" rx="7"/><rect x="5.5" y="21" width="5" height="29" rx="2.5"/><rect x="33.5" y="21" width="5" height="29" rx="2.5"/><rect x="13.5" y="50" width="8.5" height="42" rx="4.25"/><rect x="22" y="50" width="8.5" height="42" rx="4.25"/></symbol>
+
+  <!-- navigation -->
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></symbol>
+  <symbol id="i-dumbbell" viewBox="0 0 24 24"><path d="M6 7v10M18 7v10M3 9.5v5M21 9.5v5M6 12h12"/></symbol>
+  <symbol id="i-utensils" viewBox="0 0 24 24"><path d="M7 3v8M4.5 3v5a2.5 2.5 0 0 0 5 0V3M7 11v10M17 3c-2.2 1-3.5 3.3-3.5 6.5V13H17M17 3v18"/></symbol>
+  <symbol id="i-body" viewBox="0 0 24 24"><circle cx="12" cy="4.5" r="2"/><path d="M5 8.5h14M12 8.5V14M12 14l-3 7M12 14l3 7"/></symbol>
+  <symbol id="i-habits" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 2.7 2.7L16 9.8"/></symbol>
+  <symbol id="i-settings" viewBox="0 0 24 24"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></symbol>
+  <symbol id="i-back" viewBox="0 0 24 24"><path d="M20 12H5M11 5l-7 7 7 7"/></symbol>
+  <symbol id="i-chevron-right" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></symbol>
+  <symbol id="i-chevron-left" viewBox="0 0 24 24"><path d="m15 6-6 6 6 6"/></symbol>
+  <symbol id="i-chevron-down" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="i-more-v" viewBox="0 0 24 24"><circle cx="12" cy="5" r="1.6" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.6" fill="currentColor" stroke="none"/><circle cx="12" cy="19" r="1.6" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></symbol>
+  <!-- actions -->
+  <symbol id="i-close" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
+  <symbol id="i-edit" viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="m13.5 6.5 4 4"/></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8.5" y="8.5" width="12" height="12" rx="2"/><path d="M15.5 8.5v-3a2 2 0 0 0-2-2h-8a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h3"/></symbol>
+  <symbol id="i-swap" viewBox="0 0 24 24"><path d="M7 4 3.5 7.5 7 11M3.5 7.5H17M17 13l3.5 3.5L17 20M20.5 16.5H7"/></symbol>
+  <symbol id="i-share" viewBox="0 0 24 24"><circle cx="18" cy="5.5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="18.5" r="2.5"/><path d="m8.2 13.2 7.6 4.1M15.8 6.7l-7.6 4.1"/></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></symbol>
+  <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 20V9M7 14l5-5 5 5M5 4h14"/></symbol>
+  <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 11a8 8 0 0 0-14.3-4.5L4 8.5M4 4v4.5h4.5M4 13a8 8 0 0 0 14.3 4.5l1.7-2M20 20v-4.5h-4.5"/></symbol>
+  <symbol id="i-filter" viewBox="0 0 24 24"><path d="M4 5h16l-6 7.5V19l-4 1.5v-8z"/></symbol>
+  <symbol id="i-grip" viewBox="0 0 24 24"><circle cx="9" cy="6" r="1.4" fill="currentColor" stroke="none"/><circle cx="15" cy="6" r="1.4" fill="currentColor" stroke="none"/><circle cx="9" cy="12" r="1.4" fill="currentColor" stroke="none"/><circle cx="15" cy="12" r="1.4" fill="currentColor" stroke="none"/><circle cx="9" cy="18" r="1.4" fill="currentColor" stroke="none"/><circle cx="15" cy="18" r="1.4" fill="currentColor" stroke="none"/></symbol>
+  <!-- media & time -->
+  <symbol id="i-play" viewBox="0 0 24 24"><path d="M7 5v14l11-7z" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-pause" viewBox="0 0 24 24"><path d="M8 5v14M16 5v14"/></symbol>
+  <symbol id="i-timer" viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2M10 2.5h4M18.5 6l1.5-1.5"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M8 3v4M16 3v4M3.5 10h17"/></symbol>
+  <symbol id="i-history" viewBox="0 0 24 24"><path d="M3.5 12a8.5 8.5 0 1 0 2.5-6L3.5 8.5M3.5 4v4.5H8M12 8v4l3 2"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 10a6 6 0 0 1 12 0c0 6 2.5 7.5 2.5 7.5h-17S6 16 6 10M10 20.5a2.2 2.2 0 0 0 4 0"/></symbol>
+  <!-- domain -->
+  <symbol id="i-droplet" viewBox="0 0 24 24"><path d="M12 3s6.5 6.8 6.5 11.5a6.5 6.5 0 0 1-13 0C5.5 9.8 12 3 12 3z"/></symbol>
+  <symbol id="i-flame" viewBox="0 0 24 24"><path d="M12 21c-4 0-6.5-2.6-6.5-6.2 0-3.4 2.6-5.6 3.6-8.8 1.8 1.4 2.6 3.2 2.6 4.6 1-1 1.6-2.4 1.6-4.1 2.8 2 5.2 5.2 5.2 8.5 0 3.6-2.5 6-6.5 6z"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"/></symbol>
+  <symbol id="i-scale" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="4"/><path d="M8.5 10a4.5 4.5 0 0 1 7 0M12 10l1.5-2"/></symbol>
+  <symbol id="i-ruler" viewBox="0 0 24 24"><rect x="2.5" y="8" width="19" height="8" rx="1.5"/><path d="M6.5 8v3M10 8v4.5M13.5 8v3M17 8v4.5"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24"><path d="M3 20h18M6 20v-8M11 20V5M16 20v-5"/></symbol>
+  <symbol id="i-trend-down" viewBox="0 0 24 24"><path d="m3 7 7 7 4-4 7 7M21 12v5h-5"/></symbol>
+  <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1" fill="currentColor"/></symbol>
+  <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2.5 4.5 13.5H12l-1 8 8.5-11H12z"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 5.5a2 2 0 0 1 2-2h13v15H6a2 2 0 0 0-2 2zM4 20.5v-15M8 7.5h7"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><path d="m12 3 2.8 5.8 6.2.9-4.5 4.4 1.1 6.2L12 17.3l-5.6 3 1.1-6.2L3 9.7l6.2-.9z"/></symbol>
+  <symbol id="i-camera" viewBox="0 0 24 24"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></symbol>
+  <symbol id="i-image" viewBox="0 0 24 24"><rect x="3.5" y="4.5" width="17" height="15" rx="2"/><circle cx="9" cy="10" r="1.5"/><path d="m20.5 16-5-5-9 8.5"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4.5 20.5a7.5 7.5 0 0 1 15 0"/></symbol>
+  <!-- system -->
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="4.5" y="10.5" width="15" height="10" rx="2"/><path d="M8 10.5v-3a4 4 0 0 1 8 0v3"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3 4.5 6v5.5c0 4.6 3.2 8 7.5 9.5 4.3-1.5 7.5-4.9 7.5-9.5V6z"/></symbol>
+  <symbol id="i-cloud-off" viewBox="0 0 24 24"><path d="M3 3l18 18M8.5 7.2A5.5 5.5 0 0 1 17 10.5h.5a3.5 3.5 0 0 1 2.4 6M16 19H7.5a4.5 4.5 0 0 1-1.9-8.6"/></symbol>
+  <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z"/><circle cx="12" cy="12" r="3"/></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 3.5 21.5 20h-19z"/><path d="M12 10v4.5M12 17.2h.01"/></symbol>
+  <symbol id="i-list" viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11M4.5 6h.01M4.5 12h.01M4.5 18h.01"/></symbol>
+</svg>
+
+<p><a href="index.html">بازگشت به سیستم طراحی</a></p>
+<h1>آیکون‌های FitOS</h1>
+<p class="lede">اسپرایت SVG درون‌خطی با توکن: <code>stroke:currentColor</code> و ضخامت <code>--icon-stroke</code>. هندسه اختصاصی به سبک Material Symbols و Lucide. آیکون‌های جهت‌دار با کلاس <code>ico--dir</code> در راست‌چین قرینه می‌شوند. ایموجی هیچ‌وقت آیکون رابط نیست.</p>
+<div class="controls">
+  <label>ضخامت <input type="range" min="1" max="3" step="0.1" value="1.8" oninput="document.documentElement.style.setProperty('--icon-stroke',this.value)"></label>
+  <label>اندازه <input type="range" min="16" max="40" step="2" value="28" oninput="document.documentElement.style.setProperty('--icon-large',this.value+'px')"></label>
+  <select id="themeSel" aria-label="پوسته"><option value="light">روشن</option><option value="dark">تیره</option></select>
+</div>
+<div class="grid" id="grid"></div>
+<script>
+const ICONS=['home','dumbbell','utensils','body','habits','settings','menu','back','chevron-right','chevron-left','chevron-down','more-v','search','close','check','plus','minus','edit','trash','copy','swap','share','download','upload','refresh','filter','grip','play','pause','timer','clock','calendar','history','bell','droplet','flame','moon','sun','scale','ruler','chart','trend-down','target','bolt','book','star','camera','image','user','lock','shield','cloud-off','eye','info','alert','list'];
+const DIR=new Set(['back','chevron-right','chevron-left']);
+grid.innerHTML=ICONS.map(n=>`<div class="tile"><svg class="ico ico--lg${DIR.has(n)?' ico--dir':''}"><use href="#i-${n}"/></svg><div class="name">i-${n}</div></div>`).join('');
+</script>
+</body>
+</html>
