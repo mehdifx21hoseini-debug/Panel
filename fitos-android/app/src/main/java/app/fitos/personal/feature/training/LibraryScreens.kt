@@ -19,6 +19,7 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -35,6 +36,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
@@ -42,6 +44,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewModelScope
 import app.fitos.core.designsystem.component.BodySide
+import app.fitos.core.designsystem.component.ChartPoint
 import app.fitos.core.designsystem.component.FitCard
 import app.fitos.core.designsystem.component.FitChips
 import app.fitos.core.designsystem.component.FitNote
@@ -51,40 +54,40 @@ import app.fitos.core.designsystem.component.FitSecondaryButton
 import app.fitos.core.designsystem.component.FitTextButton
 import app.fitos.core.designsystem.component.FitTextField
 import app.fitos.core.designsystem.component.MuscleMap
+import app.fitos.core.designsystem.component.TrendChart
 import app.fitos.core.designsystem.component.bestSide
 import app.fitos.core.designsystem.icon.FitIcons
 import app.fitos.core.designsystem.theme.FitSpacing
 import app.fitos.core.designsystem.theme.FitTheme
 import app.fitos.core.domain.format.PersianNumbers
+import app.fitos.core.domain.time.DateFormats
 import app.fitos.core.domain.training.Equipment
 import app.fitos.core.domain.training.Exercise
 import app.fitos.core.domain.training.ExerciseFilter
 import app.fitos.core.domain.training.ExerciseInput
+import app.fitos.core.domain.training.ExercisePerformance
 import app.fitos.core.domain.training.ExerciseRepository
 import app.fitos.core.domain.training.LogType
 import app.fitos.core.domain.training.Muscle
+import app.fitos.core.domain.training.PersonalRecord
 import app.fitos.core.domain.training.ProgramRepository
+import app.fitos.core.domain.training.RecordType
+import app.fitos.core.domain.training.Strength
 import app.fitos.core.domain.training.TrainingRules
 import app.fitos.core.domain.training.TrainingRules.ExerciseProblem
 import app.fitos.core.domain.training.VariantKind
 import app.fitos.core.domain.training.WorkoutRepository
-import app.fitos.core.domain.training.ExercisePerformance
-import app.fitos.core.domain.training.PersonalRecord
-import app.fitos.core.domain.training.RecordType
-import app.fitos.core.domain.training.Strength
-import app.fitos.core.designsystem.component.ChartPoint
-import app.fitos.core.designsystem.component.TrendChart
-import app.fitos.core.domain.time.DateFormats
-import app.fitos.personal.feature.session.recordText
-import app.fitos.personal.feature.session.setText
-import androidx.compose.material3.HorizontalDivider
-import java.time.LocalDate
-import kotlin.math.roundToInt
 import app.fitos.personal.R
 import app.fitos.personal.feature.profile.FieldLabel
+import app.fitos.personal.feature.session.recordText
+import app.fitos.personal.feature.session.setText
 import app.fitos.personal.ui.EditScaffold
+import app.fitos.personal.ui.ExerciseAnimation
+import app.fitos.personal.ui.ExerciseAnimations
 import app.fitos.personal.ui.Fmt
 import app.fitos.personal.ui.SectionTitle
+import java.time.LocalDate
+import kotlin.math.roundToInt
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -317,6 +320,13 @@ fun ExerciseDetailScreen(viewModel: ExerciseDetailViewModel, onBack: () -> Unit,
 
     EditScaffold(title = exercise?.nameFa.orEmpty(), onBack = onBack) {
         val e = exercise ?: return@EditScaffold
+        val context = LocalContext.current
+        if (ExerciseAnimations.has(context, e.builtinKey)) {
+            FitCard {
+                ExerciseAnimation(e.builtinKey!!, e.nameFa)
+                Text(stringResource(R.string.exercise_animation_hint), style = MaterialTheme.typography.bodySmall, color = colors.subtle)
+            }
+        }
         FitCard {
             Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(FitSpacing.s24, Alignment.CenterHorizontally)) {
                 MuscleMap(BodySide.FRONT, e.primary, e.secondary, width = 80.dp)

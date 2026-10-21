@@ -58,14 +58,18 @@ import app.fitos.core.designsystem.theme.FitTheme
 import app.fitos.core.designsystem.theme.numeralStyle
 import app.fitos.core.domain.body.WeightEntry
 import app.fitos.core.domain.format.PersianNumbers
+import app.fitos.core.domain.habits.Habit
 import app.fitos.core.domain.habits.HabitKind
 import app.fitos.core.domain.habits.LifestyleRules
 import app.fitos.core.domain.habits.Outcome
+import app.fitos.core.domain.nutrition.Meal
 import app.fitos.core.domain.nutrition.NutrientTotals
 import app.fitos.core.domain.nutrition.NutritionTarget
 import app.fitos.core.domain.profile.WeightGoal
 import app.fitos.core.domain.time.DateFormats
 import app.fitos.core.domain.time.JalaliCalendar
+import app.fitos.core.domain.today.DayScore
+import app.fitos.core.domain.today.NextAction
 import app.fitos.core.domain.training.EasyStart
 import app.fitos.core.domain.training.ReturnChoice
 import app.fitos.core.domain.training.ReturnEvent
@@ -74,15 +78,17 @@ import app.fitos.personal.R
 import app.fitos.personal.feature.body.WeightEntrySheet
 import app.fitos.personal.feature.habits.CheckCircle
 import app.fitos.personal.feature.habits.HabitRow
+import app.fitos.personal.feature.habits.SleepSheet
 import app.fitos.personal.feature.habits.emojiIcon
 import app.fitos.personal.feature.habits.statusLine
 import app.fitos.personal.ui.Fmt
 import java.time.LocalDate
 import java.time.LocalTime
 import kotlin.math.roundToInt
+import kotlinx.coroutines.delay
 
 /** The six daily modules, in plate order from the collar outwards. */
-private enum class Module(@param:StringRes val label: Int, val emoji: FitEmoji, val color: (FitColors) -> CategoryColor) {
+internal enum class Module(@param:StringRes val label: Int, val emoji: FitEmoji, val color: (FitColors) -> CategoryColor) {
     Training(R.string.module_training, FitEmoji.LIFTING, { it.training }),
     Calories(R.string.module_calories, FitEmoji.FIRE, { it.calories }),
     Protein(R.string.module_protein, FitEmoji.POULTRY, { it.protein }),
@@ -107,11 +113,24 @@ fun HomeScreen(
     onOpenSession: () -> Unit,
     onOpenHabits: () -> Unit,
     onOpenBackup: () -> Unit,
+    onLogFood: (Meal) -> Unit,
 ) {
     LaunchedEffect(today) { viewModel.setToday(today) }
     val state by viewModel.state.collectAsStateWithLifecycle()
     val day by viewModel.day.collectAsStateWithLifecycle()
     var logging by remember { mutableStateOf(false) }
+    var loggingSleep by remember { mutableStateOf(false) }
+    var details by remember { mutableStateOf(false) }
+    // The suggestion depends on the time of day, so it is looked at again every minute.
+    var time by remember { mutableStateOf(now()) }
+    LaunchedEffect(Unit) {
+        while (true) {
+            delay(60_000)
+            time = now()
+        }
+    }
+    val score = remember(state, day) { dayScore(state, day) }
+    val next = remember(state, day, time) { nextAction(state, day, time) }
     HomeContent(
         state, day, today, onOpenSettings, onOpenTargets, onOpenWorkout, onOpenTraining, onOpenSession, onLogWeight = { logging = true },
         onToggleHabit = viewModel::toggleHabit,
@@ -119,7 +138,19 @@ fun HomeScreen(
         onChooseReturn = viewModel::chooseReturn,
         onOpenHabits = onOpenHabits,
         onOpenBackup = onOpenBackup,
+        today7 = Today7(score, next, Meal.at(time), onDetails = { details = true }, onLogSleep = { loggingSleep = true }, onLogFood = { onLogFood(Meal.at(time)) }, onHabitDone = viewModel::completeHabit),
     )
+    if (details && score != null) DayScoreSheet(score, onDismiss = { details = false })
+    if (loggingSleep) {
+        SleepSheet(
+            day = today, existing = null, onDismiss = { loggingSleep = false },
+            onSave = { bed, wake, quality, note ->
+                viewModel.saveSleep(bed, wake, quality, note)
+                loggingSleep = false
+            },
+            onDelete = null,
+        )
+    }
     if (logging) {
         WeightEntrySheet(
             editing = null,
@@ -151,6 +182,7 @@ private fun HomeContent(
     onChooseReturn: (ReturnEvent, ReturnChoice) -> Unit,
     onOpenHabits: () -> Unit,
     onOpenBackup: () -> Unit,
+    today7: Today7,
 ) {
     val colors = FitTheme.colors
     val week = remember(today) { weekOf(today) }
@@ -188,7 +220,27 @@ private fun HomeContent(
             Modifier.padding(horizontal = FitSpacing.gutter),
             verticalArrangement = Arrangement.spacedBy(FitSpacing.gapSection),
         ) {
-            TodayLoadCard(trainingDone = state.training?.doneToday == true, eaten = state.eaten, target = state.target, day = day, modifier = Modifier.pullUp(56.dp))
+            TodayCard(today7.score, onDetails = today7.onDetails, modifier = Modifier.pullUp(56.dp))
+            val training = state.training
+            val startWorkout = {
+                when {
+                    training?.open != null -> onOpenSession()
+                    training?.programId != null && training.next != null -> onOpenWorkout(training.programId, training.next.id)
+                    else -> onOpenTraining()
+                }
+            }
+            today7.next?.let { next ->
+                NextActionCard(
+                    next, training?.next?.name, today7.meal, state.eaten?.proteinG, state.target?.proteinG,
+                    onResume = onOpenSession, onLogWeight = onLogWeight, onLogSleep = today7.onLogSleep, onStartWorkout = startWorkout,
+                    onLogFood = today7.onLogFood, onAddWater = onAddWater,
+                    onHabitDone = { (next as? NextAction.DoHabit)?.let { today7.onHabitDone(it.habit) } },
+                )
+            }
+            QuickLogCard(
+                onWater = { onAddWater(LifestyleRules.GLASS_ML) }, onWeight = onLogWeight, onFood = today7.onLogFood,
+                onHabits = onOpenHabits, onWorkout = startWorkout,
+            )
             day.returnEvent?.let { ReturnCard(it, onChooseReturn) }
             state.training?.let { TrainingCard(it, onOpenWorkout, onOpenTraining, onOpenSession) }
             if (day.loaded) HabitsTodayCard(day, onToggleHabit, onAddWater, onOpenHabits)
@@ -196,66 +248,6 @@ private fun HomeContent(
             WeightCard(state.latestWeight, state.goal, onLogWeight)
             day.backupDueDays?.let { BackupDueCard(it, onOpenBackup) }
             Spacer(Modifier.height(FitSpacing.s16))
-        }
-    }
-}
-
-@Composable
-private fun TodayLoadCard(trainingDone: Boolean, eaten: NutrientTotals?, target: NutritionTarget?, day: HomeDay, modifier: Modifier = Modifier) {
-    val colors = FitTheme.colors
-    // Only real logs fill a plate: a finished session today; calories, protein, water and last
-    // night's sleep against today's targets; and the share of today's habits done (each capped at
-    // a full plate). The full day score, with tolerances, is stage 7.
-    fun share(value: Number?, of: Number?): Float =
-        if (value != null && of != null && of.toDouble() > 0) (value.toDouble() / of.toDouble()).toFloat().coerceIn(0f, 1f) else 0f
-    fun fraction(module: Module): Float = when (module) {
-        Module.Training -> if (trainingDone) 1f else 0f
-        Module.Calories -> share(eaten?.kcal, target?.kcal)
-        Module.Protein -> share(eaten?.proteinG, target?.proteinG)
-        Module.Water -> share(day.waterMl, target?.waterMl)
-        Module.Sleep -> share(day.sleepMinutes, target?.sleepMinutes)
-        Module.Habits -> share(day.habitsDone, day.habitsCounted.size)
-    }
-    val percent = PersianNumbers.digits((Module.entries.sumOf { fraction(it).toDouble() } * 100 / Module.entries.size).toInt().toString()) + "٪"
-    FitCard(modifier, hero = true) {
-        Row(verticalAlignment = Alignment.Bottom) {
-            Column(Modifier.weight(1f)) {
-                Text(stringResource(R.string.home_today_load), style = MaterialTheme.typography.titleMedium)
-                Text(stringResource(R.string.home_today_load_hint), style = MaterialTheme.typography.bodySmall, color = colors.subtle)
-            }
-            Text(percent, style = MaterialTheme.typography.displayMedium, color = colors.primary)
-        }
-        PlateMeter(
-            plates = Module.entries.map { Plate(fraction = fraction(it), color = it.color(colors).fill) },
-            description = stringResource(R.string.home_meter_description, percent),
-        )
-        Module.entries.chunked(3).forEach { row ->
-            Row(horizontalArrangement = Arrangement.spacedBy(FitSpacing.gapRelated)) {
-                row.forEach { module ->
-                    Row(
-                        Modifier.weight(1f),
-                        horizontalArrangement = Arrangement.spacedBy(6.dp),
-                        verticalAlignment = Alignment.CenterVertically,
-                    ) {
-                        EmojiTile(module.emoji, size = 32.dp, tint = module.color(colors).container)
-                        Column {
-                            Text(stringResource(module.label), style = MaterialTheme.typography.bodySmall, color = colors.subtle)
-                            val status = when {
-                                module == Module.Training && trainingDone -> stringResource(R.string.home_done)
-                                // The plate shows the share of the target; the tile says how much.
-                                module == Module.Calories && eaten != null -> Fmt.int(eaten.kcal.roundToInt())
-                                module == Module.Protein && eaten != null -> stringResource(R.string.grams_value, Fmt.int(eaten.proteinG.roundToInt()))
-                                module == Module.Water && day.waterMl != null -> stringResource(R.string.amount_liters, Fmt.liters(day.waterMl))
-                                module == Module.Sleep && day.sleepMinutes != null -> stringResource(R.string.home_sleep_status, Fmt.hours(day.sleepMinutes))
-                                module == Module.Habits && day.habitsCounted.isNotEmpty() ->
-                                    stringResource(R.string.home_habits_status, Fmt.int(day.habitsDone), Fmt.int(day.habitsCounted.size))
-                                else -> stringResource(R.string.home_not_logged)
-                            }
-                            Text(status, style = MaterialTheme.typography.labelLarge, color = colors.onSurface, maxLines = 1)
-                        }
-                    }
-                }
-            }
         }
     }
 }
@@ -406,6 +398,17 @@ private fun WeightCard(latest: WeightEntry?, goal: WeightGoal?, onLog: () -> Uni
         FitSecondaryButton(stringResource(R.string.home_log_weight), onClick = onLog, icon = FitIcons.Plus, modifier = Modifier.fillMaxWidth())
     }
 }
+
+/** Stage 7 on Home: the day's score, the next thing to do and what opens from them. */
+internal data class Today7(
+    val score: DayScore?,
+    val next: NextAction?,
+    val meal: Meal,
+    val onDetails: () -> Unit,
+    val onLogSleep: () -> Unit,
+    val onLogFood: () -> Unit,
+    val onHabitDone: (Habit) -> Unit,
+)
 
 private fun weekOf(today: LocalDate): List<WeekDay> {
     val start = JalaliCalendar.startOfWeek(today)

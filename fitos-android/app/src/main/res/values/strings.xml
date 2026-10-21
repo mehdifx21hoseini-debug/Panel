@@ -10,8 +10,6 @@
 
     <string name="home_greeting">سلام</string>
     <string name="home_settings">تنظیمات</string>
-    <string name="home_today_load">بار امروز</string>
-    <string name="home_today_load_hint">هر هدف کامل، یک وزنه کامل</string>
     <string name="home_meter_description">پیشرفت امروز %1$s.</string>
     <string name="home_not_logged">ثبت نشده</string>
     <string name="home_done">انجام شد</string>

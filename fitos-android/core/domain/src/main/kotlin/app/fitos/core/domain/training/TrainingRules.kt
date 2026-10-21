@@ -85,6 +85,26 @@ object Schedule {
 
     /** The program day planned for [weekday] (rest days included), for the week view. */
     fun dayOn(program: Program, weekday: DayOfWeek): ProgramDay? = program.days.firstOrNull { it.preferredWeekday == weekday }
+
+    /**
+     * Whether [today] is meant for training. Weekday mode: today's weekday has a training day.
+     * Sequence mode: yes, unless the last session was 1..n days ago and the n days after it in
+     * the sequence are rest days (a missed session is never skipped, so later days count).
+     */
+    fun isTrainingDay(program: Program, last: CompletedDay?, today: LocalDate): Boolean {
+        if (program.trainingDays.isEmpty()) return false
+        return when (program.scheduleMode) {
+            ScheduleMode.WEEKDAYS -> program.trainingDays.any { it.preferredWeekday == today.dayOfWeek }
+            ScheduleMode.SEQUENCE -> {
+                val index = program.days.indexOfFirst { it.id == last?.dayId }
+                if (last == null || index == -1) return true
+                val since = java.time.temporal.ChronoUnit.DAYS.between(last.date, today)
+                if (since <= 0) return true
+                val restAfter = (1..program.days.size).takeWhile { program.days[(index + it) % program.days.size].isRest }.size
+                since > restAfter
+            }
+        }
+    }
 }
 
 /** Planned hard sets per muscle: a primary muscle counts 1 per set, a secondary one 0.5. */

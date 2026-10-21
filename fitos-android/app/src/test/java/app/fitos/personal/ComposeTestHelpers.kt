@@ -1,5 +1,7 @@
 package app.fitos.personal
 
+import androidx.compose.ui.semantics.SemanticsActions
+import androidx.compose.ui.semantics.getOrNull
 import androidx.compose.ui.test.SemanticsMatcher
 import androidx.compose.ui.test.SemanticsNodeInteraction
 import androidx.compose.ui.test.hasClickAction
@@ -32,6 +34,9 @@ private fun ComposeTestRule.scrollListsTo(matcher: SemanticsMatcher): Boolean {
 }
 
 fun ComposeTestRule.waitForText(text: String) = waitFor(hasText(text))
+
+/** A clickable node by the label it gives its click action (onClickLabel). */
+fun hasClickLabel(label: String) = SemanticsMatcher("click label '$label'") { it.config.getOrNull(SemanticsActions.OnClick)?.label == label }
 fun ComposeTestRule.waitForDescription(text: String, substring: Boolean = false) = waitFor(hasContentDescription(text, substring = substring))
 
 /** An editable text field by its label. */

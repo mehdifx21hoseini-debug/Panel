@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Exercise animations -->
+    <string name="exercise_animation">نمایش سه‌بعدی حرکت %1$s</string>
+    <string name="exercise_animation_playing">در حال پخش</string>
+    <string name="exercise_animation_paused">متوقف</string>
+    <string name="exercise_animation_pause">توقف نمایش</string>
+    <string name="exercise_animation_play">پخش نمایش</string>
+    <string name="exercise_animation_hint">برای توقف یا پخش، روی نمایش بزن.</string>
+    <!-- Today: the day's completion -->
+    <string name="today_title">امروز</string>
+    <string name="today_hint">میانگین موارد امروز · برای جزئیات بزن</string>
+    <string name="today_details_label">جزئیات درصد امروز</string>
+    <string name="today_details_title">درصد امروز از کجا می‌آید</string>
+    <string name="today_details_rule">درصد روز میانگین مواردی است که امروز حساب می‌شوند. موردی که ثبت نشده صفر حساب می‌شود؛ هیچ‌وقت انجام‌شده فرض نمی‌شود.</string>
+    <string name="today_not_counted">حساب نمی‌شود</string>
+    <!-- Short forms for the small tiles of the Today card -->
+    <string name="today_tile_rest">استراحت</string>
+    <string name="today_tile_no_program">بدون برنامه</string>
+    <string name="today_tile_no_habits">بدون عادت</string>
+    <string name="today_tile_no_target">بدون هدف</string>
+    <string name="today_rest_day">روز استراحت</string>
+    <string name="today_no_program">هنوز برنامه‌ی تمرینی نداری</string>
+    <string name="today_no_target">هدفی تعیین نشده</string>
+    <string name="today_no_habits">عادتی برای امروز نیست</string>
+    <string name="today_planned_not_done">روز تمرین؛ هنوز انجام نشده</string>
+    <string name="today_done_full">انجام شد</string>
+    <string name="today_done_home">انجام شد (نسخه‌ی کوتاه خانگی)</string>
+    <string name="today_done_minimal">انجام شد (نسخه‌ی حداقلی)</string>
+    <string name="today_kcal_line">%1$s از %2$s کیلوکالری · کامل بین %3$s و %4$s</string>
+    <string name="today_protein_line">%1$s از %2$s گرم</string>
+    <string name="today_water_line">%1$s از %2$s لیتر</string>
+    <string name="today_sleep_line">%1$s از %2$s ساعت، شب گذشته</string>
+    <string name="today_habits_line">%1$s از %2$s عادت امروز</string>
+    <string name="today_kcal_over">بیش از بازه؛ امتیاز کم می‌شود</string>
+
+    <!-- Today: what to do next -->
+    <string name="next_title">کار بعدی</string>
+    <string name="next_resume">جلسه‌ی نیمه‌تمام را ادامه بده</string>
+    <string name="next_resume_body">همه‌ی ست‌ها ذخیره شده‌اند.</string>
+    <string name="next_resume_action">ادامه‌ی جلسه</string>
+    <string name="next_weight">وزن امروز را ثبت کن</string>
+    <string name="next_weight_body">صبح، بعد از دستشویی و قبل از صبحانه، قابل‌مقایسه‌ترین وزن است.</string>
+    <string name="next_sleep">خواب دیشب را ثبت کن</string>
+    <string name="next_sleep_body">ساعت خوابیدن و بیدار شدن کافی است.</string>
+    <string name="next_sleep_action">ثبت خواب</string>
+    <string name="next_workout">امروز روز تمرین است: %1$s</string>
+    <string name="next_workout_body">جلسه را باز کن و نسخه‌ی مناسب امروز را انتخاب کن.</string>
+    <string name="next_workout_action">باز کردن جلسه</string>
+    <string name="next_food">هنوز غذایی برای امروز ثبت نشده</string>
+    <string name="next_food_body">%1$s را از جست‌وجو، اخیرها یا وعده‌های ذخیره‌شده اضافه کن.</string>
+    <string name="next_food_protein">پروتئین عقب است: %1$s از %2$s گرم</string>
+    <string name="next_food_protein_body">یک وعده یا میان‌وعده‌ی پروتئینی اضافه کن.</string>
+    <string name="next_food_action">ثبت %1$s</string>
+    <string name="next_food_action_any">ثبت غذا</string>
+    <string name="next_water">آب: حدود %1$s میلی‌لیتر از برنامه‌ی امروز عقبی</string>
+    <string name="next_water_body">اگر آب را از ۷ صبح تا ۹ شب پخش کنی، تا الان باید این مقدار را خورده بودی.</string>
+    <string name="next_habit">%1$s</string>
+    <string name="next_habit_body">عادت امروز که هنوز انجام نشده.</string>
+    <string name="next_habit_action">انجام شد</string>
+    <string name="next_done">برای امروز همه‌چیز سر جایش است</string>
+    <string name="next_done_body">هر وقت چیز تازه‌ای انجام دادی، ثبتش کن.</string>
+
+    <!-- Today: quick logs -->
+    <string name="quick_title">ثبت سریع</string>
+    <string name="quick_water">آب</string>
+    <string name="quick_weight">وزن</string>
+    <string name="quick_food">غذا</string>
+    <string name="quick_habit">عادت</string>
+    <string name="quick_workout">تمرین</string>
+    <string name="quick_water_description">افزودن یک لیوان آب، %1$s میلی‌لیتر</string>
+</resources>

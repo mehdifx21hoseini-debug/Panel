@@ -144,10 +144,13 @@ class SessionUiTest {
         compose.waitForDescription("بازگشت").performClick()
         compose.waitForText("پایین‌تنه")
         compose.waitForDescription("جلسه‌ی امروز ثبت شد")
-        // Home now counts the training plate as done.
+        // Home now counts the training plate as done, at its full share.
         compose.onNode(hasText("خانه") and isSelectable()).performClick()
-        compose.waitForDescription("پیشرفت امروز ۱۶٪.")
+        compose.waitForDescription("پیشرفت امروز", substring = true)
         compose.waitForText("انجام شد")
+        compose.waitFor(hasClickLabel("جزئیات درصد امروز")).performClick()
+        compose.waitForText("درصد امروز از کجا می‌آید")
+        compose.waitFor(hasText("تمرین") and hasText("انجام شد") and hasText("۱۰۰٪")).assertExists()
     }
 
     @Test

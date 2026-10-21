@@ -81,6 +81,8 @@ import app.fitos.personal.R
 import app.fitos.personal.feature.home.easyText
 import app.fitos.personal.feature.training.label
 import app.fitos.personal.feature.training.muscleNames
+import app.fitos.personal.ui.ExerciseAnimation
+import app.fitos.personal.ui.ExerciseAnimations
 import app.fitos.personal.ui.Fmt
 import java.time.Clock
 import java.time.Duration
@@ -360,9 +362,13 @@ private fun ExerciseHeader(session: WorkoutSession, index: Int, item: SessionExe
             MuscleMap(bestSide(e.primary, e.secondary), e.primary, e.secondary, width = 44.dp)
         }
         item.note?.let { Text(it, style = MaterialTheme.typography.bodySmall, color = colors.onSurfaceVariant) }
-        e.instructions?.let { text ->
+        val animated = ExerciseAnimations.has(LocalContext.current, e.builtinKey)
+        if (e.instructions != null || animated) {
             FitTextButton(stringResource(R.string.session_guide), onClick = { guide = !guide })
-            if (guide) Text(text, style = MaterialTheme.typography.bodyMedium, color = colors.onSurfaceVariant)
+            if (guide) {
+                if (animated) ExerciseAnimation(e.builtinKey!!, e.nameFa)
+                e.instructions?.let { Text(it, style = MaterialTheme.typography.bodyMedium, color = colors.onSurfaceVariant) }
+            }
         }
     }
 }

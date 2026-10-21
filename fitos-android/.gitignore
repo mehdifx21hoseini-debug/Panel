@@ -13,3 +13,6 @@ local.properties
 keystore.properties
 *.jks
 *.keystore
+
+# Animation tool dependencies
+tools/exercise-anim/node_modules/

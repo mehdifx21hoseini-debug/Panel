@@ -247,7 +247,7 @@ fun FitOsApp(container: AppContainer, startWithSetup: Boolean, open: Destination
                     viewModel = viewModel {
                         HomeViewModel(
                             data.profiles, data.targets, data.weights, data.goals, data.programs, data.workouts, data.foodLog,
-                            data.habits, data.water, data.dayFacts, data.returnPlan, container.returnChecker, container.settingsRepository, clock,
+                            data.habits, data.water, data.sleep, data.dayFacts, data.returnPlan, container.returnChecker, container.settingsRepository, clock,
                         )
                     },
                     today = today,
@@ -259,6 +259,7 @@ fun FitOsApp(container: AppContainer, startWithSetup: Boolean, open: Destination
                     onOpenTraining = { openTab(TopLevel.Training) },
                     onOpenHabits = { openTab(TopLevel.Habits) },
                     onOpenBackup = { navController.navigate(BackupRoute()) },
+                    onLogFood = { meal -> navController.navigate(FoodPickerRoute(PickerMode.LOG.name, today.toEpochDay(), meal.code)) },
                 )
             }
             composable<TrainingRoute> {

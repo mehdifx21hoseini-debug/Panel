@@ -2,6 +2,9 @@ package app.fitos.personal
 
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.semantics.SemanticsProperties
+import androidx.compose.ui.test.SemanticsMatcher
+import androidx.compose.ui.test.assert
 import androidx.compose.ui.test.hasClickAction
 import androidx.compose.ui.test.hasContentDescription
 import androidx.compose.ui.test.hasSetTextAction
@@ -149,6 +152,19 @@ class TrainingUiTest {
         }
         compose.tapText("ساخت از روی نسخه‌ی باشگاه")
         compose.waitUntil(5_000) { active().days.first().variant(VariantKind.MINIMAL)?.exercises?.size == 6 }
+    }
+
+    @Test
+    fun exerciseDetail_showsAnimationThatPausesOnTap() {
+        launch()
+        openTraining()
+        compose.waitForDescription("کتابخانه‌ی حرکات").performClick()
+        compose.waitFor(result("پرس سینه با هالتر")).performClick()
+        val animation = compose.waitForDescription("نمایش سه‌بعدی حرکت پرس سینه با هالتر").scrollIfNeeded()
+        animation.assert(SemanticsMatcher.expectValue(SemanticsProperties.StateDescription, "در حال پخش"))
+        animation.performClick()
+        animation.assert(SemanticsMatcher.expectValue(SemanticsProperties.StateDescription, "متوقف"))
+        compose.waitForText("برای توقف یا پخش، روی نمایش بزن.").assertExists()
     }
 
     @Test

@@ -3,6 +3,7 @@ package app.fitos.core.domain.nutrition
 import java.time.DayOfWeek
 import java.time.Instant
 import java.time.LocalDate
+import java.time.LocalTime
 import kotlinx.coroutines.flow.Flow
 
 enum class FoodState(val code: String) {
@@ -51,6 +52,14 @@ enum class Meal(val code: String) {
 
     companion object {
         fun fromCode(code: String): Meal = entries.firstOrNull { it.code == code } ?: SNACK
+
+        /** The meal something eaten at [time] most likely belongs to. */
+        fun at(time: LocalTime): Meal = when {
+            time < LocalTime.of(11, 0) -> BREAKFAST
+            time < LocalTime.of(16, 0) -> LUNCH
+            time < LocalTime.of(18, 30) -> SNACK
+            else -> DINNER
+        }
     }
 }
 
