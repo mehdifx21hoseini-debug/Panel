@@ -1,6 +1,7 @@
 package app.fitos.core.domain.settings
 
 import java.time.Instant
+import java.time.LocalDate
 import kotlinx.coroutines.flow.Flow
 
 enum class ThemeMode { LIGHT, DARK, SYSTEM }
@@ -59,4 +60,14 @@ interface SettingsRepository {
     val returnNotify: Flow<Boolean>
 
     suspend fun setReturnNotify(on: Boolean)
+
+    /** Saturday of the newest weekly report the user has opened; null if none. */
+    val reportSeenWeek: Flow<LocalDate?>
+
+    suspend fun setReportSeenWeek(weekStart: LocalDate)
+
+    /** Saturday of the week whose calorie suggestion was set aside, so it is not offered again that week. */
+    val adaptiveDismissedWeek: Flow<LocalDate?>
+
+    suspend fun setAdaptiveDismissedWeek(weekStart: LocalDate)
 }

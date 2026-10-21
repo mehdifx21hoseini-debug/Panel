@@ -10,7 +10,7 @@ import app.fitos.personal.R
 import app.fitos.personal.feature.session.AndroidRestAlarm
 
 /** Where tapping a notification opens the app. */
-enum class Destination { HOME, HABITS, TRAINING, BACKUP }
+enum class Destination { HOME, HABITS, TRAINING, BACKUP, REPORT }
 
 /** Channels, ids and the "open the app at…" intent shared by every non-timer notification. */
 object Notifications {

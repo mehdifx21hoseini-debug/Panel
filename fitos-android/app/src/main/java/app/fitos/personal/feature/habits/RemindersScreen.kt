@@ -109,6 +109,7 @@ private val ReminderType.title: Int
         ReminderType.WATER -> R.string.reminder_type_water
         ReminderType.WORKOUT -> R.string.reminder_type_workout
         ReminderType.BACKUP -> R.string.reminder_type_backup
+        ReminderType.WEEKLY_REPORT -> R.string.reminder_type_report
         else -> R.string.reminder_type_habits
     }
 
@@ -118,6 +119,7 @@ private val ReminderType.about: Int
         ReminderType.WATER -> R.string.reminder_water_about
         ReminderType.WORKOUT -> R.string.reminder_workout_about
         ReminderType.BACKUP -> R.string.reminder_backup_about
+        ReminderType.WEEKLY_REPORT -> R.string.reminder_report_about
         else -> R.string.habit_reminders_hint
     }
 
@@ -127,21 +129,23 @@ private val ReminderType.emoji: FitEmoji
         ReminderType.WATER -> FitEmoji.DROPLET
         ReminderType.WORKOUT -> FitEmoji.LIFTING
         ReminderType.BACKUP -> FitEmoji.FLOPPY
+        ReminderType.WEEKLY_REPORT -> FitEmoji.BARCHART
         else -> FitEmoji.BELL
     }
 
-/** Sensible first times: weigh-in before breakfast, water mid-morning, workout before noon, backup on Friday evening. */
+/** Sensible first times: weigh-in before breakfast, water mid-morning, workout before noon, backup and the weekly report on Friday evening. */
 private val ReminderType.defaultTime: LocalTime
     get() = when (this) {
         ReminderType.WEIGH_IN -> LocalTime.of(7, 30)
         ReminderType.WATER -> LocalTime.of(11, 0)
         ReminderType.WORKOUT -> LocalTime.of(11, 30)
         ReminderType.BACKUP -> LocalTime.of(20, 0)
+        ReminderType.WEEKLY_REPORT -> LocalTime.of(20, 30)
         else -> LocalTime.of(20, 0)
     }
 
 private val ReminderType.defaultDays: Set<DayOfWeek>
-    get() = if (this == ReminderType.BACKUP) setOf(DayOfWeek.FRIDAY) else emptySet()
+    get() = if (this == ReminderType.BACKUP || this == ReminderType.WEEKLY_REPORT) setOf(DayOfWeek.FRIDAY) else emptySet()
 
 @Composable
 fun RemindersScreen(viewModel: RemindersViewModel, onBack: () -> Unit, onOpenHabit: (String) -> Unit) {
@@ -181,7 +185,7 @@ fun RemindersScreen(viewModel: RemindersViewModel, onBack: () -> Unit, onOpenHab
             )
         }
 
-        listOf(ReminderType.WEIGH_IN, ReminderType.WATER, ReminderType.WORKOUT, ReminderType.BACKUP).forEach { type ->
+        listOf(ReminderType.WEIGH_IN, ReminderType.WATER, ReminderType.WORKOUT, ReminderType.WEEKLY_REPORT, ReminderType.BACKUP).forEach { type ->
             FitCard {
                 Row(horizontalArrangement = Arrangement.spacedBy(FitSpacing.s12), verticalAlignment = Alignment.CenterVertically) {
                     EmojiTile(type.emoji)

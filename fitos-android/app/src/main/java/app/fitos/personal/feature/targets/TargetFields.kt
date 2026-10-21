@@ -96,7 +96,13 @@ fun AssumptionsCard(a: TargetAssumptions) {
                     Fmt.int(a.bmr.roundToInt()), Fmt.int(a.ageYears), Fmt.kg(a.weightKg), Fmt.kg(a.heightCm),
                 ),
             )
-            add(stringResource(R.string.assumption_tdee, a.activityLevel.label(), Fmt.field(a.activityLevel.factor, 3), Fmt.int(a.tdee.roundToInt())))
+            val adaptive = a.adaptive
+            if (adaptive != null) {
+                add(stringResource(R.string.assumption_tdee_measured, Fmt.int(a.tdee.roundToInt())))
+                add(stringResource(R.string.assumption_adaptive, Fmt.int(adaptive.days), Fmt.int(adaptive.meanIntakeKcal.roundToInt()), rateLine(adaptive.rateKgPerWeek), Fmt.int(adaptive.previousKcal)))
+            } else {
+                add(stringResource(R.string.assumption_tdee, a.activityLevel.label(), Fmt.field(a.activityLevel.factor, 3), Fmt.int(a.tdee.roundToInt())))
+            }
             add(
                 when (a.goal) {
                     PrimaryGoal.FAT_LOSS -> stringResource(R.string.assumption_deficit, Fmt.int(-a.adjustmentPercent))
@@ -114,4 +120,11 @@ fun AssumptionsCard(a: TargetAssumptions) {
         }
         Text(stringResource(R.string.assumption_disclaimer), style = MaterialTheme.typography.bodySmall, color = colors.subtle)
     }
+}
+
+@Composable
+private fun rateLine(kgPerWeek: Double): String = when {
+    kgPerWeek <= -0.05 -> stringResource(R.string.rate_down, Fmt.kg(-kgPerWeek))
+    kgPerWeek >= 0.05 -> stringResource(R.string.rate_up, Fmt.kg(kgPerWeek))
+    else -> stringResource(R.string.rate_flat)
 }

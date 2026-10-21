@@ -196,6 +196,8 @@ class HabitRulesTest {
         assertFalse(ReminderRules.shouldNotify(ReminderType.WEIGH_IN, ReminderFacts(now, weighedToday = true)))
         assertFalse(ReminderRules.shouldNotify(ReminderType.WORKOUT, ReminderFacts(now, hasActiveProgram = true, trainedToday = true)))
         assertFalse(ReminderRules.shouldNotify(ReminderType.WORKOUT, ReminderFacts(now, hasActiveProgram = false)))
+        assertFalse(ReminderRules.shouldNotify(ReminderType.WEEKLY_REPORT, ReminderFacts(now, reportHasData = false)))
+        assertTrue(ReminderRules.shouldNotify(ReminderType.WEEKLY_REPORT, ReminderFacts(now, reportHasData = true)))
         assertTrue(ReminderRules.shouldNotify(ReminderType.WORKOUT, ReminderFacts(now, hasActiveProgram = true)))
         assertFalse(ReminderRules.shouldNotify(ReminderType.BACKUP, ReminderFacts(now, lastBackupAt = now.minusSeconds(3 * 86_400))))
         assertTrue(ReminderRules.shouldNotify(ReminderType.BACKUP, ReminderFacts(now, lastBackupAt = now.minusSeconds(8 * 86_400))))

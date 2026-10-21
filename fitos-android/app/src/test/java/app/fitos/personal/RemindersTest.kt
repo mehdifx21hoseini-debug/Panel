@@ -17,6 +17,7 @@ import app.fitos.core.domain.training.ProgramTemplates
 import app.fitos.personal.notify.AlarmReminderScheduler
 import app.fitos.personal.notify.Notifications
 import app.fitos.personal.notify.ReminderAction
+import app.fitos.personal.notify.Destination
 import app.fitos.personal.notify.ReminderDelivery
 import java.time.DayOfWeek
 import java.time.LocalTime
@@ -86,6 +87,18 @@ class RemindersTest {
         assertNull(delivery.message(workout))
         data.programs.createFromTemplate(ProgramTemplates.upperFocus5, emptySet())
         assertTrue(delivery.message(workout)!!.text.startsWith("جلسه‌ی بعد:"))
+    }
+
+    @Test
+    fun theWeeklyReportReminderSpeaksOnlyWhenTheWeekHasData() = runBlocking {
+        TestApp.completeSetup(container)
+        val report = reminder(ReminderType.WEEKLY_REPORT)
+        // Last week (Saturday 10 to Friday 16 October) has nothing yet; the setup weigh-in is today.
+        assertNull(delivery.message(report))
+        data.weights.add(90.4, today.minusDays(8), LocalTime.of(7, 30), null, null)
+        val m = delivery.message(report)!!
+        assertEquals("گزارش هفته آماده است", m.title)
+        assertEquals(Destination.REPORT, m.destination)
     }
 
     @Test

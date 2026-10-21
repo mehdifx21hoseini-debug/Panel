@@ -81,6 +81,8 @@ import app.fitos.personal.feature.onboarding.OnboardingScreen
 import app.fitos.personal.feature.onboarding.OnboardingViewModel
 import app.fitos.personal.feature.profile.ProfileEditScreen
 import app.fitos.personal.feature.profile.ProfileEditViewModel
+import app.fitos.personal.feature.report.ReportScreen
+import app.fitos.personal.feature.report.ReportViewModel
 import app.fitos.personal.feature.session.SessionDetailScreen
 import app.fitos.personal.feature.session.SessionDetailViewModel
 import app.fitos.personal.feature.session.SessionHistoryScreen
@@ -154,6 +156,7 @@ import kotlinx.serialization.Serializable
 @Serializable data class HabitEditorRoute(val habitId: String? = null)
 @Serializable data class HabitDetailRoute(val habitId: String)
 @Serializable data object RemindersRoute
+@Serializable data class ReportRoute(val week: Long? = null)
 
 /** The five tabs of the bottom navigation bar, in reading order (right to left on screen). */
 private enum class TopLevel(val route: Any, val routeClass: KClass<*>, val icon: ImageVector, @param:StringRes val label: Int) {
@@ -209,6 +212,7 @@ fun FitOsApp(container: AppContainer, startWithSetup: Boolean, open: Destination
             Destination.HABITS -> openTab(TopLevel.Habits)
             Destination.TRAINING -> openTab(TopLevel.Training)
             Destination.BACKUP -> navController.navigate(BackupRoute())
+            Destination.REPORT -> navController.navigate(ReportRoute())
         }
         onOpened()
     }
@@ -247,7 +251,7 @@ fun FitOsApp(container: AppContainer, startWithSetup: Boolean, open: Destination
                     viewModel = viewModel {
                         HomeViewModel(
                             data.profiles, data.targets, data.weights, data.goals, data.programs, data.workouts, data.foodLog,
-                            data.habits, data.water, data.sleep, data.dayFacts, data.returnPlan, container.returnChecker, container.settingsRepository, clock,
+                            data.habits, data.water, data.sleep, data.dayFacts, data.returnPlan, container.returnChecker, container.settingsRepository, data.reports, clock,
                         )
                     },
                     today = today,
@@ -260,6 +264,7 @@ fun FitOsApp(container: AppContainer, startWithSetup: Boolean, open: Destination
                     onOpenHabits = { openTab(TopLevel.Habits) },
                     onOpenBackup = { navController.navigate(BackupRoute()) },
                     onLogFood = { meal -> navController.navigate(FoodPickerRoute(PickerMode.LOG.name, today.toEpochDay(), meal.code)) },
+                    onOpenReport = { navController.navigate(ReportRoute()) },
                 )
             }
             composable<TrainingRoute> {
@@ -444,6 +449,7 @@ fun FitOsApp(container: AppContainer, startWithSetup: Boolean, open: Destination
                     onLogMeasurements = { navController.navigate(MeasurementsEntryRoute) },
                     onOpenSite = { navController.navigate(SiteHistoryRoute(it)) },
                     onNewGoal = { navController.navigate(ProfileEditRoute) },
+                    onOpenReports = { navController.navigate(ReportRoute()) },
                 )
             }
             composable<MeasurementsEntryRoute> {
@@ -527,6 +533,13 @@ fun FitOsApp(container: AppContainer, startWithSetup: Boolean, open: Destination
                 ProfileEditScreen(
                     viewModel = viewModel { ProfileEditViewModel(data.profiles, data.goals, data.weights, clock) },
                     onDone = { navController.popBackStack() },
+                )
+            }
+            composable<ReportRoute> { entry ->
+                val week = entry.toRoute<ReportRoute>().week?.let(LocalDate::ofEpochDay)
+                ReportScreen(
+                    viewModel = viewModel { ReportViewModel(data.reports, data.targets, data.profiles, container.settingsRepository, clock, week) },
+                    onBack = { navController.popBackStack() },
                 )
             }
             composable<TargetsRoute> {

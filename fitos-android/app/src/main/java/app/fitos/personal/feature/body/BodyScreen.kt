@@ -36,6 +36,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
@@ -43,6 +44,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.fitos.core.designsystem.component.BodyFigure
 import app.fitos.core.designsystem.component.BodyShape
 import app.fitos.core.designsystem.component.ChartPoint
+import app.fitos.core.designsystem.component.EmojiTile
 import app.fitos.core.designsystem.component.EmptyState
 import app.fitos.core.designsystem.component.FitCard
 import app.fitos.core.designsystem.component.FitEmoji
@@ -79,6 +81,7 @@ fun BodyScreen(
     onLogMeasurements: () -> Unit,
     onOpenSite: (String) -> Unit,
     onNewGoal: () -> Unit,
+    onOpenReports: () -> Unit,
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     val colors = FitTheme.colors
@@ -126,6 +129,7 @@ fun BodyScreen(
             item { GoalCard(state, today, onNewGoal = onNewGoal, onExtend = viewModel::extendGoal) }
             if (state.weekly.size >= 2) item { WeeklyCard(state) }
             item { MeasurementsCard(state, onLog = onLogMeasurements, onOpenSite = onOpenSite) }
+            item { ReportsEntry(onOpenReports) }
             if (state.entries.isNotEmpty()) {
                 item {
                     Text(
@@ -365,5 +369,21 @@ private fun HistoryRow(entry: WeightEntry, onClick: () -> Unit) {
             if (extra.isNotEmpty()) Text(extra, style = MaterialTheme.typography.bodySmall, color = colors.subtle, maxLines = 2)
         }
         Text(Fmt.kg(entry.weightKg), style = numeralStyle(18), color = colors.onSurface)
+    }
+}
+
+/** The way into the weekly reports. */
+@Composable
+private fun ReportsEntry(onOpen: () -> Unit) {
+    val colors = FitTheme.colors
+    FitCard(Modifier.clip(RoundedCornerShape(24.dp)).clickable(role = Role.Button, onClick = onOpen)) {
+        Row(horizontalArrangement = Arrangement.spacedBy(FitSpacing.s12), verticalAlignment = Alignment.CenterVertically) {
+            EmojiTile(FitEmoji.BARCHART, tint = colors.primaryContainer)
+            Column(Modifier.weight(1f)) {
+                Text(stringResource(R.string.report_body_entry), style = MaterialTheme.typography.titleMedium, modifier = Modifier.semantics { heading() })
+                Text(stringResource(R.string.report_body_entry_hint), style = MaterialTheme.typography.bodySmall, color = colors.subtle)
+            }
+            Icon(FitIcons.ChevronRight, contentDescription = null, tint = colors.subtle)
+        }
     }
 }

@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Weekly report -->
+    <string name="report_title">گزارش هفتگی</string>
+    <string name="report_week">%1$s تا %2$s</string>
+    <string name="report_in_progress">هفته‌ی جاری، تا امروز. مهم‌ترین پیشرفت و پیشنهادها جمعه آماده می‌شوند.</string>
+    <string name="report_complete">هفته‌ی کامل، شنبه تا جمعه</string>
+    <string name="report_older">هفته‌ی قبل</string>
+    <string name="report_newer">هفته‌ی بعد</string>
+    <string name="report_pick_week">انتخاب هفته</string>
+    <string name="report_weeks_title">همه‌ی هفته‌ها</string>
+    <string name="report_week_current">هفته‌ی جاری</string>
+    <string name="report_empty">برای این هفته هنوز چیزی ثبت نشده است. گزارش فقط از داده‌های ثبت‌شده ساخته می‌شود.</string>
+    <string name="report_live_note">گزارش هر بار از داده‌های فعلی ساخته می‌شود؛ اگر چیزی از این هفته را اصلاح کنی، گزارش هم درست می‌شود.</string>
+    <string name="report_reminder_note">برای یادآوری جمعه‌شب، «گزارش هفتگی» را در یادآورها روشن کن.</string>
+
+    <!-- Highlight -->
+    <string name="report_highlight_title">مهم‌ترین پیشرفت هفته</string>
+    <string name="report_highlight_none">این هفته پیشرفت برجسته‌ای در داده‌ها دیده نشد. ثبت منظم‌تر، گزارش را دقیق‌تر می‌کند.</string>
+    <string name="highlight_e1rm">%1$s: بیشینه‌ی تخمینی یک تکرار از %2$s به %3$s کیلوگرم رسید (%4$s کیلوگرم × %5$s).</string>
+    <string name="highlight_weight">%1$s: سنگین‌ترین وزنه از %2$s به %3$s کیلوگرم رسید.</string>
+    <string name="highlight_reps">%1$s: بیشترین تکرار از %2$s به %3$s رسید.</string>
+    <string name="highlight_seconds">%1$s: بیشترین زمان از %2$s به %3$s ثانیه رسید.</string>
+    <string name="highlight_meters">%1$s: بیشترین مسافت از %2$s به %3$s متر رسید.</string>
+    <string name="highlight_weight_down">میانگین وزن این هفته %1$s کیلوگرم کمتر از هفته‌ی قبل بود.</string>
+    <string name="highlight_weight_up">میانگین وزن این هفته %1$s کیلوگرم بیشتر از هفته‌ی قبل بود، هم‌جهت با هدف افزایش وزن.</string>
+    <string name="highlight_waist_down">%1$s %2$s سانتی‌متر کمتر شد.</string>
+    <string name="highlight_sessions">همه‌ی جلسه‌های برنامه انجام شد: %1$s از %2$s.</string>
+    <string name="highlight_habits">پایبندی به عادت‌ها %1$s بود.</string>
+    <string name="highlight_protein">در %1$s روز به هدف پروتئین رسیدی.</string>
+    <string name="highlight_food">غذای همه‌ی %1$s روز هفته ثبت شد.</string>
+
+    <!-- Advice -->
+    <string name="report_advice_title">برای هفته‌ی بعد</string>
+    <string name="report_advice_none">با این داده‌ها پیشنهاد مشخصی نیست؛ همین روال را ادامه بده.</string>
+    <string name="advice_log_food">غذا را دست‌کم ۵ روز ثبت کن</string>
+    <string name="advice_log_food_body">این هفته %1$s روز از %2$s روز غذا ثبت شد. میانگین‌ها و بررسی کالری به ثبت کامل‌تر نیاز دارند.</string>
+    <string name="advice_weigh">هفته‌ای دست‌کم ۳ صبح وزن کن</string>
+    <string name="advice_weigh_body">این هفته %1$s بار وزن ثبت شد. با ۳ وزن‌کشی یا بیشتر، تغییر میانگین قابل‌اعتماد می‌شود.</string>
+    <string name="advice_training">برای روزهای شلوغ، نسخه‌ی کوتاه را انتخاب کن</string>
+    <string name="advice_training_body">این هفته %1$s جلسه از %2$s جلسه‌ی برنامه انجام شد. نسخه‌ی خانگی یا حداقلی هم جلسه حساب می‌شود.</string>
+    <string name="advice_protein">یک منبع پروتئین به یکی از وعده‌ها اضافه کن</string>
+    <string name="advice_protein_body">میانگین پروتئین روزهای ثبت‌شده %1$s گرم بود؛ هدف %2$s گرم است.</string>
+    <string name="advice_sleep">زمان خواب را نیم ساعت جلو بیاور</string>
+    <string name="advice_sleep_body">میانگین خواب ثبت‌شده %1$s ساعت بود؛ هدف %2$s ساعت است.</string>
+    <string name="advice_habit">روی «%1$s» تمرکز کن</string>
+    <string name="advice_habit_body">پایبندی این عادت در این هفته %1$s بود، کمترین بین عادت‌ها. یک زمان ثابت در روز برایش بگذار.</string>
+    <string name="advice_kcal_over">به هدف کالری نزدیک‌تر بمان</string>
+    <string name="advice_kcal_over_body">میانگین کالری روزهای ثبت‌شده %1$s بود؛ هدف %2$s است. وعده‌ای را که بیشترین فاصله را می‌سازد پیدا کن.</string>
+    <string name="advice_kcal_change">پیشنهاد هدف کالری: %1$s به جای %2$s</string>
+    <string name="advice_kcal_up">بر اساس دریافت واقعی و روند وزن، انرژی نگهداری‌ات حدود %1$s کیلوکالری است. برای هدف و سرعتی که انتخاب کرده‌ای، کمی انرژی بیشتر مناسب‌تر است.</string>
+    <string name="advice_kcal_down">بر اساس دریافت واقعی و روند وزن، انرژی نگهداری‌ات حدود %1$s کیلوکالری است. برای هدف و سرعتی که انتخاب کرده‌ای، کمی انرژی کمتر لازم است.</string>
+    <string name="advice_kcal_too_fast">وزن بیش از ۱٪ در هفته کم شده است (%1$s). این سرعت ممکن است عضله را هم کم کند؛ کمی انرژی بیشتر بهتر است.</string>
+    <string name="advice_kcal_too_low">هدف فعلی پایین‌تر از حد امن است: کمتر از متابولیسم پایه یا بیش از ۲۵٪ زیر نگهداری برآوردشده (%1$s).</string>
+    <string name="advice_eat_up">تا هدف کالری بخور</string>
+    <string name="advice_eat_up_body">وزن بیش از ۱٪ در هفته کم شده و میانگین دریافت (%1$s) خیلی کمتر از هدف (%2$s) است. هدف مناسب است؛ کمتر از آن نخور.</string>
+    <string name="advice_apply">اعمال هدف تازه</string>
+    <string name="advice_not_now">فعلاً نه</string>
+    <string name="advice_dismissed">این پیشنهاد را برای این هفته کنار گذاشتی. هفته‌ی بعد دوباره بررسی می‌شود.</string>
+    <string name="advice_applied">هدف تازه از امروز اعمال شد. دو هفته‌ی دیگر دوباره بررسی می‌شود.</string>
+
+    <!-- Apply sheet -->
+    <string name="apply_title">اعمال هدف تازه</string>
+    <string name="apply_kcal">کالری روزانه: %1$s ← %2$s</string>
+    <string name="apply_carbs">کربوهیدرات: %1$s ← %2$s گرم</string>
+    <string name="apply_same">پروتئین، چربی، آب و خواب همان می‌مانند.</string>
+    <string name="apply_from">از امروز اعمال می‌شود؛ روزهای گذشته با هدف خودشان سنجیده می‌شوند. هر وقت بخواهی از «هدف‌ها» تغییرش بده.</string>
+    <string name="apply_confirm">اعمال</string>
+    <string name="apply_cancel">انصراف</string>
+
+    <!-- Metrics -->
+    <string name="report_weight_title">وزن و اندازه</string>
+    <string name="report_weight_none">این هفته وزنی ثبت نشده.</string>
+    <string name="report_weight_avg">میانگین این هفته: %1$s کیلوگرم (%2$s وزن‌کشی)</string>
+    <string name="report_weight_down">%1$s کیلوگرم کمتر از میانگین هفته‌ی قبل</string>
+    <string name="report_weight_up">%1$s کیلوگرم بیشتر از میانگین هفته‌ی قبل</string>
+    <string name="report_weight_same">هم‌اندازه‌ی میانگین هفته‌ی قبل</string>
+    <string name="report_weight_no_change">برای مقایسه، هر هفته دست‌کم ۲ وزن‌کشی لازم است (هفته‌ی قبل: %1$s، این هفته: %2$s).</string>
+    <string name="report_waist">%1$s: %2$s سانتی‌متر در %3$s</string>
+    <string name="report_waist_down">%1$s سانتی‌متر کمتر از اندازه‌ی %2$s</string>
+    <string name="report_waist_up">%1$s سانتی‌متر بیشتر از اندازه‌ی %2$s</string>
+    <string name="report_waist_same">هم‌اندازه‌ی %1$s</string>
+    <string name="report_waist_first">اولین اندازه‌ی ثبت‌شده؛ از دفعه‌ی بعد مقایسه می‌شود.</string>
+    <string name="report_waist_none">%1$s این هفته اندازه گرفته نشد (آخرین: %2$s سانتی‌متر در %3$s).</string>
+
+    <string name="report_training_title">تمرین</string>
+    <string name="report_training_none">این هفته جلسه‌ای ثبت نشده.</string>
+    <string name="report_sessions_planned">جلسه‌ها: %1$s از %2$s</string>
+    <string name="report_sessions">جلسه‌ها: %1$s</string>
+    <string name="report_training_volume">زمان تمرین: %1$s دقیقه · تناژ: %2$s کیلوگرم</string>
+    <string name="report_short_versions">%1$s جلسه با نسخه‌ی کوتاه خانگی یا حداقلی</string>
+    <string name="report_progress">پیشرفت حرکات: %1$s از %2$s حرکت بهتر از قبل</string>
+    <string name="report_progress_first">حرکت‌های این هفته بار اول ثبت شده‌اند؛ از هفته‌ی بعد مقایسه می‌شوند.</string>
+    <string name="report_progress_kg">%1$s ← %2$s کیلوگرم</string>
+    <string name="report_progress_reps">%1$s ← %2$s تکرار</string>
+    <string name="report_progress_seconds">%1$s ← %2$s ثانیه</string>
+    <string name="report_progress_meters">%1$s ← %2$s متر</string>
+    <string name="report_progress_note">برای حرکت‌های وزنه‌ای بیشینه‌ی تخمینی یک تکرار (Epley) مقایسه می‌شود: بهترینِ این هفته در برابر بهترینِ پیش از آن.</string>
+
+    <string name="report_volume_title">ست مؤثر هر عضله</string>
+    <string name="report_volume_row">%1$s از %2$s ست</string>
+    <string name="report_volume_done">%1$s ست</string>
+    <string name="report_volume_note">هر ست اصلی برای عضله‌ی اصلی حرکت ۱ و برای عضله‌ی کمکی ۰٫۵ حساب می‌شود (گرم‌کردن نه). عدد دوم، برنامه‌ی هفتگی نسخه‌ی باشگاه است.</string>
+
+    <string name="report_food_title">تغذیه</string>
+    <string name="report_food_none">این هفته غذایی ثبت نشده.</string>
+    <string name="report_food_days">روزهای ثبت‌شده: %1$s از %2$s</string>
+    <string name="report_food_kcal">میانگین کالری: %1$s (هدف %2$s)</string>
+    <string name="report_food_kcal_only">میانگین کالری: %1$s</string>
+    <string name="report_food_protein">میانگین پروتئین: %1$s گرم (هدف %2$s)</string>
+    <string name="report_food_protein_only">میانگین پروتئین: %1$s گرم</string>
+    <string name="report_food_days_met">داخل بازه‌ی کالری: %1$s روز · رسیدن به پروتئین: %2$s روز</string>
+    <string name="report_food_note">میانگین‌ها فقط از روزهای ثبت‌شده‌اند.</string>
+
+    <string name="report_habits_title">عادت‌ها و خواب</string>
+    <string name="report_habits_none">عادتی برای سنجش در این هفته نبود.</string>
+    <string name="report_habits">پایبندی به عادت‌ها: %1$s (%2$s عادت)</string>
+    <string name="report_habits_weakest">کمترین: %1$s، %2$s</string>
+    <string name="report_sleep_none">خوابی ثبت نشده.</string>
+    <string name="report_sleep">میانگین خواب: %1$s ساعت در %2$s شب</string>
+    <string name="report_sleep_target">میانگین خواب: %1$s ساعت در %2$s شب (هدف %3$s)</string>
+
+    <!-- Calorie check -->
+    <string name="check_title">بررسی هدف کالری</string>
+    <string name="check_keep">هدف فعلی با روند واقعی جور است؛ تغییری لازم نیست.</string>
+    <string name="check_change">پیشنهاد: %1$s به جای %2$s کیلوکالری</string>
+    <string name="check_eat_up">هدف مناسب است؛ دریافت واقعی کمتر از هدف بوده.</string>
+    <string name="check_implausible">این اعداد با هم جور نیستند (نگهداری برآوردشده %1$s، متابولیسم پایه %2$s). احتمالاً بعضی وعده‌ها ثبت نشده‌اند؛ تا ثبت کامل‌تر، پیشنهادی داده نمی‌شود.</string>
+    <string name="check_not_ready">هنوز داده‌ی کافی برای بررسی نیست:</string>
+    <string name="check_need_weigh">در هر یک از سه هفته‌ی اخیر دست‌کم ۳ روز وزن‌کشی (اکنون: %1$s)</string>
+    <string name="check_need_food">ثبت کامل غذا در دست‌کم %2$s روز از ۲۱ روز (اکنون: %1$s)</string>
+    <string name="check_need_time">دست‌کم ۱۴ روز از آخرین تغییر هدف (اکنون: %1$s روز)</string>
+    <string name="check_need_target">هدف کالری تعیین نشده</string>
+    <string name="check_need_profile">پروفایل کامل نیست</string>
+    <string name="check_window">بازه: %1$s تا %2$s</string>
+    <string name="check_intake">ثبت کامل غذا: %1$s روز · میانگین دریافت: %2$s کیلوکالری</string>
+    <string name="check_rate">وزن‌کشی: %1$s روز · %2$s</string>
+    <string name="rate_down">کاهش %1$s کیلوگرم در هفته</string>
+    <string name="rate_up">افزایش %1$s کیلوگرم در هفته</string>
+    <string name="rate_flat">وزن تقریباً ثابت</string>
+    <string name="check_tdee">نگهداری برآوردشده: %1$s کیلوکالری (دریافت منهای انرژی تغییر وزن)</string>
+    <string name="check_floor">متابولیسم پایه: %1$s · کمترین هدف امن: %2$s (متابولیسم پایه یا ۷۵٪ نگهداری، هر کدام بیشتر)</string>
+    <string name="check_targets">هدف فعلی: %1$s · مناسب هدف و سرعت انتخابی: %2$s</string>
+    <string name="check_note">تقریبی است: هر کیلوگرم تغییر وزن حدود ۷۷۰۰ کیلوکالری فرض می‌شود و نوسان آب بدن روی آن اثر دارد. هیچ تغییری بدون تأیید تو اعمال نمی‌شود؛ هر تغییر حداکثر ۱۵۰ کیلوکالری است، بین دو تغییر دست‌کم ۱۴ روز فاصله می‌ماند و هدف هرگز زیر متابولیسم پایه نمی‌رود.</string>
+
+    <!-- Home and Body -->
+    <string name="report_ready_title">گزارش هفته آماده است</string>
+    <string name="report_ready_body">%1$s · مهم‌ترین پیشرفت، میانگین‌ها و پیشنهاد برای هفته‌ی بعد</string>
+    <string name="report_open">دیدن گزارش</string>
+    <string name="report_has_suggestion">یک پیشنهاد تنظیم کالری هم دارد.</string>
+    <string name="report_body_entry">گزارش‌های هفتگی</string>
+    <string name="report_body_entry_hint">وزن، تمرین، تغذیه، عادت‌ها و خواب هر هفته در یک نگاه</string>
+
+    <!-- Reminder -->
+    <string name="reminder_type_report">گزارش هفتگی</string>
+    <string name="reminder_report_about">یک اعلان وقتی گزارش هفته آماده است؛ اگر هفته داده‌ای نداشته باشد، چیزی نمی‌گوید.</string>
+    <string name="reminder_report_title">گزارش هفته آماده است</string>
+    <string name="reminder_report_body">مهم‌ترین پیشرفت و پیشنهادهای هفته‌ی بعد را ببین.</string>
+
+    <!-- Targets -->
+    <string name="assumption_adaptive">این هدف از بررسی گزارش هفتگی آمده: در %1$s روز، میانگین دریافت %2$s کیلوکالری بود و %3$s؛ هدف قبلی %4$s.</string>
+    <string name="assumption_tdee_measured">نگهداری برآوردشده از داده‌های خودت: %1$s کیلوکالری</string>
+</resources>

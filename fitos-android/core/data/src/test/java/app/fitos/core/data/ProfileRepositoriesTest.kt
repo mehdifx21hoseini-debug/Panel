@@ -11,6 +11,7 @@ import app.fitos.core.data.repository.RoomSetupRepository
 import app.fitos.core.data.repository.RoomWeightGoalRepository
 import app.fitos.core.data.repository.RoomWeightRepository
 import app.fitos.core.domain.body.WeightCondition
+import app.fitos.core.domain.nutrition.AdaptiveBasisNote
 import app.fitos.core.domain.nutrition.TargetOrigin
 import app.fitos.core.domain.profile.GoalStatus
 import kotlinx.coroutines.flow.first
@@ -81,6 +82,15 @@ class ProfileRepositoriesTest {
         assertEquals(2400, repo.effectiveOn(later.minusDays(1)).first()!!.kcal)
         assertEquals(2300, repo.effectiveOn(later).first()!!.kcal)
         assertEquals(2, db.nutritionTargetDao().observeHistory().first().size)
+    }
+
+    @Test fun anAcceptedAdjustmentKeepsItsBasis() = runBlocking {
+        val repo = RoomNutritionTargetRepository(db, clock)
+        val base = TestData.setup().target
+        val note = AdaptiveBasisNote(days = 21, meanIntakeKcal = 2512.4, rateKgPerWeek = -0.31, previousKcal = 2500)
+        val adaptive = base.copy(kcal = 2350, origin = TargetOrigin.ADAPTIVE, assumptions = base.assumptions!!.copy(tdee = 2830.0, adaptive = note))
+        repo.save(adaptive)
+        assertEquals(adaptive, repo.effectiveOn(TestData.today).first())
     }
 
     @Test fun newGoalReplacesTheActiveOne() = runBlocking {

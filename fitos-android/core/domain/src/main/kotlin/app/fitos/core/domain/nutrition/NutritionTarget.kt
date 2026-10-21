@@ -57,6 +57,18 @@ data class TargetAssumptions(
     val raisedToFloor: Boolean,
     /** Fat per kg gave less than the minimum share of energy, so fat was raised. */
     val fatRaisedToMinimum: Boolean,
+    /** Set when the energy came from the weekly report's adjustment: [tdee] is then measured, not a formula. */
+    val adaptive: AdaptiveBasisNote? = null,
+)
+
+/** What an accepted adjustment was based on, kept with the target so its reasons stay visible. */
+data class AdaptiveBasisNote(
+    /** Days in the window the estimate looked at. */
+    val days: Int,
+    val meanIntakeKcal: Double,
+    /** Weight change in kg per week over the window (negative = losing). */
+    val rateKgPerWeek: Double,
+    val previousKcal: Int,
 )
 
 interface NutritionTargetRepository {

@@ -114,8 +114,10 @@ fun HomeScreen(
     onOpenHabits: () -> Unit,
     onOpenBackup: () -> Unit,
     onLogFood: (Meal) -> Unit,
+    onOpenReport: () -> Unit,
 ) {
     LaunchedEffect(today) { viewModel.setToday(today) }
+    val report by viewModel.report.collectAsStateWithLifecycle()
     val state by viewModel.state.collectAsStateWithLifecycle()
     val day by viewModel.day.collectAsStateWithLifecycle()
     var logging by remember { mutableStateOf(false) }
@@ -139,6 +141,8 @@ fun HomeScreen(
         onOpenHabits = onOpenHabits,
         onOpenBackup = onOpenBackup,
         today7 = Today7(score, next, Meal.at(time), onDetails = { details = true }, onLogSleep = { loggingSleep = true }, onLogFood = { onLogFood(Meal.at(time)) }, onHabitDone = viewModel::completeHabit),
+        report = report,
+        onOpenReport = onOpenReport,
     )
     if (details && score != null) DayScoreSheet(score, onDismiss = { details = false })
     if (loggingSleep) {
@@ -183,6 +187,8 @@ private fun HomeContent(
     onOpenHabits: () -> Unit,
     onOpenBackup: () -> Unit,
     today7: Today7,
+    report: HomeReport?,
+    onOpenReport: () -> Unit,
 ) {
     val colors = FitTheme.colors
     val week = remember(today) { weekOf(today) }
@@ -237,6 +243,7 @@ private fun HomeContent(
                     onHabitDone = { (next as? NextAction.DoHabit)?.let { today7.onHabitDone(it.habit) } },
                 )
             }
+            report?.let { ReportReadyCard(it, onOpenReport) }
             QuickLogCard(
                 onWater = { onAddWater(LifestyleRules.GLASS_ML) }, onWeight = onLogWeight, onFood = today7.onLogFood,
                 onHabits = onOpenHabits, onWorkout = startWorkout,

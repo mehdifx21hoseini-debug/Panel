@@ -47,6 +47,8 @@ import app.fitos.core.domain.training.VariantKind
 import app.fitos.personal.R
 import app.fitos.personal.feature.habits.FitSheet
 import app.fitos.personal.feature.nutrition.label
+import app.fitos.personal.feature.report.highlightText
+import app.fitos.personal.feature.report.weekLabel
 import app.fitos.personal.ui.Fmt
 import kotlin.math.roundToInt
 
@@ -275,5 +277,23 @@ private fun QuickButton(
     ) {
         Icon(icon, contentDescription = null, tint = ink)
         Text(label, style = MaterialTheme.typography.labelMedium, color = ink, maxLines = 1)
+    }
+}
+
+/** Last week's report, until it is opened. */
+@Composable
+internal fun ReportReadyCard(report: HomeReport, onOpen: () -> Unit) {
+    val colors = FitTheme.colors
+    FitCard {
+        Row(horizontalArrangement = Arrangement.spacedBy(FitSpacing.s12), verticalAlignment = Alignment.CenterVertically) {
+            EmojiTile(FitEmoji.BARCHART, tint = colors.primaryContainer)
+            Column(Modifier.weight(1f)) {
+                Text(stringResource(R.string.report_ready_title), style = MaterialTheme.typography.titleMedium, modifier = Modifier.semantics { heading() })
+                Text(stringResource(R.string.report_ready_body, weekLabel(report.weekStart)), style = MaterialTheme.typography.bodySmall, color = colors.onSurfaceVariant)
+            }
+        }
+        report.highlight?.let { Text(highlightText(it), style = MaterialTheme.typography.bodyMedium) }
+        if (report.calorieAdvice) Text(stringResource(R.string.report_has_suggestion), style = MaterialTheme.typography.bodySmall, color = colors.primary)
+        FitPrimaryButton(stringResource(R.string.report_open), onClick = onOpen, icon = FitIcons.Chart, modifier = Modifier.fillMaxWidth())
     }
 }

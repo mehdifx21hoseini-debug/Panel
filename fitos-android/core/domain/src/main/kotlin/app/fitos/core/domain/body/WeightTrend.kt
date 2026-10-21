@@ -67,12 +67,20 @@ object WeightTrend {
         if (window.size < RATE_MIN_DAYS) return null
         val span = ChronoUnit.DAYS.between(window.first().day, window.last().day)
         if (span < RATE_MIN_SPAN_DAYS) return null
-        val xs = window.map { ChronoUnit.DAYS.between(from, it.day).toDouble() }
-        val ys = window.map { it.weightKg }
+        return slopePerWeek(window)
+    }
+
+    /** Least-squares slope of [days] in kg per week; null for fewer than two distinct days. */
+    fun slopePerWeek(days: List<DailyWeight>): Double? {
+        if (days.size < 2) return null
+        val origin = days.minOf { it.day }
+        val xs = days.map { ChronoUnit.DAYS.between(origin, it.day).toDouble() }
+        val ys = days.map { it.weightKg }
         val mx = xs.average()
         val my = ys.average()
         val sxy = xs.indices.sumOf { (xs[it] - mx) * (ys[it] - my) }
         val sxx = xs.sumOf { (it - mx) * (it - mx) }
+        if (sxx == 0.0) return null
         return sxy / sxx * 7
     }
 }

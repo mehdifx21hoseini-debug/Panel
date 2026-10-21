@@ -24,6 +24,9 @@ import app.fitos.core.domain.nutrition.NutritionTargetRepository
 import app.fitos.core.domain.profile.ProfileRepository
 import app.fitos.core.domain.profile.WeightGoal
 import app.fitos.core.domain.profile.WeightGoalRepository
+import app.fitos.core.domain.report.Advice
+import app.fitos.core.domain.report.Highlight
+import app.fitos.core.domain.report.WeeklyReportSource
 import app.fitos.core.domain.settings.SettingsRepository
 import app.fitos.core.domain.time.JalaliCalendar
 import app.fitos.core.domain.today.DayScore
@@ -59,6 +62,7 @@ import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
@@ -86,6 +90,9 @@ data class HomeTraining(
     /** The version of today's finished session. */
     val todayVariant: VariantKind? = null,
 )
+
+/** A finished week's report waiting to be read. */
+data class HomeReport(val weekStart: LocalDate, val highlight: Highlight?, val calorieAdvice: Boolean)
 
 /** Stage 6 on Home: water, sleep and today's habits, the question after a break, and an old backup. */
 data class HomeDay(
@@ -120,6 +127,7 @@ class HomeViewModel(
     private val returnPlan: ReturnPlanRepository,
     returnChecker: ReturnPlanChecker,
     settings: SettingsRepository,
+    private val reports: WeeklyReportSource,
     private val clock: Clock,
 ) : ViewModel() {
     private val today = MutableStateFlow<LocalDate?>(null)
@@ -210,6 +218,17 @@ class HomeViewModel(
     fun addWeight(input: WeightInput) {
         viewModelScope.launch { weights.add(input.weightKg, input.day, input.time, input.condition, input.note) }
     }
+
+    /** Last week's report until it is opened (null when it has nothing in it). */
+    @OptIn(ExperimentalCoroutinesApi::class)
+    val report: StateFlow<HomeReport?> = combine(today.filterNotNull(), settings.reportSeenWeek, settings.adaptiveDismissedWeek) { d, seen, dismissed ->
+        Triple(d, seen, dismissed)
+    }.mapLatest { (d, seen, dismissed) ->
+        val week = JalaliCalendar.startOfWeek(d).minusWeeks(1)
+        if (seen != null && seen >= week) return@mapLatest null
+        val r = reports.report(week, d)
+        if (!r.hasData) null else HomeReport(week, r.highlight, r.advice.any { it is Advice.Calories } && dismissed != week)
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), null)
 
     fun saveSleep(bedtime: LocalTime, wake: LocalTime, quality: Int?, note: String?) {
         val d = today.value ?: return

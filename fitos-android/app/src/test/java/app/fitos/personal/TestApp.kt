@@ -13,8 +13,8 @@ import app.fitos.core.domain.profile.Profile
 import app.fitos.core.domain.profile.Sex
 import app.fitos.core.domain.settings.AutoBackupSettings
 import app.fitos.core.domain.settings.SettingsRepository
-import app.fitos.core.domain.training.ReturnPlan
 import app.fitos.core.domain.settings.ThemeMode
+import app.fitos.core.domain.training.ReturnPlan
 import app.fitos.personal.feature.session.NoRestAlarm
 import app.fitos.personal.feature.session.RestAlarm
 import app.fitos.personal.notify.NoReminderScheduler
@@ -45,6 +45,14 @@ class FakeSettingsRepository(initial: ThemeMode = ThemeMode.LIGHT) : SettingsRep
     override val returnNotify = MutableStateFlow(true)
     override suspend fun setReturnNotify(on: Boolean) {
         returnNotify.value = on
+    }
+    override val reportSeenWeek = MutableStateFlow<LocalDate?>(null)
+    override suspend fun setReportSeenWeek(weekStart: LocalDate) {
+        reportSeenWeek.value = weekStart
+    }
+    override val adaptiveDismissedWeek = MutableStateFlow<LocalDate?>(null)
+    override suspend fun setAdaptiveDismissedWeek(weekStart: LocalDate) {
+        adaptiveDismissedWeek.value = weekStart
     }
 }
 

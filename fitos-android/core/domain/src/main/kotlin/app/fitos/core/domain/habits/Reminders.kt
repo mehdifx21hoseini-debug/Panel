@@ -65,6 +65,8 @@ data class ReminderFacts(
     val sessionOpen: Boolean = false,
     val hasActiveProgram: Boolean = false,
     val lastBackupAt: Instant? = null,
+    /** The week's report has something in it. */
+    val reportHasData: Boolean = false,
 )
 
 object ReminderRules {
@@ -85,7 +87,7 @@ object ReminderRules {
     /**
      * One reminder never repeats itself, and it says nothing when the thing is already done:
      * a habit done, skipped or not due today, water at target, a weigh-in or workout already
-     * logged, or a recent backup.
+     * logged, a recent backup, or a week with nothing to report.
      */
     fun shouldNotify(type: ReminderType, facts: ReminderFacts): Boolean = when (type) {
         ReminderType.HABIT -> {
@@ -96,8 +98,7 @@ object ReminderRules {
         ReminderType.WEIGH_IN -> !facts.weighedToday
         ReminderType.WORKOUT -> facts.hasActiveProgram && !facts.trainedToday && !facts.sessionOpen
         ReminderType.BACKUP -> backupDue(facts.lastBackupAt, facts.now)
-        // Arrives with the weekly report (stage 8).
-        ReminderType.WEEKLY_REPORT -> false
+        ReminderType.WEEKLY_REPORT -> facts.reportHasData
     }
 
     fun backupDue(lastBackupAt: Instant?, now: Instant): Boolean =

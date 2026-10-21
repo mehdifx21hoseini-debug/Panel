@@ -35,12 +35,13 @@ class ScreenRenderTest {
         setupDone: Boolean = true,
         weights: Int = 0,
         program: Boolean = false,
+        setup: (suspend (AppContainer) -> Unit)? = null,
         seed: suspend (AppContainer, TestApp.SettableClock) -> Unit = { _, _ -> },
         steps: () -> Unit = {},
     ) {
         val clock = TestApp.SettableClock()
         val container = TestApp.container(theme, clock = clock)
-        if (setupDone) TestApp.completeSetup(container)
+        if (setup != null) kotlinx.coroutines.runBlocking { setup(container) } else if (setupDone) TestApp.completeSetup(container)
         if (weights > 0) TestApp.addWeights(container, weights)
         if (program) kotlinx.coroutines.runBlocking {
             container.data.programs.createFromTemplate(app.fitos.core.domain.training.ProgramTemplates.upperFocus5, emptySet())
@@ -375,5 +376,58 @@ class ScreenRenderTest {
         click("دو جلسه‌ی سبک‌تر")
         openTraining()
         compose.waitForText("شروع جلسه‌ی سبک‌تر")
+    }
+
+    /** Setup with a target from 1 September, so the calorie check can judge the last three weeks. */
+    private suspend fun oldTarget(container: AppContainer) {
+        container.data.setup.completeSetup(
+            app.fitos.core.domain.profile.InitialSetup(
+                TestApp.profile, 90.0, 80.0, TestApp.today.plusWeeks(12),
+                app.fitos.core.domain.nutrition.NutritionTarget(
+                    java.time.LocalDate.of(2026, 9, 1), 2500, 180, 285, 70, 35, 3000, 450, app.fitos.core.domain.nutrition.TargetOrigin.CALCULATED, null,
+                ),
+            ),
+        )
+    }
+
+    /** Three weeks of weigh-ins (−0.3 kg a week), food at 2500 kcal, the waist and some nights; workouts from [history]. */
+    private suspend fun reportWeeks(container: AppContainer, clock: TestApp.SettableClock) {
+        val data = container.data
+        history(container, clock)
+        val meal = data.foods.addCustom(
+            app.fitos.core.domain.nutrition.FoodInput(
+                "خوراک روزانه", null, null, 100.0, app.fitos.core.domain.nutrition.Nutrients(250.0, 16.0, 30.0, 7.0, 3.5),
+                app.fitos.core.domain.nutrition.FoodState.COOKED, app.fitos.core.domain.nutrition.FoodSource.USER, emptyList(),
+            ),
+        )
+        val start = java.time.LocalDate.of(2026, 9, 26)
+        (0 until 21).forEach { i ->
+            val day = start.plusDays(i.toLong())
+            data.weights.add(90.6 - 0.3 / 7 * i + if (i % 3 == 0) 0.2 else 0.0, day, java.time.LocalTime.of(7, 30), null, null)
+            data.foodLog.add(day, app.fitos.core.domain.nutrition.Meal.LUNCH, meal.id, app.fitos.core.domain.nutrition.Amount(if (i % 4 == 0) 1100.0 else 980.0))
+            if (i >= 14 && i % 2 == 0) data.sleep.save(day, java.time.LocalTime.of(23, 30), java.time.LocalTime.of(6, 45), null, null)
+        }
+        val abdomen = data.measurements.sites.first().first { it.builtinKey == "abdomen" }.id
+        data.measurements.add(java.time.LocalDate.of(2026, 10, 2), mapOf(abdomen to 108.5), null)
+        data.measurements.add(java.time.LocalDate.of(2026, 10, 15), mapOf(abdomen to 107.6), null)
+    }
+
+    private fun openReport() {
+        click("دیدن گزارش")
+        compose.waitForText("مهم‌ترین پیشرفت هفته")
+    }
+
+    @Test fun homeReport() = renderWith("16-home-report", program = true, setup = { oldTarget(it) }, seed = { c, k -> reportWeeks(c, k) }) {
+        compose.waitForText("دیدن گزارش").performScrollTo()
+    }
+    @Test fun report() = renderWith("90-report", program = true, setup = { oldTarget(it) }, seed = { c, k -> reportWeeks(c, k) }) { openReport() }
+    @Test fun reportDark() = renderWith("90-report-dark", ThemeMode.DARK, program = true, setup = { oldTarget(it) }, seed = { c, k -> reportWeeks(c, k) }) { openReport() }
+    @Test fun reportMetrics() = renderWith("91-report-metrics", program = true, setup = { oldTarget(it) }, seed = { c, k -> reportWeeks(c, k) }) {
+        openReport()
+        compose.waitForText("تغذیه").performScrollTo()
+    }
+    @Test fun reportCheck() = renderWith("92-report-check", program = true, setup = { oldTarget(it) }, seed = { c, k -> reportWeeks(c, k) }) {
+        openReport()
+        compose.waitFor(androidx.compose.ui.test.hasText("تقریبی است:", substring = true)).performScrollTo()
     }
 }

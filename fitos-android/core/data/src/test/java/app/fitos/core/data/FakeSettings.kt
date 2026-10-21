@@ -5,6 +5,7 @@ import app.fitos.core.domain.settings.SettingsRepository
 import app.fitos.core.domain.settings.ThemeMode
 import app.fitos.core.domain.training.ReturnPlan
 import java.time.Instant
+import java.time.LocalDate
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 
@@ -26,5 +27,13 @@ internal class FakeSettings(theme: ThemeMode = ThemeMode.LIGHT) : SettingsReposi
     override val returnNotify = MutableStateFlow(true)
     override suspend fun setReturnNotify(on: Boolean) {
         returnNotify.value = on
+    }
+    override val reportSeenWeek = MutableStateFlow<LocalDate?>(null)
+    override suspend fun setReportSeenWeek(weekStart: LocalDate) {
+        reportSeenWeek.value = weekStart
+    }
+    override val adaptiveDismissedWeek = MutableStateFlow<LocalDate?>(null)
+    override suspend fun setAdaptiveDismissedWeek(weekStart: LocalDate) {
+        adaptiveDismissedWeek.value = weekStart
     }
 }

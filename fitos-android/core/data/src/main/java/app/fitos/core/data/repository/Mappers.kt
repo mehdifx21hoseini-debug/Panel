@@ -7,6 +7,7 @@ import app.fitos.core.data.db.entity.WeightGoalEntity
 import app.fitos.core.domain.body.WeightCondition
 import app.fitos.core.domain.body.WeightEntry
 import app.fitos.core.domain.common.DataSource
+import app.fitos.core.domain.nutrition.AdaptiveBasisNote
 import app.fitos.core.domain.nutrition.NutritionTarget
 import app.fitos.core.domain.nutrition.TargetAssumptions
 import app.fitos.core.domain.nutrition.TargetOrigin
@@ -127,6 +128,11 @@ internal object AssumptionsCodec {
         val fatPerKg: Double,
         val raisedToFloor: Boolean,
         val fatRaisedToMinimum: Boolean,
+        // Since 0.9.0, only on targets accepted from a weekly-report adjustment; absent before.
+        val adaptiveDays: Int? = null,
+        val adaptiveIntake: Double? = null,
+        val adaptiveRate: Double? = null,
+        val adaptivePreviousKcal: Int? = null,
     )
 
     fun encode(a: TargetAssumptions): String = json.encodeToString(
@@ -137,6 +143,8 @@ internal object AssumptionsCodec {
             adjustmentPercent = a.adjustmentPercent, referenceWeightKg = a.referenceWeightKg,
             proteinPerKg = a.proteinPerKg, fatPerKg = a.fatPerKg,
             raisedToFloor = a.raisedToFloor, fatRaisedToMinimum = a.fatRaisedToMinimum,
+            adaptiveDays = a.adaptive?.days, adaptiveIntake = a.adaptive?.meanIntakeKcal,
+            adaptiveRate = a.adaptive?.rateKgPerWeek, adaptivePreviousKcal = a.adaptive?.previousKcal,
         ),
     )
 
@@ -148,6 +156,11 @@ internal object AssumptionsCodec {
             goal = PrimaryGoal.fromCode(d.goal), adjustmentPercent = d.adjustmentPercent,
             referenceWeightKg = d.referenceWeightKg, proteinPerKg = d.proteinPerKg, fatPerKg = d.fatPerKg,
             raisedToFloor = d.raisedToFloor, fatRaisedToMinimum = d.fatRaisedToMinimum,
+            adaptive = if (d.adaptiveDays != null && d.adaptiveIntake != null && d.adaptiveRate != null && d.adaptivePreviousKcal != null) {
+                AdaptiveBasisNote(d.adaptiveDays, d.adaptiveIntake, d.adaptiveRate, d.adaptivePreviousKcal)
+            } else {
+                null
+            },
         )
     }.getOrNull()
 }

@@ -21,6 +21,7 @@ import app.fitos.core.domain.habits.ReminderFacts
 import app.fitos.core.domain.habits.ReminderRepository
 import app.fitos.core.domain.habits.ReminderRules
 import app.fitos.core.domain.habits.ReminderType
+import app.fitos.core.domain.report.WeeklyReportRules
 import app.fitos.core.domain.time.JalaliCalendar
 import app.fitos.core.domain.training.Schedule
 import app.fitos.personal.AppContainer
@@ -58,7 +59,7 @@ class AlarmReminderScheduler(
     override suspend fun sync() {
         val byId = habits.habits.first().associateBy { it.id }
         val active = reminders.list().filter { r ->
-            r.enabled && r.type != ReminderType.WEEKLY_REPORT && (r.type != ReminderType.HABIT || byId[r.habitId]?.archived == false)
+            r.enabled && (r.type != ReminderType.HABIT || byId[r.habitId]?.archived == false)
         }
         val now = ZonedDateTime.now(clock)
         active.forEach { schedule(it.id, ReminderRules.nextFire(it, now).toInstant().toEpochMilli()) }
@@ -129,6 +130,7 @@ class ReminderDelivery(private val context: Context, private val container: AppC
             sessionOpen = data.workouts.active.first() != null,
             hasActiveProgram = data.programs.active.first() != null,
             lastBackupAt = container.settingsRepository.lastBackupAt.first(),
+            reportHasData = r.type == ReminderType.WEEKLY_REPORT && data.reports.report(WeeklyReportRules.latestWeek(today), today).hasData,
         )
         var habit: Habit? = null
         var habitLine = ""
@@ -177,7 +179,9 @@ class ReminderDelivery(private val context: Context, private val container: AppC
                     ?: context.getString(R.string.reminder_backup_never),
                 Destination.BACKUP,
             )
-            ReminderType.WEEKLY_REPORT -> null
+            ReminderType.WEEKLY_REPORT -> ReminderMessage(
+                context.getString(R.string.reminder_report_title), context.getString(R.string.reminder_report_body), Destination.REPORT,
+            )
         }
     }
 

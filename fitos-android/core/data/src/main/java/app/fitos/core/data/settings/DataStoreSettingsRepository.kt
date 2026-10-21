@@ -16,6 +16,7 @@ import app.fitos.core.domain.settings.SettingsRepository
 import app.fitos.core.domain.settings.ThemeMode
 import app.fitos.core.domain.training.ReturnPlan
 import java.time.Instant
+import java.time.LocalDate
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
@@ -66,6 +67,18 @@ class DataStoreSettingsRepository(context: Context) : SettingsRepository {
         store.edit { it[RETURN_NOTIFY] = on }
     }
 
+    override val reportSeenWeek: Flow<LocalDate?> = store.data.map { prefs -> prefs[REPORT_SEEN]?.let(LocalDate::ofEpochDay) }
+
+    override suspend fun setReportSeenWeek(weekStart: LocalDate) {
+        store.edit { it[REPORT_SEEN] = weekStart.toEpochDay() }
+    }
+
+    override val adaptiveDismissedWeek: Flow<LocalDate?> = store.data.map { prefs -> prefs[ADAPTIVE_DISMISSED]?.let(LocalDate::ofEpochDay) }
+
+    override suspend fun setAdaptiveDismissedWeek(weekStart: LocalDate) {
+        store.edit { it[ADAPTIVE_DISMISSED] = weekStart.toEpochDay() }
+    }
+
     private fun Preferences.autoBackup() = AutoBackupSettings(
         enabled = this[AUTO_ENABLED] ?: false,
         folder = this[AUTO_FOLDER],
@@ -92,5 +105,7 @@ class DataStoreSettingsRepository(context: Context) : SettingsRepository {
         val AUTO_LAST_ERROR = stringPreferencesKey("auto_backup_last_error")
         val RETURN_DAYS = intPreferencesKey("return_threshold_days")
         val RETURN_NOTIFY = booleanPreferencesKey("return_notify")
+        val REPORT_SEEN = longPreferencesKey("report_seen_week")
+        val ADAPTIVE_DISMISSED = longPreferencesKey("adaptive_dismissed_week")
     }
 }

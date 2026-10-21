@@ -8,32 +8,32 @@ import app.fitos.core.data.backup.RoomBackupService
 import app.fitos.core.data.db.FitDatabase
 import app.fitos.core.data.repository.RoomActivityRepository
 import app.fitos.core.data.repository.RoomExerciseRepository
-import app.fitos.core.data.repository.RoomHabitRepository
-import app.fitos.core.data.repository.RoomReminderRepository
-import app.fitos.core.data.repository.RoomReturnPlanRepository
-import app.fitos.core.data.repository.RoomSleepRepository
-import app.fitos.core.data.repository.RoomWaterRepository
 import app.fitos.core.data.repository.RoomFoodLogRepository
 import app.fitos.core.data.repository.RoomFoodRepository
+import app.fitos.core.data.repository.RoomHabitRepository
 import app.fitos.core.data.repository.RoomMealPlanRepository
-import app.fitos.core.data.repository.RoomSavedMealRepository
 import app.fitos.core.data.repository.RoomMeasurementRepository
-import app.fitos.core.data.repository.RoomProgramRepository
 import app.fitos.core.data.repository.RoomNutritionTargetRepository
 import app.fitos.core.data.repository.RoomProfileRepository
+import app.fitos.core.data.repository.RoomProgramRepository
+import app.fitos.core.data.repository.RoomReminderRepository
+import app.fitos.core.data.repository.RoomReturnPlanRepository
+import app.fitos.core.data.repository.RoomSavedMealRepository
 import app.fitos.core.data.repository.RoomSetupRepository
+import app.fitos.core.data.repository.RoomSleepRepository
+import app.fitos.core.data.repository.RoomWaterRepository
 import app.fitos.core.data.repository.RoomWeightGoalRepository
 import app.fitos.core.data.repository.RoomWeightRepository
 import app.fitos.core.data.repository.RoomWorkoutRepository
 import app.fitos.core.domain.backup.BackupService
 import app.fitos.core.domain.body.MeasurementRepository
+import app.fitos.core.domain.body.WeightRepository
 import app.fitos.core.domain.habits.ActivityRepository
 import app.fitos.core.domain.habits.DayFactsSource
 import app.fitos.core.domain.habits.HabitRepository
 import app.fitos.core.domain.habits.ReminderRepository
 import app.fitos.core.domain.habits.SleepRepository
 import app.fitos.core.domain.habits.WaterRepository
-import app.fitos.core.domain.body.WeightRepository
 import app.fitos.core.domain.nutrition.FoodLogRepository
 import app.fitos.core.domain.nutrition.FoodRepository
 import app.fitos.core.domain.nutrition.MealPlanRepository
@@ -42,6 +42,7 @@ import app.fitos.core.domain.nutrition.SavedMealRepository
 import app.fitos.core.domain.profile.ProfileRepository
 import app.fitos.core.domain.profile.SetupRepository
 import app.fitos.core.domain.profile.WeightGoalRepository
+import app.fitos.core.domain.report.WeeklyReportSource
 import app.fitos.core.domain.settings.SettingsRepository
 import app.fitos.core.domain.training.ExerciseRepository
 import app.fitos.core.domain.training.ProgramRepository
@@ -83,6 +84,7 @@ class DataGraph private constructor(
     val reminders: ReminderRepository = RoomReminderRepository(db, clock)
     val returnPlan: ReturnPlanRepository = RoomReturnPlanRepository(db, clock)
     val dayFacts = DayFactsSource(water, sleep, activity, workouts, weights, foodLog, targets)
+    val reports = WeeklyReportSource(weights, measurements, workouts, programs, foodLog, targets, habits, dayFacts, sleep, profiles)
     val backup: BackupService = RoomBackupService(
         context.applicationContext, db, settings, clock, app, backupIterations,
         // An older backup may lack built-in exercises or foods.
